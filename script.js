@@ -14,6 +14,12 @@ const progressText = document.getElementById("progress-text");
 
 const progressFill = document.querySelector(".progress-fill");
 
+const leftPreviewButton =
+    document.getElementById("left-preview-button");
+
+const rightPreviewButton =
+    document.getElementById("right-preview-button");
+
 startButton.addEventListener("click", function () {
 
     homeScreen.style.display = "none";
@@ -23,20 +29,6 @@ startButton.addEventListener("click", function () {
     startRanking();
 
 });
-
-// 曲データ（今は10曲だけ）
-const songs = [
-    { title: "春泥棒", image: "assets/icon.jpg" },
-    { title: "左右盲", image: "assets/icon.jpg" },
-    { title: "花に亡霊", image: "assets/icon.jpg" },
-    { title: "都落ち", image: "assets/icon.jpg" },
-    { title: "藍二乗", image: "assets/icon.jpg" },
-    { title: "盗作", image: "assets/icon.jpg" },
-    { title: "ただ君に晴れ", image: "assets/icon.jpg" },
-    { title: "だから僕は音楽を辞めた", image: "assets/icon.jpg" },
-    { title: "晴る", image: "assets/icon.jpg" },
-    { title: "老人と海", image: "assets/icon.jpg" }
-];
 
 let currentLeftSong = songs[0];
 let currentRightSong = songs[1];
@@ -94,6 +86,19 @@ function displaySongs() {
 
     leftImage.src = currentLeftSong.image;
     rightImage.src = currentRightSong.image;
+
+    // 前の曲の画像タイプをリセット
+    leftImage.classList.remove("mv-image", "jacket-image");
+    rightImage.classList.remove("mv-image", "jacket-image");
+
+    // 現在の曲の画像タイプを付け直す
+    if (currentLeftSong.imageType) {
+        leftImage.classList.add(currentLeftSong.imageType + "-image");
+    }
+
+    if (currentRightSong.imageType) {
+        rightImage.classList.add(currentRightSong.imageType + "-image");
+    }
 
 }
 
@@ -236,6 +241,32 @@ async function startRanking() {
 // 左右のカード
 const leftCard = document.getElementById("left-card");
 const rightCard = document.getElementById("right-card");
+
+leftPreviewButton.addEventListener("click", function (event) {
+
+    event.stopPropagation();
+
+    if (!currentLeftSong.youtubeUrl) {
+        alert("この曲はまだ試聴できません。");
+        return;
+    }
+
+    window.open(currentLeftSong.youtubeUrl, "_blank");
+
+});
+
+rightPreviewButton.addEventListener("click", function (event) {
+
+    event.stopPropagation();
+
+    if (!currentRightSong.youtubeUrl) {
+        alert("この曲はまだ試聴できません。");
+        return;
+    }
+
+    window.open(currentRightSong.youtubeUrl, "_blank");
+
+});
 
 // 左を選択
 leftCard.addEventListener("click", function () {

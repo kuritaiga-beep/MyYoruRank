@@ -41,23 +41,43 @@
 
     <div class="compare-container">
 
-        <button class="song-card" id="left-card">
+    <div class="song-card">
 
-            <img id="left-image" src="assets/icon.jpg">
+        <button class="song-select-button" id="left-card" type="button">
+
+            <div class="image-container">
+                <img id="left-image" src="assets/icon.jpg">
+            </div>
 
             <h3 id="left-title">春泥棒</h3>
 
         </button>
 
-        <button class="song-card" id="right-card">
+        <button id="left-preview-button" class="preview-button" type="button">
+            ▶ 曲を確認する
+        </button>
 
-            <img id="right-image" src="assets/icon.jpg">
+    </div>
+
+    <div class="song-card">
+
+        <button class="song-select-button" id="right-card" type="button">
+
+            <div class="image-container">
+                <img id="right-image" src="assets/icon.jpg">
+            </div>
 
             <h3 id="right-title">左右盲</h3>
 
         </button>
 
+        <button id="right-preview-button" class="preview-button" type="button">
+            ▶ 曲を確認する
+        </button>
+
     </div>
+
+</div>
 
 </div>
 
@@ -70,6 +90,8 @@
     <button id="restart-button">もう一度ランキングする</button>
 
 </section>
+
+<script src="songs.js"></script>
 
 <script src="script.js"></script>
 
