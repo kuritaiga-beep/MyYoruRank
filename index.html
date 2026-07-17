@@ -1,18 +1,68 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyYoruRank</title>
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>MyYoruRank</h1>
+    <div id="home-screen" class="container">
 
-    <p>ヨルシカ全曲ランキングを作ろう！</p>
+        <img id="artist-icon" src="assets/icon.jpg" alt="Yorushika">
+
+        <h1>MyYoruRank</h1>
+
+        <p class="subtitle">
+            あなただけのヨルシカランキングを作ろう
+        </p>
+
+        <button id="start-button">
+            START
+        </button>
+
+        <p class="version">
+            Ver.0.1
+        </p>
+
+    </div>
+
+<div id="compare-screen" class="container" style="display:none;">
+
+    <h2 id="progress-text">比較 1 / 45</h2>
+
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+
+    <div class="compare-container">
+
+        <button class="song-card" id="left-card">
+
+            <img id="left-image" src="assets/icon.png">
+
+            <h3 id="left-title">春泥棒</h3>
+
+        </button>
+
+        <button class="song-card" id="right-card">
+
+            <img id="right-image" src="assets/icon.png">
+
+            <h3 id="right-title">左右盲</h3>
+
+        </button>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
+
 </html>
