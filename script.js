@@ -29,6 +29,8 @@ const songs = [
 let currentLeftIndex = 0;
 let currentRightIndex = 1;
 
+const comparisonResults = [];
+
 // HTMLの要素を取得
 const leftTitle = document.getElementById("left-title");
 const rightTitle = document.getElementById("right-title");
@@ -69,7 +71,12 @@ const rightCard = document.getElementById("right-card");
 // 左を選択
 leftCard.addEventListener("click", function () {
 
-    console.log(songs[currentLeftIndex].title + " が勝ち");
+    comparisonResults.push({
+        winner: songs[currentLeftIndex].title,
+        loser: songs[currentRightIndex].title
+    });
+
+    console.log(comparisonResults);
 
     nextComparison();
 
@@ -78,7 +85,12 @@ leftCard.addEventListener("click", function () {
 // 右を選択
 rightCard.addEventListener("click", function () {
 
-    console.log(songs[currentRightIndex].title + " が勝ち");
+    comparisonResults.push({
+        winner: songs[currentRightIndex].title,
+        loser: songs[currentLeftIndex].title
+    });
+
+    console.log(comparisonResults);
 
     nextComparison();
 
