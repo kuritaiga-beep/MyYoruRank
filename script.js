@@ -10,6 +10,10 @@ const rankingList = document.getElementById("ranking-list");
 
 const restartButton = document.getElementById("restart-button");
 
+const progressText = document.getElementById("progress-text");
+
+const progressFill = document.querySelector(".progress-fill");
+
 startButton.addEventListener("click", function () {
 
     homeScreen.style.display = "none";
@@ -41,7 +45,41 @@ let comparisonResolve = null;
 
 const comparisonResults = [];
 
-// HTMLの要素を取得
+let completedMergeSteps = 0;
+
+let progressPercent = 0;
+
+const totalMergeSteps = calculateTotalMergeSteps(songs.length);
+
+function calculateTotalMergeSteps(length) {
+
+    if (length <= 1) {
+        return 0;
+    }
+
+    const leftLength = Math.floor(length / 2);
+    const rightLength = length - leftLength;
+
+    return (
+        length +
+        calculateTotalMergeSteps(leftLength) +
+        calculateTotalMergeSteps(rightLength)
+    );
+
+}
+
+function updateProgress() {
+
+    progressPercent = Math.round(
+        (completedMergeSteps / totalMergeSteps) * 100
+    );
+
+    progressText.textContent = `進捗 ${progressPercent}%`;
+    progressFill.style.width = `${progressPercent}%`;
+
+}
+
+    // HTMLの要素を取得
 const leftTitle = document.getElementById("left-title");
 const rightTitle = document.getElementById("right-title");
 
@@ -115,16 +153,28 @@ async function merge(leftList, rightList) {
             rightIndex++;
         }
 
+        completedMergeSteps++;
+        updateProgress();
+
     }
 
     while (leftIndex < leftList.length) {
-        mergedList.push(leftList[leftIndex]);
-        leftIndex++;
+    mergedList.push(leftList[leftIndex]);
+    leftIndex++;
+
+    completedMergeSteps++;
+    updateProgress();
+
     }
+    
 
     while (rightIndex < rightList.length) {
-        mergedList.push(rightList[rightIndex]);
-        rightIndex++;
+    mergedList.push(rightList[rightIndex]);
+    rightIndex++;
+
+    completedMergeSteps++;
+    updateProgress();
+
     }
 
     return mergedList;
@@ -164,7 +214,17 @@ function displayRanking(ranking) {
 
 async function startRanking() {
 
+    completedMergeSteps = 0;
+    progressPercent = 0;
+
+    progressText.textContent = "進捗 0%";
+    progressFill.style.width = "0%";
+
     const ranking = await mergeSort([...songs]);
+
+    progressPercent = 100;
+    progressText.textContent = "進捗 100%";
+    progressFill.style.width = "100%";
 
     displayRanking(ranking);
 
