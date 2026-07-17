@@ -154,3 +154,42 @@ h1 {
     margin-bottom:20px;
 
 }
+
+#result-screen {
+    display: none;
+    width: min(700px, 90%);
+    margin: 0 auto;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 16px;
+    margin-bottom: 12px;
+
+    background: #ffffff10;
+    border-radius: 12px;
+}
+
+.ranking-number {
+    font-size: 22px;
+    font-weight: bold;
+    width: 60px;
+}
+
+.ranking-title {
+    font-size: 18px;
+}
+
+.ranking-image {
+    width: 60px;
+    height: 60px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}

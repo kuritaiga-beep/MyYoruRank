@@ -4,6 +4,12 @@ const homeScreen = document.getElementById("home-screen");
 
 const compareScreen = document.getElementById("compare-screen");
 
+const resultScreen = document.getElementById("result-screen");
+
+const rankingList = document.getElementById("ranking-list");
+
+const restartButton = document.getElementById("restart-button");
+
 startButton.addEventListener("click", function () {
 
     homeScreen.style.display = "none";
@@ -14,7 +20,7 @@ startButton.addEventListener("click", function () {
 
 });
 
-// 曲データ（今は2曲だけ）
+// 曲データ（今は10曲だけ）
 const songs = [
     { title: "春泥棒", image: "assets/icon.jpg" },
     { title: "左右盲", image: "assets/icon.jpg" },
@@ -125,15 +131,45 @@ async function merge(leftList, rightList) {
 
 }
 
+function displayRanking(ranking) {
+
+    rankingList.innerHTML = "";
+
+    ranking.forEach(function (song, index) {
+
+        const rankingItem = document.createElement("div");
+
+        rankingItem.classList.add("ranking-item");
+
+        rankingItem.innerHTML = `
+            <span class="ranking-number">
+                ${index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `${index + 1}位`}
+            </span>
+
+            <img
+                src="${song.image}"
+                alt="${song.title}"
+                class="ranking-image"
+            >
+
+            <span class="ranking-title">${song.title}</span>
+         
+        `;
+    
+        rankingList.appendChild(rankingItem);
+
+    });
+
+}
+
 async function startRanking() {
 
     const ranking = await mergeSort([...songs]);
 
-    console.log("ランキング完成");
+    displayRanking(ranking);
 
-    ranking.forEach(function (song, index) {
-        console.log((index + 1) + "位: " + song.title);
-    });
+    compareScreen.style.display = "none";
+    resultScreen.style.display = "block";
 
 }
 
@@ -172,5 +208,16 @@ rightCard.addEventListener("click", function () {
 
     comparisonResolve(currentRightSong);
     comparisonResolve = null;
+
+});
+
+restartButton.addEventListener("click", function () {
+
+    comparisonResults.length = 0;
+    comparisonResolve = null;
+
+    resultScreen.style.display = "none";
+
+    homeScreen.style.display = "block";
 
 });
