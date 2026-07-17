@@ -236,6 +236,85 @@ h1 {
     transform: scale(0.92);
 }
 
+/* ==========================
+   7.1 比較画面追加要素
+========================== */
+
+/* 案内メッセージ */
+
+.compare-message {
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    color: white;
+
+    text-align: center;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* 戻るボタン */
+
+.undo-button {
+
+    display: block;
+
+    margin: 30px auto 0;
+
+    padding: 12px 24px;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    color: white;
+
+    background: #374151;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: background 0.2s;
+
+}
+
+
+/* 戻るボタン（ホバー） */
+
+.undo-button:hover:not(:disabled) {
+
+    background: #4b5563;
+
+}
+
+
+/* 戻るボタン（無効状態） */
+
+.undo-button:disabled {
+
+    background: #6b7280;
+
+    cursor: not-allowed;
+
+    opacity: 0.6;
+
+}
+
+.youtube-note {
+    margin-top: 16px;
+
+    font-size: 14px;
+    color: #888;
+
+    text-align: center;
+}
 
 /* ========================================
    8. 結果画面

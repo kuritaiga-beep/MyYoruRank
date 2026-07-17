@@ -37,6 +37,12 @@ let comparisonResolve = null;
 
 const comparisonResults = [];
 
+let replayIndex = 0;
+let isReplaying = false;
+
+// ランキング処理を識別する番号
+let rankingRunId = 0;
+
 let completedMergeSteps = 0;
 
 let progressPercent = 0;
@@ -100,6 +106,13 @@ function displaySongs() {
         rightImage.classList.add(currentRightSong.imageType + "-image");
     }
 
+    // YouTubeボタンの表示・非表示
+    leftPreviewButton.style.display =
+        currentLeftSong.youtubeUrl ? "block" : "none";
+
+    rightPreviewButton.style.display =
+        currentRightSong.youtubeUrl ? "block" : "none";
+
 }
 
 function compareSongs(leftSong, rightSong) {
@@ -109,13 +122,53 @@ function compareSongs(leftSong, rightSong) {
 
     displaySongs();
 
+    // 戻るための再実行中は、保存済みの選択を自動で再現する
+    if (
+        isReplaying &&
+        replayIndex < comparisonResults.length
+    ) {
+
+        const savedResult = comparisonResults[replayIndex];
+
+        const isSameComparison =
+            savedResult.leftSong === leftSong.title &&
+            savedResult.rightSong === rightSong.title;
+
+        if (isSameComparison) {
+
+            replayIndex++;
+
+            if (savedResult.selectedSong === leftSong.title) {
+                return Promise.resolve(leftSong);
+            }
+
+            return Promise.resolve(rightSong);
+
+        }
+
+        // 履歴と実際の比較が一致しなかった場合は自動再生を止める
+        console.error("比較履歴が一致しません。", {
+            savedResult,
+            leftSong: leftSong.title,
+            rightSong: rightSong.title
+        });
+
+        isReplaying = false;
+
+    }
+
+    // 保存済みの履歴をすべて再現したら、通常の比較に戻る
+    if (isReplaying) {
+        isReplaying = false;
+    }
+
     return new Promise(function (resolve) {
         comparisonResolve = resolve;
     });
 
 }
 
-async function mergeSort(songList) {
+async function mergeSort(songList, currentRunId) {
 
     if (songList.length <= 1) {
         return songList;
@@ -126,14 +179,25 @@ async function mergeSort(songList) {
     const leftList = songList.slice(0, middleIndex);
     const rightList = songList.slice(middleIndex);
 
-    const sortedLeftList = await mergeSort(leftList);
-    const sortedRightList = await mergeSort(rightList);
+    const sortedLeftList = await mergeSort(
+        leftList,
+        currentRunId
+    );
 
-    return await merge(sortedLeftList, sortedRightList);
+    const sortedRightList = await mergeSort(
+        rightList,
+        currentRunId
+    );
+
+    return await merge(
+        sortedLeftList,
+        sortedRightList,
+        currentRunId
+    );
 
 }
 
-async function merge(leftList, rightList) {
+async function merge(leftList, rightList, currentRunId) {
 
     const mergedList = [];
 
@@ -145,10 +209,20 @@ async function merge(leftList, rightList) {
         rightIndex < rightList.length
     ) {
 
+        // 古いランキング処理になっていたら終了する
+        if (currentRunId !== rankingRunId) {
+        return [];
+        }
+
         const winner = await compareSongs(
             leftList[leftIndex],
             rightList[rightIndex]
         );
+
+        // 比較待ちの間に古い処理になっていたら終了する
+        if (currentRunId !== rankingRunId) {
+        return [];
+        }
 
         if (winner === leftList[leftIndex]) {
             mergedList.push(leftList[leftIndex]);
@@ -219,13 +293,24 @@ function displayRanking(ranking) {
 
 async function startRanking() {
 
+    // 新しいランキング処理の番号を発行
+    rankingRunId++;
+
+    // 今回の処理番号を保存
+    const currentRunId = rankingRunId;
+
     completedMergeSteps = 0;
     progressPercent = 0;
 
     progressText.textContent = "進捗 0%";
     progressFill.style.width = "0%";
 
-    const ranking = await mergeSort([...songs]);
+    const ranking = await mergeSort([...songs], currentRunId);
+
+    // この処理が古くなっていたら、結果画面を表示せず終了する
+    if (currentRunId !== rankingRunId) {
+        return;
+    }
 
     progressPercent = 100;
     progressText.textContent = "進捗 100%";
@@ -241,6 +326,9 @@ async function startRanking() {
 // 左右のカード
 const leftCard = document.getElementById("left-card");
 const rightCard = document.getElementById("right-card");
+
+// 一つ前の選択に戻るボタン
+const undoButton = document.getElementById("undo-button");
 
 leftPreviewButton.addEventListener("click", function (event) {
 
@@ -276,9 +364,12 @@ leftCard.addEventListener("click", function () {
     }
 
     comparisonResults.push({
-        winner: currentLeftSong.title,
-        loser: currentRightSong.title
+    leftSong: currentLeftSong.title,
+    rightSong: currentRightSong.title,
+    selectedSong: currentLeftSong.title
     });
+
+    undoButton.disabled = false;
 
     comparisonResolve(currentLeftSong);
     comparisonResolve = null;
@@ -293,12 +384,32 @@ rightCard.addEventListener("click", function () {
     }
 
     comparisonResults.push({
-        winner: currentRightSong.title,
-        loser: currentLeftSong.title
+    leftSong: currentLeftSong.title,
+    rightSong: currentRightSong.title,
+    selectedSong: currentRightSong.title
     });
+
+    undoButton.disabled = false;
 
     comparisonResolve(currentRightSong);
     comparisonResolve = null;
+
+});
+
+undoButton.addEventListener("click", function () {
+
+    if (comparisonResults.length === 0) {
+        return;
+    }
+
+    comparisonResults.pop();
+
+    replayIndex = 0;
+    isReplaying = true;
+
+    undoButton.disabled = true;
+
+    startRanking();
 
 });
 
