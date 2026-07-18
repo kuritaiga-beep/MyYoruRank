@@ -3,17 +3,35 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>MyYoruRank</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="debug.css">
+
 </head>
 
 <body>
 
-    <div id="home-screen" class="container">
+    <!-- ==========================
+         ホーム画面
+    =========================== -->
 
-        <img id="artist-icon" src="assets/icon.jpg" alt="Yorushika">
+    <main
+        id="home-screen"
+        class="container"
+    >
+
+        <img
+            id="artist-icon"
+            src="assets/icon.jpg"
+            alt="ヨルシカ"
+        >
 
         <h1>MyYoruRank</h1>
 
@@ -21,129 +39,458 @@
             あなただけのヨルシカランキングを作ろう
         </p>
 
-        <button id="start-button">
+        <button
+            id="start-button"
+            type="button"
+        >
             START
         </button>
 
-        <button id="check-button">データ確認</button>
+        <button
+            id="song-list-button"
+            type="button"
+        >
+            楽曲一覧
+        </button>
 
         <p class="version">
             Ver.0.1
         </p>
 
-    </div>
+    </main>
 
-<div id="compare-screen" class="container" style="display:none;">
 
-     <h2 class="compare-message">
-        より好きな曲を選んでください
-    </h2>
+    <!-- ==========================
+         比較画面
+    =========================== -->
+
+    <main
+        id="compare-screen"
+        class="container"
+        style="display: none;"
+    >
+
+        <h2 class="compare-message">
+            より好きな曲を選んでください
+        </h2>
+
+        <h2 id="progress-text">
+            進捗 0%
+        </h2>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="compare-container">
+
+            <!-- 左側の楽曲 -->
+
+            <div class="song-card">
+
+                <button
+                    id="left-card"
+                    class="song-select-button"
+                    type="button"
+                >
+
+                    <div class="image-container">
+
+                        <img
+                            id="left-image"
+                            src="assets/icon.jpg"
+                            alt=""
+                        >
+
+                    </div>
+
+                    <h3 id="left-title">
+                        春泥棒
+                    </h3>
+
+                </button>
+
+                <button
+                    id="left-preview-button"
+                    class="preview-button"
+                    type="button"
+                >
+                    ▶ 曲を確認する
+                </button>
+
+            </div>
+
+
+            <!-- 右側の楽曲 -->
+
+            <div class="song-card">
+
+                <button
+                    id="right-card"
+                    class="song-select-button"
+                    type="button"
+                >
+
+                    <div class="image-container">
+
+                        <img
+                            id="right-image"
+                            src="assets/icon.jpg"
+                            alt=""
+                        >
+
+                    </div>
+
+                    <h3 id="right-title">
+                        左右盲
+                    </h3>
+
+                </button>
+
+                <button
+                    id="right-preview-button"
+                    class="preview-button"
+                    type="button"
+                >
+                    ▶ 曲を確認する
+                </button>
+
+            </div>
+
+        </div>
+
+        <button
+            id="undo-button"
+            class="undo-button"
+            type="button"
+            disabled
+        >
+            ← 一つ前の選択に戻る
+        </button>
+
+        <p class="youtube-note">
+            ※ YouTubeボタンは公式動画が公開されている楽曲のみ表示されます。
+        </p>
+
+    </main>
+
+
+    <!-- ==========================
+         結果画面
+    =========================== -->
+
+    <main
+        id="result-screen"
+        class="container"
+        style="display: none;"
+    >
+
+        <h2>
+            My Yoru Ranking
+        </h2>
+
+        <div id="ranking-list"></div>
+
+        <button
+            id="restart-button"
+            type="button"
+        >
+            もう一度ランキングする
+        </button>
+
+    </main>
+
+
+    <!-- ==========================
+         楽曲一覧画面
+    =========================== -->
+
+    <main
+        id="song-list-screen"
+        class="container"
+        style="display: none;"
+    >
+
+        <h1>
+            楽曲一覧
+        </h1>
+
+        <!-- フィルター -->
+
+        <button
+            id="song-list-home-button"
+            class="secondary-button"
+            type="button"
+        >
+            ← ホームに戻る
+        </button>
+
+        <div class="filter-panel">
+
+            <button
+                id="filter-toggle-button"
+                type="button"
+                aria-expanded="true"
+                aria-controls="song-list-filters"
+            >
+                <span>絞り込み</span>
+
+                <span id="filter-toggle-icon">
+                    ▲
+                </span>
+            </button>
+
+
+            <div id="song-list-filters">
+
+                <div class="filter-header">
+
+                    <button
+                        id="filter-reset-button"
+                        type="button"
+                    >
+                        条件をリセット
+                    </button>
+
+                </div>
+
+
+                <!-- 曲名検索 -->
+
+                <fieldset class="filter-group">
+
+                    <legend>
+                        曲名
+                    </legend>
+
+                    <input
+                        id="song-search-input"
+                        type="search"
+                        placeholder="曲名を検索"
+                        autocomplete="off"
+                    >
+
+                </fieldset>
+
+                <!-- 楽曲タイプ -->
+
+                <fieldset class="filter-group">
+
+                    <legend class="filter-group-title">
+                        Type
+                    </legend>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="music-type"
+                            value="vocal"
+                        >
+
+                        <span>Vocal</span>
+
+                    </label>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="music-type"
+                            value="instrumental"
+                        >
+
+                        <span>Instrumental</span>
+
+                    </label>
+
+                </fieldset>
+
+
+                <!-- MV -->
+
+                <fieldset class="filter-group">
+
+                    <legend class="filter-group-title">
+                        MV
+                    </legend>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="mv-status"
+                            value="true"
+                        >
+
+                        <span>MVあり</span>
+
+                    </label>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="mv-status"
+                            value="false"
+                        >
+
+                        <span>MVなし</span>
+
+                    </label>
+
+                </fieldset>
+
+
+                <!-- 収録区分 -->
+
+                <fieldset class="filter-group">
+
+                    <legend class="filter-group-title">
+                        Category
+                    </legend>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="song-category"
+                            value="album"
+                        >
+
+                        <span>Album</span>
+
+                    </label>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="song-category"
+                            value="single"
+                        >
+
+                        <span>Single</span>
+
+                    </label>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="song-category"
+                            value="tribute"
+                        >
+
+                        <span>Tribute</span>
+
+                    </label>
+
+                </fieldset>
+
+
+                <!-- アルバム選択 -->
+
+                <fieldset class="filter-group filter-album-group">
+
+                    <legend class="filter-group-title">
+                        Album
+                    </legend>
+
+                    <div id="album-filter-options"></div>
+
+                </fieldset>
+
+            </div>
+
+        </div>
+
+        <!-- 楽曲数 -->
+
+        <div id="song-list-summary">
+
+            <p>
+                全曲数：
+                <span id="total-song-count">0</span>曲
+            </p>
+
+            <p>
+                MVあり：
+                <span id="mv-song-count">0</span>曲
+            </p>
+
+            <p>
+                インスト：
+                <span id="instrumental-song-count">0</span>曲
+            </p>
+
+            <p id="image-error-summary">
+                画像エラー：
+                <span id="image-error-count">0</span>件
+            </p>
+
+        </div>
+
+
+        <!-- 楽曲カードの出力先 -->
+
+        <div id="song-list"></div>
+
+
+        <!-- ホームに戻る -->
+
+        <button
+            id="song-list-back-button"
+            type="button"
+        >
+            ←ホームに戻る
+        </button>
+
+    </main>
+
+
+    <!-- ==========================
+         JavaScript
+    =========================== -->
+
+    <!-- 楽曲データ -->
+    <script src="songs.js"></script>
+
+    <!-- 共通処理・司令塔 -->
+    <script src="js/script.js"></script>
+
+    <!-- 各機能 -->
+    <script src="js/ranking.js"></script>
+    <script src="js/compare.js"></script>
+    <script src="js/song-list.js"></script>
+    <script src="js/debug.js"></script>
+
+
+    <!-- ==============================
+        Debug Menu
+    ============================== -->
+
+    <div id="debug-menu-overlay" class="hidden">
+
+        <div id="debug-menu">
+
+            <h2>Debug Menu</h2>
+
+            <button id="debug-random-ranking">
+                ランダム順位生成
+            </button>
+
+            <button id="debug-close-menu">
+                閉じる
+            </button>
+
+        </div>
+
+</div>
+
+
+
     
-    <h2 id="progress-text">進捗 0%</h2>
-
-    <div class="progress-bar">
-        <div class="progress-fill"></div>
-    </div>
-
-    <div class="compare-container">
-
-    <div class="song-card">
-
-        <button class="song-select-button" id="left-card" type="button">
-
-            <div class="image-container">
-                <img id="left-image" src="assets/icon.jpg">
-            </div>
-
-            <h3 id="left-title">春泥棒</h3>
-
-        </button>
-
-        <button id="left-preview-button" class="preview-button" type="button">
-            ▶ 曲を確認する
-        </button>
-
-    </div>
-
-    <div class="song-card">
-
-        <button class="song-select-button" id="right-card" type="button">
-
-            <div class="image-container">
-                <img id="right-image" src="assets/icon.jpg">
-            </div>
-
-            <h3 id="right-title">左右盲</h3>
-
-        </button>
-
-        <button id="right-preview-button" class="preview-button" type="button">
-            ▶ 曲を確認する
-        </button>
-
-    </div>
-
-</div>
-
-    <button id="undo-button" class="undo-button" type="button" disabled>
-        ← 一つ前の選択に戻る
-    </button>
-
-    <p class="youtube-note">
-    ※ YouTubeボタンは公式動画が公開されている楽曲のみ表示されます。
-    </p>
-
-</div>
-
-<div id="check-screen" class="container" style="display: none;">
-    <h1>データ確認</h1>
-
-    <div id="check-filters">
-        <button class="filter-button active" data-filter="all">
-            全部
-        </button>
-
-        <button class="filter-button" data-filter="mv">
-            MVあり
-        </button>
-
-        <button class="filter-button" data-filter="vocal">
-            ボーカル
-        </button>
-
-        <button class="filter-button" data-filter="instrumental">
-            インスト
-        </button>
-    </div>
-
-    <div id="check-summary">
-        <p>全曲数：<span id="total-song-count">0</span>曲</p>
-        <p>MVあり：<span id="mv-song-count">0</span>曲</p>
-        <p>インスト：<span id="instrumental-song-count">0</span>曲</p>
-        <p>画像エラー：<span id="image-error-count">0</span>件</p>
-    </div>
-
-    <div id="check-list"></div>
-
-    <button id="back-home-button">
-        ホームへ戻る
-    </button>
-</div>
-
-<section id="result-screen">
-
-    <h2>My Yoru Ranking</h2>
-
-    <div id="ranking-list"></div>
-
-    <button id="restart-button">もう一度ランキングする</button>
-
-</section>
-
-<script src="songs.js"></script>
-
-<script src="script.js"></script>
-
 </body>
 
 </html>
