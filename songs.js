@@ -6,7 +6,7 @@ const songs = [
     // =========================
 
 {
-    title: "夏陰、ピアノを弾く ",
+    title: "夏陰、ピアノを弾く",
 
     image: "assets/jackets/albums/Natsukusa ga Jama wo Suru.jpg",
     imageType: "jacket",
