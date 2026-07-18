@@ -411,7 +411,187 @@ const songs = [
     // エルマ
     // =========================
 
+{
+    title: "車窓",
 
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "instrumental",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=oeMP1XtA92A"
+},
+
+{
+    title: "憂一乗",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=RMreKWHCP74"
+},
+
+{
+    title: "夕凪、某、花惑い",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=wpkgN3Ny_P0"
+},
+
+{
+    title: "雨とカプチーノ",
+
+    image: "assets/mv-thumbnails/official/Ame to Cappuccino.jpg",
+    imageType: "mv",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: true,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=PWbRleMGagU"
+},
+
+{
+    title: "湖の街",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "instrumental",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=g1WD9ogYZLU"
+},
+
+{
+    title: "神様のダンス",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=3qTWFjeItaw"
+},
+
+{
+    title: "雨晴るる",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=lEKSsgwn8hw"
+},
+
+{
+    title: "歩く",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=rjrres2QTyk"
+},
+
+{
+    title: "心に穴が空いた",
+
+    image: "assets/mv-thumbnails/official/Kokoro ni Ana ga Aita.jpg",
+    imageType: "mv",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: true,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=DlyG6MAKUOA"
+},
+
+{
+    title: "森の教会",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "instrumental",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=N4OL5QgZ2G4"
+},
+
+{
+    title: "声",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=Hl56wOGf0iY"
+},
+
+{
+    title: "エイミー",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=Ysyap8QkF-A"
+},
+
+{
+    title: "海底、月明かり",
+
+    image: "assets/jackets/albums/Elma.jpg",
+    imageType: "jacket",
+
+    musicType: "instrumental",
+    album: "エルマ",
+    hasMV: false,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=eH_GNrsIy54"
+},
+
+{
+    title: "ノーチラス",
+
+    image: "assets/mv-thumbnails/official/Nautilus.jpg",
+    imageType: "mv",
+
+    musicType: "vocal",
+    album: "エルマ",
+    hasMV: true,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=j83OVgv6woA"
+},
 
     // =========================
     // 盗作
