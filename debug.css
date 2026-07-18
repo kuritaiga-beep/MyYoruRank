@@ -1,0 +1,54 @@
+/* ==============================
+   Debug Menu
+============================== */
+
+/* 非表示 */
+#debug-menu-overlay.hidden {
+    display: none;
+}
+
+/* 背景 */
+#debug-menu-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.6);
+
+    z-index: 9999;
+}
+
+/* メニュー本体 */
+#debug-menu {
+    width: 320px;
+
+    padding: 24px;
+
+    background: white;
+    border-radius: 12px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* タイトル */
+#debug-menu h2 {
+    margin: 0;
+
+    text-align: center;
+}
+
+/* ボタン */
+#debug-menu button {
+    padding: 12px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
