@@ -20,6 +20,30 @@ const leftPreviewButton =
 const rightPreviewButton =
     document.getElementById("right-preview-button");
 
+const checkButton = document.getElementById("check-button");
+
+const checkScreen = document.getElementById("check-screen");
+
+const checkList = document.getElementById("check-list");
+
+const filterButtons =
+    document.querySelectorAll(".filter-button");
+
+const totalSongCount =
+    document.getElementById("total-song-count");
+
+const mvSongCount =
+    document.getElementById("mv-song-count");
+
+const instrumentalSongCount =
+    document.getElementById("instrumental-song-count");
+
+const imageErrorCount =
+    document.getElementById("image-error-count");
+
+const backHomeButton =
+    document.getElementById("back-home-button");
+
 startButton.addEventListener("click", function () {
 
     homeScreen.style.display = "none";
@@ -27,6 +51,22 @@ startButton.addEventListener("click", function () {
     compareScreen.style.display = "block";
 
     startRanking();
+
+});
+
+checkButton.addEventListener("click", function () {
+
+    createCheckList();
+
+    homeScreen.style.display = "none";
+    checkScreen.style.display = "block";
+
+});
+
+backHomeButton.addEventListener("click", function () {
+
+    checkScreen.style.display = "none";
+    homeScreen.style.display = "block";
 
 });
 
@@ -305,7 +345,7 @@ async function startRanking() {
     progressText.textContent = "進捗 0%";
     progressFill.style.width = "0%";
 
-    const ranking = await mergeSort([...songs], currentRunId);
+    const ranking = await mergeSort(shuffleSongs(songs), currentRunId);
 
     // この処理が古くなっていたら、結果画面を表示せず終了する
     if (currentRunId !== rankingRunId) {
@@ -320,6 +360,29 @@ async function startRanking() {
 
     compareScreen.style.display = "none";
     resultScreen.style.display = "block";
+
+}
+
+function shuffleSongs(songList) {
+
+    const shuffledSongs = [...songList];
+
+    for (let i = shuffledSongs.length - 1; i > 0; i--) {
+
+        const randomIndex =
+            Math.floor(Math.random() * (i + 1));
+
+        [
+            shuffledSongs[i],
+            shuffledSongs[randomIndex]
+        ] = [
+            shuffledSongs[randomIndex],
+            shuffledSongs[i]
+        ];
+
+    }
+
+    return shuffledSongs;
 
 }
 
@@ -421,5 +484,180 @@ restartButton.addEventListener("click", function () {
     resultScreen.style.display = "none";
 
     homeScreen.style.display = "block";
+
+});
+
+function createCheckList() {
+
+    checkList.innerHTML = "";
+
+    totalSongCount.textContent = songs.length;
+
+    mvSongCount.textContent =
+        songs.filter(function (song) {
+            return song.hasMV;
+        }).length;
+
+    instrumentalSongCount.textContent =
+        songs.filter(function (song) {
+            return song.musicType === "instrumental";
+        }).length;
+
+    imageErrorCount.textContent = "0";
+
+    let errorCount = 0;
+
+    const albums = {};
+
+    songs.forEach(function (song) {
+
+        if (!albums[song.album]) {
+            albums[song.album] = [];
+        }
+
+        albums[song.album].push(song);
+
+    });
+
+    Object.keys(albums).forEach(function (albumName) {
+
+        const albumSection = document.createElement("section");
+        albumSection.className = "album-section";
+
+        const albumTitle = document.createElement("h2");
+        albumTitle.className = "album-title";
+        albumTitle.textContent = albumName;
+
+        const albumGrid = document.createElement("div");
+        albumGrid.className = "album-grid";
+
+        albums[albumName].forEach(function (song) {
+
+            const card = document.createElement("div");
+
+            card.className = "check-card";
+
+            card.dataset.hasMv = song.hasMV;
+
+            card.dataset.musicType = song.musicType;
+
+            card.innerHTML = `
+                <img
+                    class="check-image"
+                    src="${song.image}"
+                    alt="${song.title}"
+                >
+
+                <p class="image-error">
+                    ⚠ 画像が見つかりません
+                    <span class="image-path">${song.image}</span>
+                </p>
+
+                <h3>${song.title}</h3>
+
+                <p>アルバム：${song.album}</p>
+
+                <p>画像：${song.imageType}</p>
+
+                <p>種類：${song.musicType}</p>
+
+                <p>MV:${song.hasMV ? "○" : "x"}</p>
+
+                <p>YouTube:${song.youtubeUrl ? "○" : "x"}</p>
+
+                ${
+                    song.hasMV === true && song.imageType === "jacket"
+                        ? `
+                            <p class="data-warning">
+                                ⚠ MVありなのに画像がjacketです
+                            </p>
+                        `
+                        : ""
+                }
+
+                ${
+                    song.youtubeUrl
+                        ? `<button
+                            class="check-preview-button"
+                            type="button"
+                            onclick="window.open('${song.youtubeUrl}', '_blank')"
+                        >
+                            ▶ YouTube
+                        </button>
+                        `
+                        : ""
+                }
+            `;
+
+            const checkImage = card.querySelector(".check-image");
+            const imageError = card.querySelector(".image-error");
+
+            checkImage.addEventListener("error", function () {
+
+                checkImage.style.display = "none";
+                imageError.style.display = "block";
+
+                errorCount++;
+
+                imageErrorCount.textContent = errorCount;
+            });
+
+            albumGrid.appendChild(card);
+
+        });
+
+        albumSection.appendChild(albumTitle);
+        albumSection.appendChild(albumGrid);
+
+        checkList.appendChild(albumSection);
+
+    });
+
+}
+
+filterButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        const selectedFilter = button.dataset.filter;
+
+        filterButtons.forEach(function (otherButton) {
+            otherButton.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        const cards = document.querySelectorAll(".check-card");
+
+        cards.forEach(function (card) {
+
+            const hasMV = card.dataset.hasMv === "true";
+            const musicType = card.dataset.musicType;
+
+            if (selectedFilter === "all") {
+                card.style.display = "block";
+            }
+
+            if (selectedFilter === "mv") {
+                card.style.display = hasMV ? "block" : "none";
+            }
+
+            if (selectedFilter === "vocal") {
+                card.style.display =
+                    musicType === "vocal"
+                        ? "block"
+                        : "none";
+            }
+
+            if (selectedFilter === "instrumental") {
+                card.style.display =
+                    musicType === "instrumental"
+                        ? "block"
+                        : "none";
+            }
+
+        });
+
+    });
 
 });

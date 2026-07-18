@@ -25,6 +25,8 @@
             START
         </button>
 
+        <button id="check-button">データ確認</button>
+
         <p class="version">
             Ver.0.1
         </p>
@@ -91,6 +93,41 @@
     ※ YouTubeボタンは公式動画が公開されている楽曲のみ表示されます。
     </p>
 
+</div>
+
+<div id="check-screen" class="container" style="display: none;">
+    <h1>データ確認</h1>
+
+    <div id="check-filters">
+        <button class="filter-button active" data-filter="all">
+            全部
+        </button>
+
+        <button class="filter-button" data-filter="mv">
+            MVあり
+        </button>
+
+        <button class="filter-button" data-filter="vocal">
+            ボーカル
+        </button>
+
+        <button class="filter-button" data-filter="instrumental">
+            インスト
+        </button>
+    </div>
+
+    <div id="check-summary">
+        <p>全曲数：<span id="total-song-count">0</span>曲</p>
+        <p>MVあり：<span id="mv-song-count">0</span>曲</p>
+        <p>インスト：<span id="instrumental-song-count">0</span>曲</p>
+        <p>画像エラー：<span id="image-error-count">0</span>件</p>
+    </div>
+
+    <div id="check-list"></div>
+
+    <button id="back-home-button">
+        ホームへ戻る
+    </button>
 </div>
 
 <section id="result-screen">

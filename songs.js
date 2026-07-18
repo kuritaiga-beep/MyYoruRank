@@ -220,6 +220,194 @@ const songs = [
 },
 
     // =========================
+    // だから僕は音楽をやめた
+    // =========================
+
+// だから僕は音楽を辞めた
+
+{
+    title: "8/31",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "instrumental",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "藍二乗",
+
+    image: "assets/mv-thumbnails/official/Ai Nijou.jpg",
+    imageType: "mv",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: true,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=4MoRLTAJY_0"
+},
+
+{
+    title: "八月、某、月明かり",
+
+    image: "assets/mv-thumbnails/official/Hachigatsu, Bou, Tsukiakari.jpg",
+    imageType: "mv",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: true,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=Vs5NViM8TSY"
+},
+
+{
+    title: "詩書きとコーヒー",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "7/13",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "instrumental",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "踊ろうぜ",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "六月は雨上がりの街を書く",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "五月は花緑青の窓辺から",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "夜紛い",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "5/6",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "instrumental",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "パレード",
+
+    image: "assets/mv-thumbnails/official/Parade.jpg",
+    imageType: "mv",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: true,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=ry3Tupx4BL4"
+},
+
+{
+    title: "エルマ",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "4/10",
+
+    image: "assets/jackets/albums/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "jacket",
+
+    musicType: "instrumental",
+    album: "だから僕は音楽を辞めた",
+    hasMV: false,
+
+    youtubeUrl: ""
+},
+
+{
+    title: "だから僕は音楽を辞めた",
+
+    image: "assets/mv-thumbnails/official/Dakara Boku wa Ongaku wo Yameta.jpg",
+    imageType: "mv",
+
+    musicType: "vocal",
+    album: "だから僕は音楽を辞めた",
+    hasMV: true,
+
+    youtubeUrl: "https://www.youtube.com/watch?v=KTZ-y85Erus"
+},
+
+    // =========================
     // エルマ
     // =========================
 
