@@ -526,7 +526,7 @@ function createCheckList() {
 
         const albumTitle = document.createElement("h2");
         albumTitle.className = "album-title";
-        albumTitle.textContent = albumName;
+        albumTitle.textContent = albumName === "" ? "シングル" : albumName;
 
         const albumGrid = document.createElement("div");
         albumGrid.className = "album-grid";
@@ -563,17 +563,7 @@ function createCheckList() {
 
                 <p>MV:${song.hasMV ? "○" : "x"}</p>
 
-                <p>YouTube:${song.youtubeUrl ? "○" : "x"}</p>
-
-                ${
-                    song.hasMV === true && song.imageType === "jacket"
-                        ? `
-                            <p class="data-warning">
-                                ⚠ MVありなのに画像がjacketです
-                            </p>
-                        `
-                        : ""
-                }
+                <p>YouTube:${song.youtubeUrl ? "○" : "x"}</p>       
 
                 ${
                     song.youtubeUrl
