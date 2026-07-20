@@ -6,6 +6,10 @@
 const homeScreen =
     document.getElementById("home-screen");
 
+const settingsScreen =
+    document.getElementById("settings-screen");
+
+
 const compareScreen =
     document.getElementById("compare-screen");
 
@@ -19,6 +23,9 @@ const songListScreen =
 // ホーム画面
 const startButton =
     document.getElementById("start-button");
+
+const rankingStartButton =
+    document.getElementById("ranking-start-button");
 
 const songListHomeButton =
     document.getElementById( "song-list-home-button");
@@ -167,6 +174,19 @@ let completedMergeSteps = 0;
 let progressPercent = 0;
 let totalMergeSteps = 0;
 
+// ランキング対象の楽曲
+let rankingTargetSongs = [];
+
+// ランキング条件
+const rankingSettings = {
+
+    album: "all",
+
+    includeTribute: false,
+
+    includeInstrumental: false
+
+};
 
 // ==============================
 // 4. 画面切り替え
@@ -273,9 +293,23 @@ function setupEventListeners() {
 
             resetRankingState();
 
+            homeScreen.style.display = "none";
+
+            settingsScreen.style.display = "block";
+
+        }
+    );
+
+    // 条件を決めてランキング開始
+    rankingStartButton.addEventListener(
+        "click",
+        function () {
+
+            settingsScreen.style.display = "none";
+
             showCompareScreen();
 
-            startRanking();
+            beginNewRanking();
 
         }
     );

@@ -245,6 +245,41 @@ async function merge(
 
 }
 
+// ==============================
+// 6. ランキング対象を更新
+// ==============================
+
+function updateRankingTargetSongs() {
+
+    rankingTargetSongs =
+        songs.filter(
+            function (song) {
+
+                if (
+                    !rankingSettings.includeTribute &&
+                    song.album === "トリビュート"
+                ) {
+
+                    return false;
+
+                }
+
+                if (
+                    !rankingSettings.includeInstrumental &&
+                    song.musicType === "instrumental"
+                ) {
+
+                    return false;
+
+                }
+
+                return true;
+
+            }
+        );
+
+}
+
 
 // ==============================
 // 5. 楽曲の順番をシャッフル
@@ -283,6 +318,18 @@ function shuffleSongs(
 
 }
 
+// ==============================
+// 6. 新しいランキングを開始
+// ==============================
+
+function beginNewRanking() {
+
+    updateRankingTargetSongs();
+
+    startRanking();
+
+}
+
 
 // ==============================
 // 6. ランキングを開始
@@ -301,7 +348,7 @@ async function startRanking() {
 
     totalMergeSteps =
         calculateTotalMergeSteps(
-            songs.length
+            rankingTargetSongs.length
         );
 
     progressText.textContent =
@@ -311,7 +358,7 @@ async function startRanking() {
         "0%";
 
     // 楽曲が存在しない場合
-    if (songs.length === 0) {
+    if (rankingTargetSongs.length === 0) {
 
         rankingList.innerHTML = `
             <p>
@@ -326,9 +373,11 @@ async function startRanking() {
     }
 
     // 1曲だけの場合
-    if (songs.length === 1) {
+    if (rankingTargetSongs.length === 1) {
 
-        displayRanking([...songs]);
+        displayRanking(
+            [...rankingTargetSongs]
+        );
 
         progressPercent = 100;
 
@@ -345,7 +394,9 @@ async function startRanking() {
     }
 
     const shuffledSongs =
-        shuffleSongs(songs);
+        shuffleSongs(
+            rankingTargetSongs
+        );
 
     const ranking =
         await mergeSort(
@@ -510,3 +561,4 @@ toggleRankingButton.addEventListener(
     "click",
     toggleRankingDisplay
 );
+

@@ -92,12 +92,11 @@
 
         }
 
-    const debugRanking =
-        [...songs];
+    updateRankingTargetSongs();
 
-    displayRanking(
-        debugRanking
-    );
+    const debugRanking = [...rankingTargetSongs];
+
+    displayRanking(debugRanking);
 
     showResultScreen();
 

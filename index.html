@@ -59,6 +59,47 @@
 
     </main>
 
+    <!-- ==========================
+         ランキング条件画面
+    =========================== -->
+
+    <main
+        id="settings-screen"
+        class="container"
+        style="display: none;"
+    >
+
+        <h2>
+            ランキング条件
+        </h2>
+
+        <div class="setting-group">
+
+            <label for="ranking-album-select">
+                アルバム
+            </label>
+
+            <select id="ranking-album-select">
+
+                <option value="all">
+                    全部
+                </option>
+
+            </select>
+
+        </div>
+
+        <button
+            id="ranking-start-button"
+            type="button"
+        >
+            ランキング開始
+        </button>
+
+
+    </main>
+
+
 
     <!-- ==========================
          比較画面
@@ -191,19 +232,23 @@
 
         <div id="ranking-list"></div>
 
+        <div class="result-button-group">
+
         <button
             id="toggle-ranking-button"
             type="button"
         >
             全曲ランキングを表示
         </button>
-        
+
         <button
             id="restart-button"
             type="button"
         >
             もう一度ランキングする
         </button>
+
+</div>
 
     </main>
 
