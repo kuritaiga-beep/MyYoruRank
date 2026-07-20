@@ -5,6 +5,18 @@
 
 
 // ==============================
+// 0. 結果画面の要素・状態
+// ==============================
+
+const toggleRankingButton =
+    document.getElementById(
+        "toggle-ranking-button"
+    );
+
+let isShowingAllRanking = false;
+
+
+// ==============================
 // 1. 比較処理の総ステップ数を計算
 // ==============================
 
@@ -367,6 +379,17 @@ async function startRanking() {
 
 function displayRanking(ranking) {
 
+    isShowingAllRanking = false;
+
+    toggleRankingButton.textContent =
+        "全曲ランキングを表示";
+
+        document
+            .getElementById("result-screen")
+            .classList.remove(
+                "show-all-ranking"
+            );
+
     rankingList.innerHTML = "";
 
     ranking.forEach(
@@ -378,6 +401,15 @@ function displayRanking(ranking) {
             rankingItem.classList.add(
                 "ranking-item"
             );
+
+            if (index >= 10) {
+
+                rankingItem.classList.add(
+                    "ranking-hidden-item"
+                );
+
+            }
+
 
             const rankingPosition =
                 getRankingPosition(index);
@@ -446,3 +478,35 @@ function getRankingPosition(index) {
     return `${index + 1}位`;
 
 }
+
+
+// ==============================
+// 9. ランキング表示切り替え
+// ==============================
+
+function toggleRankingDisplay() {
+
+    const resultScreen =
+        document.getElementById(
+            "result-screen"
+        );
+
+    isShowingAllRanking =
+        !isShowingAllRanking;
+
+    resultScreen.classList.toggle(
+        "show-all-ranking",
+        isShowingAllRanking
+    );
+
+    toggleRankingButton.textContent =
+        isShowingAllRanking
+            ? "トップ10だけ表示"
+            : "全曲ランキングを表示";
+
+}
+
+toggleRankingButton.addEventListener(
+    "click",
+    toggleRankingDisplay
+);

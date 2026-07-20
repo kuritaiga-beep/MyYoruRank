@@ -47,12 +47,61 @@
 
     function openDebugMenu() {
 
-        // 現在は動作確認用
-        // 後からDebug Menuの画面表示処理に変更する
-        alert("Debug Mode");
+        const shouldShowResult =
+            confirm(
+                "結果画面を表示しますか？"
+            );
+
+        if (!shouldShowResult) {
+            return;
+        }
+
+        showDebugResultScreen();
 
     }
 
+    // ------------------------------
+    // 3-1. 結果画面を表示
+    // ------------------------------
+
+    function showDebugResultScreen() {
+
+        if (
+            typeof songs === "undefined" ||
+            !Array.isArray(songs)
+        ) {
+
+            alert(
+                "songsが読み込まれていません。"
+            );
+
+            return;
+
+        }
+
+        if (
+            typeof displayRanking !== "function" ||
+            typeof showResultScreen !== "function"
+        ) {
+
+            alert(
+                "結果画面の表示処理が読み込まれていません。"
+            );
+
+            return;
+
+        }
+
+    const debugRanking =
+        [...songs];
+
+    displayRanking(
+        debugRanking
+    );
+
+    showResultScreen();
+
+}
 
     // ==============================
     // 4. 画像デバッグ
