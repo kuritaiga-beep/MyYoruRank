@@ -11,51 +11,42 @@
 /* サイト全体で使用する色 */
 :root {
 
-    /* 背景 */
+    /* ページ背景 */
     --color-background: #3f8790;
 
-    /* カード・パネル */
-    --color-surface: #346F77;
+    /* 白い面 */
+    --color-surface: #f5f7f7;
 
-    /* 少し明るい面 */
-    --color-surface-light: #2c4d57;
+    /* 白い面のホバー */
+    --color-surface-hover: #e8eeee;
 
-    /* 花緑青 */
+    /* 白カード内の文字 */
+    --color-surface-text: #223033;
+
+    /* 白カード内の補助文字 */
+    --color-surface-text-muted: #66777a;
+
+    /* 花緑青アクセント */
     --color-accent: #5ab9c1;
 
-    /* 濃い花緑青 */
-    --color-accent-dark: #408f98;
+    /* 濃いアクセント */
+    --color-accent-dark: #346f77;
 
-    /* カードより少し暗い画像枠 */
-    --color-surface-dark: #2c5f67;
-
-    --color-input-background: #f5f7f7;
-    --color-input-text: #223033;
-    --color-input-placeholder: #66777a;
-
-    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.22);
-
-    --color-youtube: #C75B56;
-    --color-youtube-hover: #B94C47;
-
-    /* 文字 */
+    /* 背景上の文字 */
     --color-text: #f5f7f7;
 
-    /* 補助文字 */
-    --color-text-muted: #b8c7ca;
+    /* 背景上の補助文字 */
+    --color-text-muted: #c8d5d7;
 
-    --color-text-secondary: rgba(255, 255, 255, 0.8);
+    /* 境界線 */
+    --color-border: rgba(34, 48, 51, 0.14);
 
-    /* 枠線 */
-    --color-border: rgba(245, 247, 247, 0.18);
+    /* YouTube */
+    --color-youtube: #c75b56;
+    --color-youtube-hover: #b94c47;
 
-    --color-hover: rgba(255, 255, 255, 0.08);
-
-    --color-selected: rgba(255, 255, 255, 0.14);
-
-    /* オーバーレイ */
-    --color-overlay: rgba(5, 15, 18, 0.72);
-
+    /* 影 */
+    --shadow-card: 0 6px 18px rgba(0, 0, 0, 0.16);
 }
 
 html {
@@ -125,7 +116,7 @@ img {
    3. ホーム画面
 ======================================== */
 
-#artist-icon {
+#home-screen #artist-icon {
     width: 170px;
     height: 170px;
 
@@ -136,13 +127,13 @@ img {
     object-fit: cover;
 }
 
-h1 {
+#home-screen h1 {
     margin-bottom: 20px;
 
     font-size: 48px;
 }
 
-.subtitle {
+#home-screen .subtitle {
     margin-bottom: 40px;
 
     color: var(--color-text-muted);
@@ -151,52 +142,62 @@ h1 {
     line-height: 1.6;
 }
 
-#start-button,
-#song-list-button {
-    width: 260px;
-    min-height: 60px;
+/* ---------- ボタン ---------- */
 
-    border: none;
-    border-radius: 15px;
+#home-screen #start-button,
+#home-screen #song-list-button {
+
+    width: 220px;
+
+    padding: 14px 20px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
 
     cursor: pointer;
 
-    font-size: 21px;
+    font-family: inherit;
+    font-size: 18px;
     font-weight: 700;
 
     transition:
-        transform 0.2s,
-        opacity 0.2s;
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-#start-button {
-    background-color: var(--color-text);
-    color: var(--color-background);
-}
-
-#song-list-button {
+#home-screen #song-list-button {
     margin-top: 15px;
-
-    background-color: var(--color-surface);
-    color: var(--color-text);
-
-    border: 1px solid var(--color-border);
 }
 
-#start-button:hover,
-#filter-reset-button:hover {
-    transform: scale(1.04);
+#home-screen #start-button:hover,
+#home-screen #song-list-button:hover {
+
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
 }
 
-#start-button:active,
-#song-list-button:active {
-    transform: scale(0.98);
+#home-screen #start-button:active,
+#home-screen #song-list-button:active {
+
+    transform: translateY(0);
+
 }
 
-.version {
+/* ---------- バージョン ---------- */
+
+#home-screen .version {
+
     margin-top: 35px;
 
     color: var(--color-text-muted);
+
 }
 
 
@@ -209,19 +210,24 @@ h1 {
     max-width: 1000px;
 }
 
-.compare-message {
+#compare-screen .compare-message {
     margin-bottom: 20px;
+
+    color: var(--color-text);
 
     font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
 }
 
-#progress-text {
+#compare-screen #progress-text {
+    color: var(--color-text);
+
     font-size: 20px;
+    font-weight: 600;
 }
 
-.compare-container {
+#compare-screen .compare-container {
     width: 100%;
 
     display: flex;
@@ -232,10 +238,10 @@ h1 {
 
 
 /* ========================================
-   5. 進捗バー
+   4.1 進捗バー
 ======================================== */
 
-.progress-bar {
+#compare-screen .progress-bar {
     width: 100%;
     height: 12px;
 
@@ -243,11 +249,11 @@ h1 {
 
     overflow: hidden;
 
-    background-color: var(--color-surface);
+    background-color: var(--color-accent-dark);
     border-radius: 999px;
 }
 
-.progress-fill {
+#compare-screen .progress-fill {
     width: 0%;
     height: 100%;
 
@@ -259,10 +265,10 @@ h1 {
 
 
 /* ========================================
-   6. 比較用の曲カード
+   4.2 比較用の曲カード
 ======================================== */
 
-.song-card {
+#compare-screen .song-card {
     flex: 1 1 400px;
     max-width: 400px;
 
@@ -274,7 +280,7 @@ h1 {
     box-shadow: var(--shadow-card);
 }
 
-.song-select-button {
+#compare-screen .song-select-button {
     width: 100%;
 
     padding: 0;
@@ -282,24 +288,24 @@ h1 {
     background: none;
     border: none;
 
-    color: var(--color-text);
+    color: var(--color-surface-text);
 
     cursor: pointer;
 
     transition:
-        transform 0.2s,
-        opacity 0.2s;
+        transform 0.2s ease,
+        opacity 0.2s ease;
 }
 
-.song-select-button:hover {
+#compare-screen .song-select-button:hover {
     transform: scale(1.02);
 }
 
-.song-select-button:active {
+#compare-screen .song-select-button:active {
     transform: scale(0.98);
 }
 
-.image-container {
+#compare-screen .image-container {
     height: 280px;
 
     display: flex;
@@ -310,11 +316,11 @@ h1 {
 
     overflow: hidden;
 
-    background-color: var(--color-surface);
+    background-color: #ffffff;
     border-radius: 15px;
 }
 
-.song-card img {
+#compare-screen .song-card img {
     display: block;
 
     max-width: 100%;
@@ -325,7 +331,7 @@ h1 {
     border-radius: 15px;
 }
 
-.song-card h3 {
+#compare-screen .song-card h3 {
     min-height: 58px;
 
     display: flex;
@@ -334,14 +340,19 @@ h1 {
 
     margin: 18px 0;
 
-    color: var(--color-text);
+    color: var(--color-surface-text);
 
     font-size: 1.4rem;
     font-weight: 700;
     text-align: center;
 }
 
-.preview-button {
+
+/* ========================================
+   4.3 YouTube確認ボタン
+======================================== */
+
+#compare-screen .preview-button {
     width: 100%;
 
     margin-top: 10px;
@@ -359,46 +370,46 @@ h1 {
     font-weight: 700;
 
     transition:
-        background-color 0.2s,
-        transform 0.2s;
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
-.preview-button:hover {
+#compare-screen .preview-button:hover {
     background-color: var(--color-youtube-hover);
 }
 
-.preview-button:active {
+#compare-screen .preview-button:active {
     transform: scale(0.98);
 }
 
 
 /* ========================================
-   7. 画像タイプ
+   4.4 画像タイプ
 ======================================== */
 
-.song-card img.mv-image {
+#compare-screen .song-card img.mv-image {
     transform: scale(1);
 }
 
-.song-card img.jacket-image {
+#compare-screen .song-card img.jacket-image {
     transform: scale(0.92);
 }
 
 
 /* ========================================
-   8. 比較画面の追加要素
+   4.5 比較画面の追加要素
 ======================================== */
 
-.undo-button {
+#compare-screen .undo-button {
     display: block;
 
     margin: 30px auto 0;
     padding: 12px 24px;
 
-    background-color: var(--color-surface-dark);
-    color: var(--color-text);
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
 
-    border: none;
+    border: 1px solid var(--color-border);
     border-radius: 10px;
 
     cursor: pointer;
@@ -407,23 +418,31 @@ h1 {
     font-weight: 600;
 
     transition:
-        background-color 0.2s,
-        opacity 0.2s;
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        opacity 0.2s ease;
 }
 
-.undo-button:hover:not(:disabled) {
-    background-color: var(--color-surface-light);
+#compare-screen .undo-button:hover:not(:disabled) {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
 }
 
-.undo-button:disabled {
-    background-color: var(--color-surface);
+#compare-screen .undo-button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+#compare-screen .undo-button:disabled {
+    background-color: var(--color-surface-hover);
+    color: var(--color-surface-text-muted);
 
     cursor: not-allowed;
 
-    opacity: 0.6;
+    opacity: 0.65;
 }
 
-.youtube-note {
+#compare-screen .youtube-note {
     margin-top: 16px;
 
     color: var(--color-text-muted);
@@ -434,7 +453,7 @@ h1 {
 
 
 /* ========================================
-   9. 結果画面
+   5. 結果画面
 ======================================== */
 
 #result-screen {
@@ -450,16 +469,21 @@ h1 {
 #result-screen h2 {
     margin-bottom: 30px;
 
+    color: var(--color-text);
+
     font-size: 32px;
+    font-weight: 700;
 }
 
-#ranking-list {
+#result-screen #ranking-list {
     width: 100%;
 
     margin-bottom: 30px;
 }
 
-.ranking-item {
+/* ---------- ランキングカード ---------- */
+
+#result-screen .ranking-item {
     display: flex;
     align-items: center;
     gap: 16px;
@@ -468,22 +492,27 @@ h1 {
     padding: 16px;
 
     background-color: var(--color-surface);
+
     border: 1px solid var(--color-border);
     border-radius: 12px;
+
+    box-shadow: var(--shadow-card);
 
     text-align: left;
 }
 
-.ranking-number {
+#result-screen .ranking-number {
     width: 65px;
     flex-shrink: 0;
 
+    color: var(--color-surface-text);
+
     font-size: 22px;
-    font-weight: bold;
+    font-weight: 700;
     text-align: center;
 }
 
-.ranking-image {
+#result-screen .ranking-image {
     width: 70px;
     height: 70px;
     flex-shrink: 0;
@@ -493,26 +522,31 @@ h1 {
     border-radius: 8px;
 }
 
-.ranking-image.jacket-image {
+#result-screen .ranking-image.jacket-image {
     object-fit: contain;
 
-    background-color: var(--color-surface-dark);
+    background-color: #ffffff;
 }
 
-.ranking-title {
+#result-screen .ranking-title {
+    color: var(--color-surface-text);
+
     font-size: 18px;
     font-weight: 700;
 }
 
-#restart-button {
+/* ---------- リスタート ---------- */
+
+#result-screen #restart-button {
+
     min-width: 240px;
 
     padding: 14px 24px;
 
-    background-color: var(--color-text);
-    color: var(--color-background);
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
 
-    border: none;
+    border: 1px solid var(--color-border);
     border-radius: 12px;
 
     cursor: pointer;
@@ -520,16 +554,36 @@ h1 {
     font-size: 16px;
     font-weight: 700;
 
-    transition: transform 0.2s;
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-#restart-button:hover {
-    transform: scale(1.04);
+#result-screen #restart-button:hover {
+
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+
+}
+
+#result-screen #restart-button:active {
+
+    transform: translateY(0);
+
 }
 
 
 /* ========================================
-   10. 楽曲一覧画面
+   6. 楽曲一覧
+======================================== */
+
+
+/* ========================================
+   6.1 レイアウト
 ======================================== */
 
 #song-list-screen {
@@ -548,75 +602,7 @@ h1 {
 
 
 /* ========================================
-   11. 楽曲一覧フィルター
-======================================== */
-
-#song-list-filters {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-
-    margin: 20px 0;
-}
-
-.filter-button {
-    padding: 10px 18px;
-
-    background-color: var(--color-text);
-    color: var(--color-background);
-
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    font-size: 14px;
-    font-weight: bold;
-
-    transition:
-        background-color 0.2s,
-        color 0.2s,
-        transform 0.2s;
-}
-
-.filter-button:hover {
-    transform: translateY(-2px);
-}
-
-.filter-button.active {
-    background-color: var(--color-youtube);
-    color: var(--color-text);
-
-    border-color: var(--color-youtube);
-}
-
-/* ========================================
-   フィルターパネル
-======================================== */
-
-#song-list-filters {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 20px;
-
-    max-width: 1100px;
-
-    margin: 0 auto 40px;
-
-    padding: 24px;
-
-    border-radius: 16px;
-
-    background-color: var(--color-surface);
-
-}
-
-/* ========================================
-   フィルター上段レイアウト
+   6.2 フィルターパネル
 ======================================== */
 
 #song-list-filters {
@@ -624,177 +610,19 @@ h1 {
     grid-template-columns:
         repeat(4, minmax(0, 1fr));
     gap: 20px;
-}
 
-.filter-header {
+    max-width: 1100px;
 
-    grid-column: 1 / -1;
+    margin: 0 auto 40px;
+    padding: 24px;
 
-    display: flex;
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
 
-    justify-content: flex-end;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
 
-    align-items: center;
-
-    margin-bottom: 4px;
-
-}
-
-.filter-group {
-    min-width: 0;
-    margin: 0;
-    padding: 16px;
-
-    border: 1px solid
-        var(--color-border);
-
-    border-radius: 10px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: flex-start;
-
-    box-sizing: border-box;
-
-}
-
-.filter-album-group {
-    grid-column: 1 / -1;
-}
-
-/* ========================================
-   アルバムフィルターの並び、チェックボックス
-======================================== */
-
-#album-filter-options {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 10px 18px;
-
-    margin-top: 8px;
-}
-
-
-/* ========================================
-   検索ボックス
-======================================== */
-
-#song-search-input {
-
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 10px 12px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background-color: var(--color-input-background);
-    color: var(--color-input-text);
-
-    font-weight: 600;
-
-    font-family: inherit;
-
-    font-size: 14px;
-
-    outline: none;
-
-    transition:
-        border-color 0.2s ease,
-        background-color 0.2s ease,
-        box-shadow 0.2s ease;
-
-}
-
-#song-search-input::placeholder {
-    color: var(--color-input-placeholder);
-}
-
-#song-search-input:focus {
-
-    background-color: var(--color-input-background);
-
-    box-shadow:
-        0 0 0 3px var(--color-focus-ring);
-
-}
-
-/* ========================================
-   検索結果なしメッセージ
-======================================== */
-
-#song-list-no-results {
-
-    margin: 50px 0;
-
-    text-align: center;
-
-    font-size: 18px;
-    font-weight: 600;
-
-    color: var(--color-text-secondary);
-
-}
-
-/* ========================================
-   チェックボックス
-======================================== */
-
-.filter-checkbox {
-
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    line-height: 1.4;
-
-    cursor: pointer;
-
-    user-select: none;
-
-    padding: 4px 8px;
-
-    border-radius: 6px;
-
-    transition:
-        background-color 0.2s ease;
-
-}
-
-.filter-checkbox:hover {
-
-    background-color: var(--color-hover);
-}
-
-.filter-checkbox:has(
-    input[type="checkbox"]:checked) {
-
-    background-color: var(--color-selected);
-}
-
-.filter-checkbox:has(input[type="checkbox"]:checked):hover {
-
-    background-color: var(--color-hover);
-}
-
-.filter-checkbox input[type="checkbox"] {
-
-    width: 18px;
-    height: 18px;
-
-    accent-color: var(--color-text);
-
-    cursor: pointer;
-
+    box-shadow: var(--shadow-card);
 }
 
 /* フィルターパネルを閉じた状態 */
@@ -805,14 +633,233 @@ h1 {
 
 
 /* ========================================
-   12. 楽曲数サマリー
+   6.3 フィルター上段レイアウト
+======================================== */
+
+.filter-header {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    margin-bottom: 4px;
+}
+
+.filter-group {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    box-sizing: border-box;
+
+    margin: 0;
+    padding: 16px;
+
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+}
+
+/* フィルター項目の見出し */
+
+.filter-group legend {
+    padding: 0 8px;
+
+    color: var(--color-surface-text);
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* フィルターボタン */
+
+.filter-button {
+    padding: 10px 18px;
+
+    background-color: #ffffff;
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.filter-button:hover {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        var(--shadow-card);
+}
+
+.filter-button.active {
+    background-color: var(--color-surface-hover);
+    color: var(--color-surface-text);
+
+    border-color: var(--color-border);
+}
+
+
+/* ========================================
+   6.4 アルバムフィルター
+======================================== */
+
+.filter-album-group {
+    grid-column: 1 / -1;
+}
+
+#album-filter-options {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 10px 18px;
+
+    margin-top: 8px;
+}
+
+
+/* ========================================
+   6.5 検索ボックス
+======================================== */
+
+#song-search-input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    background-color: #ffffff;
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#song-search-input::placeholder {
+    color: var(--color-surface-text-muted);
+}
+
+#song-search-input:focus {
+    background-color: #ffffff;
+
+    border-color: var(--color-accent-dark);
+
+    box-shadow:
+        0 0 0 3px rgba(90, 185, 193, 0.25);
+}
+
+
+/* ========================================
+   6.6 検索結果なしメッセージ
+======================================== */
+
+#song-list-no-results {
+    margin: 50px 0;
+
+    color: var(--color-text);
+
+    text-align: center;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/* ========================================
+   6.7 チェックボックス
+======================================== */
+
+.filter-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 6px 8px;
+
+    color: var(--color-surface-text);
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    user-select: none;
+
+    transition:
+        background-color 0.2s ease;
+
+}
+
+.filter-checkbox:hover {
+    background-color: var(--color-surface-hover);
+}
+
+/* チェック済み */
+
+.filter-checkbox:has(
+    input[type="checkbox"]:checked
+) {
+    background-color: #e8eeee;
+}
+
+.filter-checkbox:has(
+    input[type="checkbox"]:checked
+):hover {
+    background-color: #dde6e6;
+}
+
+.filter-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+
+    accent-color: var(--color-surface-text);
+
+    cursor: pointer;
+}
+
+
+
+/* ========================================
+   6.8 楽曲数サマリー
 ======================================== */
 
 #song-list-summary {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
 
     margin: 20px 0 30px;
 }
@@ -821,25 +868,22 @@ h1 {
     min-width: 140px;
 
     margin: 0;
-    padding: 12px 16px;
+    padding: 10px 16px;
 
-    background-color: var(--color-surface-dark);
-    color: var(--color-input-text);
+    background-color: rgba(255, 255, 255, 0.82);
+    color: var(--color-surface-text);
 
+    border: 1px solid rgba(255, 255, 255, 0.45);
     border-radius: 10px;
 
-    font-size: 15px;
-    font-weight: bold;
-}
+    font-size: 14px;
+    font-weight: 700;
 
-#image-error-summary {
-    background-color: var(--color-surface-dark) !important;
-    color: var(--color-input-text) !important;
+    pointer-events: none;
 }
-
 
 /* ========================================
-   13. 楽曲一覧
+   6.9 楽曲一覧レイアウト
 ======================================== */
 
 #song-list {
@@ -852,13 +896,11 @@ h1 {
     margin-top: 30px;
 }
 
-
 /* アルバムごとのまとまり */
 
 .album-section {
     width: 100%;
 }
-
 
 /* アルバム名 */
 
@@ -866,16 +908,14 @@ h1 {
     margin: 0 0 22px;
     padding-bottom: 12px;
 
-    border-bottom:
-        2px solid
-        var(--color-border);
-
     color: var(--color-text);
+
+    border-bottom:
+        2px solid var(--color-border);
 
     font-size: 28px;
     text-align: left;
 }
-
 
 /* アルバム内のカード配置 */
 
@@ -883,15 +923,16 @@ h1 {
     width: 100%;
 
     display: grid;
-
     grid-template-columns:
         repeat(4, minmax(0, 1fr));
-
     gap: 20px;
 }
 
 
-/* 楽曲カード */
+
+/* ========================================
+   6.10 楽曲カード
+======================================== */
 
 .song-item {
     min-width: 0;
@@ -899,14 +940,12 @@ h1 {
     overflow: hidden;
 
     background-color: var(--color-surface);
-    color: var(--color-input-text);
+    color: var(--color-surface-text);
 
     border: 1px solid var(--color-border);
     border-radius: 12px;
 
-    box-shadow:
-        0 4px 14px
-        var(--color-shadow);
+    box-shadow: var(--shadow-card);
 
     text-align: left;
 
@@ -918,13 +957,12 @@ h1 {
 .song-item:hover {
     transform: translateY(-4px);
 
-    box-shadow:
-        0 8px 22px
-        var(--color-shadow);
+    box-shadow: var(--shadow-card);
 }
 
-
-/* 楽曲画像 */
+/* ========================================
+   6.11 楽曲画像
+======================================== */
 
 .song-list-image {
     display: block;
@@ -932,7 +970,7 @@ h1 {
     width: 100%;
     aspect-ratio: 16 / 9;
 
-    background-color: var(--color-surface-dark);
+    background-color: #ffffff;
 
     object-fit: cover;
 }
@@ -942,36 +980,33 @@ h1 {
 
     padding: 8px;
 
-    background-color: var(--color-surface-dark);
-
-
-/* 楽曲情報 */
-
-.song-info {
-    padding: 16px;
+    background-color: #ffffff;
 }
 
+/* ========================================
+   6.12 楽曲情報
+======================================== */
 
-/* 曲名 */
+.song-info {
+    padding: 18px;
+}
 
 .song-info h3 {
-    margin-bottom: 16px;
+    margin-bottom: 18px;
 
-    color: var(--color-input-text);
+    color: var(--color-surface-text);
 
     font-size: 19px;
+    font-weight: 700;
     line-height: 1.4;
 
     word-break: break-word;
 }
 
-
-/* Album・Type・MVのラベル */
-
 .song-label {
-    margin: 8px 0 2px;
+    margin: 10px 0 3px;
 
-    color: var(--color-text-muted);
+    color: var(--color-surface-text-muted);
 
     font-size: 12px;
     font-weight: 700;
@@ -980,13 +1015,10 @@ h1 {
     text-transform: uppercase;
 }
 
-
-/* Album名・Type・MVの値 */
-
 .song-value {
     margin: 0 0 5px;
 
-    color: var(--color-input-text);
+    color: var(--color-surface-text);
 
     font-size: 14px;
     font-weight: 700;
@@ -997,19 +1029,16 @@ h1 {
 
 /* MV表示 */
 
-.mv-yes {
-    color: var(--color-mv-yes);
-
-    font-weight: 700;
-}
-
+.mv-yes,
 .mv-no {
-    color: var(--color-mv-no);
+    color: var(--color-surface-text);
 
     font-weight: 700;
 }
 
-/* YouTubeリンク */
+/* ========================================
+   6.13 YouTubeリンク
+======================================== */
 
 .youtube-link {
     display: inline-block;
@@ -1040,65 +1069,48 @@ h1 {
 
 
 /* ========================================
-   14. 楽曲一覧の戻るボタン
+   6.14 楽曲一覧ボタン
 ======================================== */
-
-#song-list-back-button {
-    margin-top: 40px;
-    padding: 14px 28px;
-
-    background-color: var(--color-surface-dark);
-    color: var(--color-input-text);
-
-    border: none;
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-size: 16px;
-    font-weight: 700;
-
-    transition: transform 0.2s;
-}
-
-#song-list-back-button:hover {
-    transform: scale(1.04);
-}
 
 /* 楽曲一覧上部のホームボタン */
 
 #song-list-home-button {
-
-    display: block;
+    display: flex;
 
     width: fit-content;
 
     margin-right: auto;
-
     margin-bottom: 16px;
-
 }
 
-.back-to-top-button {
+/* ページ上部へ戻るボタン */
 
-    display: block;
+.back-to-top-button {
+    display: flex;
 
     width: fit-content;
 
     margin-top: 20px;
-
     margin-left: auto;
-
 }
 
-/* 楽曲一覧画面のボタンを集計カード風に統一 */
+/* 楽曲一覧下部の戻るボタン */
+
+#song-list-back-button {
+    display: flex;
+
+    width: fit-content;
+
+    margin: 40px auto 0;
+}
+
+/* 楽曲一覧画面のボタン共通デザイン */
 
 #song-list-home-button,
 #filter-toggle-button,
 #filter-reset-button,
 .back-to-top-button,
 #song-list-back-button {
-
     align-items: center;
     justify-content: center;
 
@@ -1106,34 +1118,47 @@ h1 {
 
     box-sizing: border-box;
 
-    border: none;
+    padding: 11px 18px;
 
+    background-color: #ffffff;
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
     border-radius: 10px;
-
-    background-color: var(--color-surface-dark);
-
-    color: var(--color-input-text);
-
-    padding: 10px 16px;
-
-    font-family: inherit;
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-    line-height: 1;
 
     cursor: pointer;
 
-    box-shadow:
-        0 4px 12px var(--color-shadow);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+
+    text-decoration: none;
 
     transition:
+        background-color 0.2s ease,
         transform 0.2s ease,
-        box-shadow 0.2s ease,
-        background-color 0.2s ease;
+        box-shadow 0.2s ease;
+}
 
+#song-list-home-button:hover,
+#filter-toggle-button:hover,
+#filter-reset-button:hover,
+.back-to-top-button:hover,
+#song-list-back-button:hover {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+}
+
+#song-list-home-button:active,
+#filter-toggle-button:active,
+#filter-reset-button:active,
+.back-to-top-button:active,
+#song-list-back-button:active {
+    transform: translateY(0);
 }
 
 

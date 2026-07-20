@@ -422,6 +422,8 @@ function applySongListFilters() {
         document.querySelectorAll(".song-item");
 
     let visibleSongCount = 0;
+    let visibleMvCount = 0;
+    let visibleInstrumentalCount = 0;
 
     songCards.forEach(function (card) {
 
@@ -443,7 +445,20 @@ function applySongListFilters() {
             shouldShow ? "" : "none";
 
         if (shouldShow) {
+
             visibleSongCount++;
+
+            if (song.hasMV === true) {
+                visibleMvCount++;
+            }
+
+            if (
+                String(song.musicType).toLowerCase() ===
+                "instrumental"
+            ) {
+                visibleInstrumentalCount++;
+            }
+
         }
 
     });
@@ -452,6 +467,12 @@ function applySongListFilters() {
 
     updateNoResultsMessage(
         visibleSongCount
+    );
+
+    updateSongListSummary(
+        visibleSongCount,
+        visibleMvCount,
+        visibleInstrumentalCount
     );
 
 }
@@ -555,6 +576,58 @@ function resetSongListFilterState() {
     currentSongListFilters.albums = [];
 
     applySongListFilters();
+
+}
+
+// ----------------------------------------
+// 3.1.6 楽曲数サマリーの更新
+// ----------------------------------------
+
+// 現在表示中の楽曲数をサマリーへ反映する
+function updateSongListSummary(
+    visibleSongCount,
+    visibleMvCount,
+    visibleInstrumentalCount
+) {
+
+    const totalSongCount =
+        songs.length;
+
+    const totalSongSummary =
+        document.getElementById(
+            "total-song-count"
+        );
+
+    const mvSongSummary =
+        document.getElementById(
+            "mv-song-count"
+        );
+
+    const instrumentalSongSummary =
+        document.getElementById(
+            "instrumental-song-count"
+        );
+
+    if (totalSongSummary) {
+
+        totalSongSummary.textContent =
+            `表示中：${visibleSongCount}曲 / 全${totalSongCount}曲`;
+
+    }
+
+    if (mvSongSummary) {
+
+        mvSongSummary.textContent =
+            `MVあり：${visibleMvCount}曲`;
+
+    }
+
+    if (instrumentalSongSummary) {
+
+        instrumentalSongSummary.textContent =
+            `インスト：${visibleInstrumentalCount}曲`;
+
+    }
 
 }
 
@@ -1034,29 +1107,35 @@ function matchesSongListFilter(
 
 function updateSongSummary() {
 
+    const visibleSongs =
+        songs.filter(function (song) {
+            return matchesSongFilters(song);
+        });
+
+    const visibleSongCount =
+        visibleSongs.length;
+
+    const visibleMvCount =
+        visibleSongs.filter(function (song) {
+            return song.hasMV === true;
+        }).length;
+
+    const visibleInstrumentalCount =
+        visibleSongs.filter(function (song) {
+            return (
+                String(song.musicType).toLowerCase() ===
+                "instrumental"
+            );
+        }).length;
+
     totalSongCount.textContent =
-        songs.length;
+        `表示中：${visibleSongCount}曲 / 全${songs.length}曲`;
 
     mvSongCount.textContent =
-        songs.filter(
-            function (song) {
-
-                return song.hasMV === true;
-
-            }
-        ).length;
+        `MVあり：${visibleMvCount}曲`;
 
     instrumentalSongCount.textContent =
-        songs.filter(
-            function (song) {
-
-                return (
-                    song.musicType ===
-                    "instrumental"
-                );
-
-            }
-        ).length;
+        `インスト：${visibleInstrumentalCount}曲`;
 
     updateImageErrorCount();
 
