@@ -2,13 +2,15 @@
 // 1. HTML要素の取得
 // ==============================
 
+// ----------
 // 画面
+// ----------
+
 const homeScreen =
     document.getElementById("home-screen");
 
 const settingsScreen =
     document.getElementById("settings-screen");
-
 
 const compareScreen =
     document.getElementById("compare-screen");
@@ -20,21 +22,32 @@ const songListScreen =
     document.getElementById("song-list-screen");
 
 
+// ----------
 // ホーム画面
+// ----------
+
 const startButton =
     document.getElementById("start-button");
-
-const rankingStartButton =
-    document.getElementById("ranking-start-button");
-
-const songListHomeButton =
-    document.getElementById( "song-list-home-button");
 
 const songListButton =
     document.getElementById("song-list-button");
 
 
+// ----------
+// ランキング条件画面
+// ----------
+
+const rankingStartButton =
+    document.getElementById("ranking-start-button");
+
+const rankingAlbumSelect =
+    document.getElementById("ranking-album-select");
+
+
+// ----------
 // 比較画面
+// ----------
+
 const progressText =
     document.getElementById("progress-text");
 
@@ -69,7 +82,10 @@ const undoButton =
     document.getElementById("undo-button");
 
 
+// ----------
 // 結果画面
+// ----------
+
 const rankingList =
     document.getElementById("ranking-list");
 
@@ -77,9 +93,18 @@ const restartButton =
     document.getElementById("restart-button");
 
 
+// ----------
 // 楽曲一覧画面
+// ----------
+
 const songList =
     document.getElementById("song-list");
+
+const songListHomeButton =
+    document.getElementById("song-list-home-button");
+
+const songListBackButton =
+    document.getElementById("song-list-back-button");
 
 const songListFilters =
     document.getElementById("song-list-filters");
@@ -117,15 +142,6 @@ const mvSongCount =
 const instrumentalSongCount =
     document.getElementById("instrumental-song-count");
 
-const imageErrorSummary =
-    document.getElementById("image-error-summary");
-
-const imageErrorCount =
-    document.getElementById("image-error-count");
-
-const songListBackButton =
-    document.getElementById("song-list-back-button");
-
 const filterToggleButton =
     document.getElementById(
         "filter-toggle-button"
@@ -137,8 +153,40 @@ const filterToggleIcon =
     );
 
 
+// ----------
+// デバッグ表示
+// ----------
+
+const imageErrorSummary =
+    document.getElementById("image-error-summary");
+
+const imageErrorCount =
+    document.getElementById("image-error-count");
+// ==========================
+// 2. ランキング条件画面
+// ==========================
+
+// アルバム選択欄を作成
+function createRankingAlbumOptions() {
+
+    rankingAlbumSelect.innerHTML = "";
+
+    const allOption =
+        document.createElement("option");
+
+    allOption.value = "all";
+
+    allOption.textContent = "全部";
+
+    rankingAlbumSelect.appendChild(
+        allOption
+    );
+
+}
+
+
 // ==============================
-// 2. 共通設定
+// 3. 共通設定
 // ==============================
 
 // URLの末尾に「?debug=true」を付けると
@@ -149,7 +197,7 @@ const isDebugMode =
 
 
 // ==============================
-// 3. ランキングの共通状態
+// 4. ランキングの共通状態
 // ==============================
 
 // 現在比較中の楽曲
@@ -189,12 +237,13 @@ const rankingSettings = {
 };
 
 // ==============================
-// 4. 画面切り替え
+// 5. 画面切り替え
 // ==============================
 
 function hideAllScreens() {
 
     homeScreen.style.display = "none";
+    settingsScreen.style.display = "none";
     compareScreen.style.display = "none";
     resultScreen.style.display = "none";
     songListScreen.style.display = "none";
@@ -209,11 +258,14 @@ function showHomeScreen() {
 
 }
 
-function returnToHomeScreen() {
+function showSettingsScreen() {
 
-    showHomeScreen();
+    hideAllScreens();
+
+    settingsScreen.style.display = "block";
 
 }
+
 
 function showCompareScreen() {
 
@@ -241,7 +293,7 @@ function showSongListScreen() {
 
 
 // ==============================
-// 5. 共通リセット処理
+// 6. 共通リセット処理
 // ==============================
 
 function resetRankingState() {
@@ -249,23 +301,23 @@ function resetRankingState() {
     // 実行中の古いランキング処理を無効にする
     rankingRunId++;
 
+    // 比較状態
     comparisonResolve = null;
-
     comparisonResults.length = 0;
-
     replayIndex = 0;
     isReplaying = false;
 
+    // 進捗状態
     completedMergeSteps = 0;
     progressPercent = 0;
 
+    // UI
     undoButton.disabled = true;
 
     progressText.textContent = "進捗 0%";
     progressFill.style.width = "0%";
 
 }
-
 function resetSongListFilters() {
 
     if (
@@ -281,39 +333,26 @@ function resetSongListFilters() {
 
 
 // ==============================
-// 6. イベント登録
+// 7. イベント登録
 // ==============================
 
 function setupEventListeners() {
 
-    // ランキング開始
+    // ----------
+    // ホーム画面
+    // ----------
+
+    // ランキング条件画面を開く
     startButton.addEventListener(
         "click",
         function () {
 
             resetRankingState();
 
-            homeScreen.style.display = "none";
-
-            settingsScreen.style.display = "block";
+            showSettingsScreen();
 
         }
     );
-
-    // 条件を決めてランキング開始
-    rankingStartButton.addEventListener(
-        "click",
-        function () {
-
-            settingsScreen.style.display = "none";
-
-            showCompareScreen();
-
-            beginNewRanking();
-
-        }
-    );
-
 
     // 楽曲一覧を開く
     songListButton.addEventListener(
@@ -341,30 +380,26 @@ function setupEventListeners() {
     );
 
 
-    // 楽曲一覧からホームへ戻る
-    songListBackButton.addEventListener(
-        "click",
-        returnToHomeScreen
-    );
+    // ----------
+    // ランキング条件画面
+    // ----------
 
-    songListHomeButton.addEventListener(
-        "click",
-        returnToHomeScreen
-    );
-
-
-    // 結果画面からホームへ戻る
-    restartButton.addEventListener(
+    // 条件を決めてランキング開始
+    rankingStartButton.addEventListener(
         "click",
         function () {
 
-            resetRankingState();
+            showCompareScreen();
 
-            showHomeScreen();
+            beginNewRanking();
 
         }
     );
 
+
+    // ----------
+    // 比較画面
+    // ----------
 
     // 左側の楽曲を選択
     leftCard.addEventListener(
@@ -376,7 +411,6 @@ function setupEventListeners() {
         }
     );
 
-
     // 右側の楽曲を選択
     rightCard.addEventListener(
         "click",
@@ -386,7 +420,6 @@ function setupEventListeners() {
 
         }
     );
-
 
     // 左側の曲をYouTubeで確認
     leftPreviewButton.addEventListener(
@@ -400,7 +433,6 @@ function setupEventListeners() {
         }
     );
 
-
     // 右側の曲をYouTubeで確認
     rightPreviewButton.addEventListener(
         "click",
@@ -413,7 +445,6 @@ function setupEventListeners() {
         }
     );
 
-
     // 一つ前の選択に戻る
     undoButton.addEventListener(
         "click",
@@ -424,6 +455,38 @@ function setupEventListeners() {
         }
     );
 
+
+    // ----------
+    // 結果画面
+    // ----------
+
+    // ホーム画面へ戻る
+    restartButton.addEventListener(
+        "click",
+        function () {
+
+            resetRankingState();
+
+            showHomeScreen();
+
+        }
+    );
+
+
+    // ----------
+    // 楽曲一覧画面
+    // ----------
+
+    // 楽曲一覧からホームへ戻る
+    songListBackButton.addEventListener(
+        "click",
+        showHomeScreen
+    );
+
+    songListHomeButton.addEventListener(
+        "click",
+        showHomeScreen
+    );
 
     // 楽曲一覧フィルターのイベント登録
     if (
@@ -457,13 +520,13 @@ function setupEventListeners() {
                 isExpanded ? "▼" : "▲";
 
         }
-);
+    );
 
 }
 
 
 // ==============================
-// 7. 初期化
+// 8. 初期化
 // ==============================
 
 function initializeApp() {
@@ -482,9 +545,11 @@ function initializeApp() {
 
     }
 
-    resetRankingState();
-
     setupEventListeners();
+
+    createRankingAlbumOptions();
+
+    resetRankingState();
 
     showHomeScreen();
 
@@ -492,7 +557,7 @@ function initializeApp() {
 
 
 // ==============================
-// 8. アプリ起動
+// 9. アプリ起動
 // ==============================
 
 // すべてのJavaScriptファイルが読み込まれてから起動する

@@ -246,7 +246,7 @@ async function merge(
 }
 
 // ==============================
-// 6. ランキング対象を更新
+// 5. ランキング対象を更新
 // ==============================
 
 function updateRankingTargetSongs() {
@@ -282,7 +282,7 @@ function updateRankingTargetSongs() {
 
 
 // ==============================
-// 5. 楽曲の順番をシャッフル
+// 6. 楽曲の順番をシャッフル
 // ==============================
 
 function shuffleSongs(
@@ -319,7 +319,7 @@ function shuffleSongs(
 }
 
 // ==============================
-// 6. 新しいランキングを開始
+// 7. 新しいランキングを開始
 // ==============================
 
 function beginNewRanking() {
@@ -332,16 +332,25 @@ function beginNewRanking() {
 
 
 // ==============================
-// 6. ランキングを開始
+// 8. ランキングを開始
 // ==============================
 
 async function startRanking() {
+
+    // ----------
+    // ランキング処理を開始
+    // ----------
 
     // 新しいランキング処理の番号を発行
     rankingRunId++;
 
     const currentRunId =
         rankingRunId;
+
+
+    // ----------
+    // 進捗を初期化
+    // ----------
 
     completedMergeSteps = 0;
     progressPercent = 0;
@@ -357,7 +366,11 @@ async function startRanking() {
     progressFill.style.width =
         "0%";
 
-    // 楽曲が存在しない場合
+
+    // ----------
+    // ランキング対象が0曲の場合
+    // ----------
+
     if (rankingTargetSongs.length === 0) {
 
         rankingList.innerHTML = `
@@ -372,7 +385,11 @@ async function startRanking() {
 
     }
 
-    // 1曲だけの場合
+
+    // ----------
+    // ランキング対象が1曲の場合
+    // ----------
+
     if (rankingTargetSongs.length === 1) {
 
         displayRanking(
@@ -393,6 +410,11 @@ async function startRanking() {
 
     }
 
+
+    // ----------
+    // ランキングを実行
+    // ----------
+
     const shuffledSongs =
         shuffleSongs(
             rankingTargetSongs
@@ -408,6 +430,11 @@ async function startRanking() {
     if (currentRunId !== rankingRunId) {
         return;
     }
+
+
+    // ----------
+    // ランキング結果を表示
+    // ----------
 
     progressPercent = 100;
 
@@ -425,23 +452,29 @@ async function startRanking() {
 
 
 // ==============================
-// 7. ランキング結果を表示
+// 9. ランキング結果を表示
 // ==============================
 
 function displayRanking(ranking) {
+
+    // ----------
+    // 結果画面を初期化
+    // ----------
 
     isShowingAllRanking = false;
 
     toggleRankingButton.textContent =
         "全曲ランキングを表示";
 
-        document
-            .getElementById("result-screen")
-            .classList.remove(
-                "show-all-ranking"
-            );
+    resultScreen.classList.remove(
+        "show-all-ranking"
+    );
 
     rankingList.innerHTML = "";
+
+    // ----------
+    // ランキングを表示
+    // ----------
 
     ranking.forEach(
         function (song, index) {
@@ -486,7 +519,7 @@ function displayRanking(ranking) {
                     ".ranking-image"
                 );
 
-            // 楽曲の画像タイプを付与
+            //画像タイプに応じたCSSを適用
             if (
                 rankingImage &&
                 song.imageType
@@ -509,7 +542,7 @@ function displayRanking(ranking) {
 
 
 // ==============================
-// 8. 順位の表示文字を作成
+// 10. 順位の表示文字を作成
 // ==============================
 
 function getRankingPosition(index) {
@@ -532,7 +565,7 @@ function getRankingPosition(index) {
 
 
 // ==============================
-// 9. ランキング表示切り替え
+// 11. ランキング表示切り替え
 // ==============================
 
 function toggleRankingDisplay() {
