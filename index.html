@@ -73,21 +73,171 @@
             ランキング条件
         </h2>
 
-        <div class="setting-group">
+        <div class="filter-panel">
 
-            <label for="ranking-album-select">
-                アルバム
-            </label>
+            <div id="ranking-filters">
 
-            <select id="ranking-album-select">
+                <div class="filter-header">
 
-                <option value="all">
-                    全部
-                </option>
+                    <button
+                        id="ranking-filter-reset-button"
+                        type="button"
+                    >
+                        条件をリセット
+                    </button>
 
-            </select>
+                </div>
+
+
+                <!-- 楽曲タイプ -->
+
+                <fieldset class="filter-group">
+
+                    <legend class="filter-group-title">
+                        Type
+                    </legend>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="ranking-music-type"
+                            value="vocal"
+                        >
+
+                        <span>Vocal</span>
+
+                    </label>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="ranking-music-type"
+                            value="instrumental"
+                        >
+
+                        <span>Instrumental</span>
+
+                    </label>
+
+                </fieldset>
+
+
+                <!-- MV -->
+
+                <fieldset class="filter-group">
+
+                    <legend class="filter-group-title">
+                        MV
+                    </legend>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="ranking-mv-status"
+                            value="true"
+                        >
+
+                        <span>MVあり</span>
+
+                    </label>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="ranking-mv-status"
+                            value="false"
+                        >
+
+                        <span>MVなし</span>
+
+                    </label>
+
+                </fieldset>
+
+
+                <!-- 収録区分 -->
+
+                <fieldset class="filter-group">
+
+                    <legend class="filter-group-title">
+                        Category
+                    </legend>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="ranking-song-category"
+                            value="album"
+                        >
+
+                        <span>Album</span>
+
+                    </label>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="ranking-song-category"
+                            value="single"
+                        >
+
+                        <span>Single</span>
+
+                    </label>
+
+                    <label class="filter-checkbox">
+
+                        <input
+                            type="checkbox"
+                            name="ranking-song-category"
+                            value="tribute"
+                        >
+
+                        <span>Tribute</span>
+
+                    </label>
+
+                </fieldset>
+
+
+                <!-- アルバム選択 -->
+
+                <fieldset class="filter-group filter-album-group">
+
+                    <legend class="filter-group-title">
+                        Album
+                    </legend>
+
+                    <div id="ranking-album-filter-options"></div>
+
+                </fieldset>
+
+            </div>
+        
+        </div>    
+
+    </div>
+
+        <div class="ranking-selection-summary">
+
+            <p id="ranking-song-count">
+                選択中：0曲 / 全0曲
+            </p>
 
         </div>
+
+        <button
+            id="settings-home-button"
+            type="button"
+        >
+            ホームへ戻る
+        </button>
 
         <button
             id="ranking-start-button"

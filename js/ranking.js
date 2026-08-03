@@ -251,32 +251,222 @@ async function merge(
 
 function updateRankingTargetSongs() {
 
+    const checkedAlbums =
+        Array.from(
+            document.querySelectorAll(
+                'input[name="ranking-album-filter"]:checked'
+            )
+        ).map(function (input) {
+
+            return input.value;
+
+        });
+
+    const checkedMusicTypes =
+        Array.from(
+            document.querySelectorAll(
+                'input[name="ranking-music-type"]:checked'
+            )
+        ).map(function (input) {
+
+            return input.value;
+
+        });
+
+    const checkedCategories =
+        Array.from(
+            document.querySelectorAll(
+                'input[name="ranking-song-category"]:checked'
+            )
+        ).map(function (input) {
+
+            return input.value;
+
+        });
+
+    const checkedMvStatus =
+        Array.from(
+            document.querySelectorAll(
+                'input[name="ranking-mv-status"]:checked'
+            )
+        ).map(function (input) {
+
+            return input.value;
+
+        });
+
     rankingTargetSongs =
-        songs.filter(
-            function (song) {
+        songs.filter(function (song) {
 
-                if (
-                    !rankingSettings.includeTribute &&
-                    song.album === "トリビュート"
-                ) {
+            // Album
+            if (
+                checkedAlbums.length > 0 &&
+                !checkedAlbums.includes(song.album)
+            ) {
 
-                    return false;
-
-                }
-
-                if (
-                    !rankingSettings.includeInstrumental &&
-                    song.musicType === "instrumental"
-                ) {
-
-                    return false;
-
-                }
-
-                return true;
+                return false;
 
             }
-        );
+
+            // Type
+            if (
+                checkedMusicTypes.length > 0 &&
+                !checkedMusicTypes.includes(song.musicType)
+            ) {
+
+                return false;
+
+            }
+
+            // Category
+            if (checkedCategories.length > 0) {
+
+                const isSingle =
+                    !song.album ||
+                    song.album.trim() === "";
+
+                const isTribute =
+                    song.album === "トリビュート";
+
+                const isAlbum =
+                    !isSingle &&
+                    !isTribute;
+
+                const matchesCategory =
+                    (
+                        checkedCategories.includes("album") &&
+                        isAlbum
+                    ) ||
+                    (
+                        checkedCategories.includes("single") &&
+                        isSingle
+                    ) ||
+                    (
+                        checkedCategories.includes("tribute") &&
+                        isTribute
+                    );
+
+                if (!matchesCategory) {
+
+                    return false;
+
+                }
+
+            }
+
+            // MV
+            if (checkedMvStatus.length > 0) {
+
+                const hasMv =
+                    song.hasMV;
+
+                const matchesMv =
+                    (
+                        checkedMvStatus.includes("true") &&
+                        hasMv
+                    ) ||
+                    (
+                        checkedMvStatus.includes("false") &&
+                        !hasMv
+                    );
+
+                if (!matchesMv) {
+
+                    return false;
+
+                }
+
+            }
+
+            return true;
+
+        });
+
+}
+
+
+// ランキング条件のアルバムフィルターを生成する
+function createRankingAlbumFilterOptions() {
+
+    rankingAlbumFilterOptions.innerHTML = "";
+
+    const groupedSongs =
+        groupSongsByAlbum(songs);
+
+    const albumNames =
+        getOrderedAlbumNames(groupedSongs);
+
+    const filteredAlbumNames =
+        albumNames.filter(function (albumName) {
+
+            return albumName !== "シングル";
+
+        });
+
+    filteredAlbumNames.forEach(function (albumName) {
+
+            const label =
+                document.createElement("label");
+
+            label.className =
+                "filter-checkbox";
+
+
+            const input =
+                document.createElement("input");
+
+            input.type =
+                "checkbox";
+
+            input.name =
+                "ranking-album-filter";
+
+            input.value =
+                albumName;
+
+
+            const span =
+                document.createElement("span");
+
+            if (
+                albumName ===
+                "負け犬にアンコールはいらない"
+            ) {
+
+                span.innerHTML =
+                    "負け犬にアンコールは<br>いらない";
+
+            } else {
+
+                span.textContent =
+                    albumName;
+
+            }
+
+
+            label.appendChild(input);
+            label.appendChild(span);
+
+            rankingAlbumFilterOptions.appendChild(
+                label
+            );
+
+        }
+    );
+
+}
+
+
+// ==============================
+// 6. 選択中の楽曲数を更新
+// ==============================
+
+function updateRankingSongCount() {
+
+    updateRankingTargetSongs();
+
+    rankingSongCount.textContent =
+        `選択中：${rankingTargetSongs.length}曲 / 全${songs.length}曲`;
 
 }
 

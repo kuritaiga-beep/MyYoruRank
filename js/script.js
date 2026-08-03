@@ -40,8 +40,20 @@ const songListButton =
 const rankingStartButton =
     document.getElementById("ranking-start-button");
 
-const rankingAlbumSelect =
-    document.getElementById("ranking-album-select");
+const rankingAlbumFilterOptions =
+    document.getElementById("ranking-album-filter-options");
+
+const rankingSongCount =
+    document.getElementById("ranking-song-count");
+
+const rankingFilters =
+    document.getElementById("ranking-filters");
+
+const rankingFilterResetButton =
+    document.getElementById("ranking-filter-reset-button");
+
+const settingsHomeButton =
+    document.getElementById("settings-home-button");
 
 
 // ----------
@@ -166,24 +178,6 @@ const imageErrorCount =
 // 2. ランキング条件画面
 // ==========================
 
-// アルバム選択欄を作成
-function createRankingAlbumOptions() {
-
-    rankingAlbumSelect.innerHTML = "";
-
-    const allOption =
-        document.createElement("option");
-
-    allOption.value = "all";
-
-    allOption.textContent = "全部";
-
-    rankingAlbumSelect.appendChild(
-        allOption
-    );
-
-}
-
 
 // ==============================
 // 3. 共通設定
@@ -261,6 +255,10 @@ function showHomeScreen() {
 function showSettingsScreen() {
 
     hideAllScreens();
+
+    createRankingAlbumFilterOptions();
+
+    updateRankingSongCount();
 
     settingsScreen.style.display = "block";
 
@@ -384,6 +382,39 @@ function setupEventListeners() {
     // ランキング条件画面
     // ----------
 
+    // ランキング条件フィルターの変更を反映
+    rankingFilters.addEventListener(
+        "change",
+        function () {
+
+            updateRankingSongCount();
+
+        }
+    );
+
+    // ランキング条件をリセット
+    rankingFilterResetButton.addEventListener(
+        "click",
+        function () {
+
+            const rankingFilterInputs =
+                rankingFilters.querySelectorAll(
+                    'input[type="checkbox"]'
+                );
+
+            rankingFilterInputs.forEach(
+                function (input) {
+
+                    input.checked = false;
+
+                }
+            );
+
+            updateRankingSongCount();
+
+        }
+    );
+
     // 条件を決めてランキング開始
     rankingStartButton.addEventListener(
         "click",
@@ -395,6 +426,20 @@ function setupEventListeners() {
 
         }
     );
+
+    // ホーム画面へ戻る
+    settingsHomeButton.addEventListener(
+        "click",
+        function () {
+
+            resetRankingState();
+
+            showHomeScreen();
+
+        }
+    );
+
+
 
 
     // ----------
@@ -545,9 +590,8 @@ function initializeApp() {
 
     }
 
-    setupEventListeners();
 
-    createRankingAlbumOptions();
+    setupEventListeners();
 
     resetRankingState();
 

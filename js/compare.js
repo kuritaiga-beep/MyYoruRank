@@ -41,7 +41,7 @@ function displaySongs() {
     );
 
 
-    // 現在の画像タイプを付ける
+    // 現在の画像タイプを適用
     if (currentLeftSong.imageType) {
 
         leftImage.classList.add(
@@ -59,7 +59,7 @@ function displaySongs() {
     }
 
 
-    // YouTube URLがある場合だけボタンを表示
+    // 試聴ボタンの表示を切り替える
     leftPreviewButton.style.display =
         currentLeftSong.youtubeUrl
             ? "block"
@@ -88,8 +88,7 @@ function compareSongs(
     displaySongs();
 
 
-    // Undo後の再実行中は、
-    // 保存済みの選択履歴を自動で再現する
+    // Undo後は保存済みの選択履歴を再現する
     if (
         isReplaying &&
         replayIndex < comparisonResults.length

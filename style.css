@@ -200,6 +200,34 @@ img {
 
 }
 
+/* ==============================
+   3.1 ランキング条件画面
+============================== */
+
+.ranking-selection-summary {
+
+    margin: 24px 0 16px;
+
+    text-align: center;
+
+}
+
+#ranking-song-count {
+
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    border-radius: 12px;
+
+    background: #f5f5f5;
+
+    font-weight: bold;
+
+    color: var(--color-surface-text);
+
+}
+
 
 /* ========================================
    4. 比較画面
