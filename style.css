@@ -1442,9 +1442,13 @@ img {
 
 @media (max-width: 650px) {
 
+    /* ------------------------------
+       共通
+    ------------------------------ */
+
     .container {
-        width: 92%;
-        padding: 30px 0;
+        width: 94%;
+        padding: 24px 0;
     }
 
     h1 {
@@ -1469,40 +1473,157 @@ img {
         width: min(100%, 280px);
     }
 
-    #compare-screen {
+
+    /* ------------------------------
+       ランキング条件画面
+    ------------------------------ */
+
+    #settings-screen {
         width: 94%;
-
-        justify-content: flex-start;
-
-        padding-top: 30px;
+        max-width: none;
     }
 
-    .compare-message {
-        font-size: 1.2rem;
+    #settings-screen h2 {
+        margin-bottom: 18px;
+
+        font-size: 30px;
     }
 
-    .compare-container {
-        flex-direction: column;
+    #settings-home-button {
+        margin-bottom: 16px;
+    }
+
+    #ranking-filters {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+
+        padding: 16px;
+    }
+
+    #ranking-filters fieldset:last-child {
+        grid-column: auto;
+    }
+
+    #ranking-album-filter-options {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 8px 10px;
+    }
+
+    #ranking-filters .filter-checkbox {
+        font-size: 14px;
+    }
+
+    .ranking-selection-summary {
+        margin: 18px 0 12px;
+    }
+
+    #ranking-song-count {
+        min-width: 0;
+
+        padding: 9px 14px;
+
+        font-size: 14px;
+    }
+
+    .ranking-button-group {
+        margin-top: 12px;
+    }
+
+
+    /* ------------------------------
+    比較画面
+    ------------------------------ */
+
+    #compare-screen {
+        width: 96%;
+        padding-top: 18px;
+    }
+
+    #compare-screen .compare-message {
+        margin-bottom: 8px;
+
+        font-size: 1.1rem;
+    }
+
+    #compare-screen #progress-text {
+        margin: 0;
+
+        font-size: 16px;
+    }
+
+    #compare-screen .progress-bar {
+        height: 10px;
+
+        margin: 8px 0 14px;
+    }
+
+    #compare-screen .compare-container {
+        flex-direction: row;
+        align-items: stretch;
+
+        width: 100%;
+
+        gap: 10px;
+    }
+
+    #compare-screen .song-card {
+        width: calc(50% - 5px);
+        max-width: none;
+
+        padding: 10px;
+    }
+
+    #compare-screen .image-container {
+        height: 150px;
+    }
+
+    #compare-screen .song-title {
+        min-height: 48px;
+
+        margin: 10px 0;
+
+        font-size: 16px;
+
+        display: flex;
         align-items: center;
-
-        width: 100%;
+        justify-content: center;
     }
 
-    .song-card {
-        width: 100%;
-        max-width: 420px;
+    #compare-screen .preview-button {
+        min-height: 38px;
 
-        flex-basis: auto;
+        padding: 8px 6px;
 
-        padding: 20px;
+        font-size: 13px;
     }
 
-    .image-container {
-        height: 240px;
+    #undo-button {
+        min-height: 38px;
+
+        margin-top: 12px;
+        padding: 8px 12px;
+
+        font-size: 13px;
     }
+
+    #compare-screen .preview-note {
+        margin-top: 10px;
+
+        font-size: 11px;
+    }
+
+    /* ------------------------------
+       楽曲一覧画面
+    ------------------------------ */
 
     .album-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
     }
 
     .album-title {
@@ -1517,25 +1638,64 @@ img {
         width: 100%;
     }
 
-    .ranking-item {
-        gap: 10px;
 
-        padding: 12px;
+    /* ------------------------------
+       結果画面
+    ------------------------------ */
+
+    #result-screen {
+        width: 94%;
+
+        padding: 30px 0;
     }
 
-    .ranking-number {
-        width: 48px;
+    #result-screen h2 {
+        margin-bottom: 24px;
+
+        font-size: 30px;
+    }
+
+    #result-screen .ranking-item {
+        gap: 12px;
+
+        padding: 10px 12px;
+    }
+
+    #result-screen .ranking-number {
+        width: 42px;
 
         font-size: 18px;
     }
 
-    .ranking-image {
-        width: 55px;
-        height: 55px;
+    #result-screen .ranking-image {
+        width: 48px;
+        height: 48px;
     }
 
-    .ranking-title {
-        font-size: 15px;
+    #result-screen .ranking-image.mv-image {
+        width: 72px;
+        height: 48px;
+
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+
+    #result-screen .ranking-title {
+        font-size: 16px;
+    }
+
+    #result-screen .ranking-item:nth-child(-n + 3)
+    .ranking-number {
+        font-size: 22px;
+    }
+
+    #toggle-ranking-button,
+    #restart-button {
+        min-height: 42px;
+
+        padding: 10px 16px;
+
+        font-size: 14px;
     }
 
 }
