@@ -219,6 +219,10 @@ let totalMergeSteps = 0;
 // ランキング対象の楽曲
 let rankingTargetSongs = [];
 
+// 現在のランキングで使用する曲順
+let currentRankingSongOrder = [];
+
+
 // ランキング条件
 const rankingSettings = {
 

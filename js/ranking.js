@@ -299,9 +299,20 @@ function updateRankingTargetSongs() {
         songs.filter(function (song) {
 
             // Album
+            const albumName =
+
+                song.album && song.album.trim() !== ""
+
+                    ? song.album
+
+                    : "シングル";
+
             if (
+
                 checkedAlbums.length > 0 &&
-                !checkedAlbums.includes(song.album)
+
+                !checkedAlbums.includes(albumName)
+
             ) {
 
                 return false;
@@ -396,14 +407,8 @@ function createRankingAlbumFilterOptions() {
     const albumNames =
         getOrderedAlbumNames(groupedSongs);
 
-    const filteredAlbumNames =
-        albumNames.filter(function (albumName) {
 
-            return albumName !== "シングル";
-
-        });
-
-    filteredAlbumNames.forEach(function (albumName) {
+    albumNames.forEach(function (albumName) {
 
             const label =
                 document.createElement("label");
@@ -525,7 +530,7 @@ function beginNewRanking() {
 // 8. ランキングを開始
 // ==============================
 
-async function startRanking() {
+async function startRanking(isReplay = false) {
 
     // ----------
     // ランキング処理を開始
@@ -605,14 +610,20 @@ async function startRanking() {
     // ランキングを実行
     // ----------
 
-    const shuffledSongs =
-        shuffleSongs(
-            rankingTargetSongs
-        );
+    // 新しくランキングを開始するときだけシャッフル
+    if (!isReplay) {
+
+        currentRankingSongOrder =
+            shuffleSongs(
+                rankingTargetSongs
+            );
+
+    }
+
 
     const ranking =
         await mergeSort(
-            shuffledSongs,
+            [...currentRankingSongOrder],
             currentRunId
         );
 

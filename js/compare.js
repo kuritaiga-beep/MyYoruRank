@@ -97,13 +97,22 @@ function compareSongs(
         const savedResult =
             comparisonResults[replayIndex];
 
-        const isSameComparison =
+        const isSameOrder =
             savedResult.leftSong ===
                 leftSong.title &&
             savedResult.rightSong ===
                 rightSong.title;
 
-        if (isSameComparison) {
+        const isReverseOrder =
+            savedResult.leftSong ===
+                rightSong.title &&
+            savedResult.rightSong ===
+                leftSong.title;
+
+        if (
+            isSameOrder ||
+            isReverseOrder
+        ) {
 
             replayIndex++;
 
@@ -118,9 +127,16 @@ function compareSongs(
 
             }
 
-            return Promise.resolve(
-                rightSong
-            );
+            if (
+                savedResult.selectedSong ===
+                rightSong.title
+            ) {
+
+                return Promise.resolve(
+                    rightSong
+                );
+
+            }
 
         }
 
@@ -129,20 +145,29 @@ function compareSongs(
         console.error(
             "比較履歴が一致しません。",
             {
+                replayIndex,
                 savedResult,
-                leftSong: leftSong.title,
-                rightSong: rightSong.title
+                currentLeft: leftSong.title,
+                currentRight: rightSong.title,
+                historyLength: comparisonResults.length
             }
         );
-
-        isReplaying = false;
 
     }
 
 
-    // 保存済み履歴をすべて再現したら通常処理へ戻る
-    if (isReplaying) {
+    // 保存済み履歴をすべて再現したら、
+    // 削除した直前の比較で通常操作へ戻る
+    if (
+        isReplaying &&
+        replayIndex >= comparisonResults.length
+    ) {
+
         isReplaying = false;
+
+        undoButton.disabled =
+            comparisonResults.length === 0;
+
     }
 
 
@@ -283,7 +308,7 @@ function undoLastSelection() {
     undoButton.disabled = true;
 
 
-    // ランキングを最初から再計算
-    startRanking();
+    // 同じ曲順でランキングを再計算
+    startRanking(true);
 
 }

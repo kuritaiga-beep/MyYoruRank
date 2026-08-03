@@ -65,7 +65,7 @@
 
     <main
         id="settings-screen"
-        class="container"
+        class="container settings-screen"
         style="display: none;"
     >
 
@@ -81,6 +81,7 @@
 
                     <button
                         id="ranking-filter-reset-button"
+                        class="ranking-action-button"
                         type="button"
                     >
                         条件をリセット
@@ -222,7 +223,6 @@
         
         </div>    
 
-    </div>
 
         <div class="ranking-selection-summary">
 
@@ -232,20 +232,25 @@
 
         </div>
 
-        <button
-            id="settings-home-button"
-            type="button"
-        >
-            ホームへ戻る
-        </button>
+        <div class="ranking-button-group">
 
-        <button
-            id="ranking-start-button"
-            type="button"
-        >
-            ランキング開始
-        </button>
+            <button
+                id="settings-home-button"
+                class="ranking-action-button"
+                type="button"
+            >
+                ← ホームに戻る
+            </button>
 
+            <button
+                id="ranking-start-button"
+                class="ranking-action-button"
+                type="button"
+            >
+                ランキング開始
+            </button>
+
+        </div>
 
     </main>
 

@@ -204,11 +204,99 @@ img {
    3.1 ランキング条件画面
 ============================== */
 
+/* ランキング条件画面全体 */
+#settings-screen {
+
+    width: 90%;
+    max-width: 1100px;
+
+}
+
+
+#settings-screen h2 {
+
+    margin-bottom: 28px;
+
+}
+
+
+/* ランキング条件画面のボタン共通デザイン */
+.ranking-action-button {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    min-height: 42px;
+
+    box-sizing: border-box;
+
+    padding: 11px 18px;
+
+    background-color: #ffffff;
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+.ranking-action-button:hover {
+
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+
+}
+
+.ranking-action-button:active {
+
+    transform: translateY(0);
+
+}
+
 .ranking-selection-summary {
 
-    margin: 24px 0 16px;
+    display: flex;
 
-    text-align: center;
+    justify-content: center;
+
+    margin: 28px 0;
+
+}
+
+#ranking-song-count {
+
+    margin: 0;
+
+}
+
+.ranking-button-group {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 16px;
+
+    margin-top: 24px;
 
 }
 
@@ -216,15 +304,83 @@ img {
 
     display: inline-block;
 
-    padding: 10px 20px;
+    min-width: 140px;
 
-    border-radius: 12px;
+    margin: 0;
 
-    background: #f5f5f5;
+    padding: 10px 16px;
 
-    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.82);
 
     color: var(--color-surface-text);
+
+    border: 1px solid rgba(255, 255, 255, 0.45);
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    pointer-events: none;
+
+}
+
+/* フィルターパネル */
+#ranking-filters {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 20px;
+
+    padding: 24px;
+
+    background: var(--color-surface);
+
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: 16px;
+
+    box-shadow: var(--shadow-card);
+
+}
+
+/* Album一覧 */
+#ranking-album-filter-options {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 10px 18px;
+
+    margin-top: 8px;
+
+}
+
+#ranking-filters legend,
+#ranking-filters .filter-checkbox {
+
+    color: var(--color-surface-text);
+
+}
+
+#ranking-filters legend {
+
+    font-weight: 700;
+
+}
+
+/* Albumだけ横いっぱい */
+#ranking-filters fieldset:last-child {
+
+    grid-column: 1 / -1;
 
 }
 
