@@ -463,6 +463,58 @@ function createRankingAlbumFilterOptions() {
 
 
 // ==============================
+// ランキング条件を推奨設定にする
+// ==============================
+
+function applyRecommendedRankingFilters() {
+
+    // すべてのチェックを一度外す
+    const rankingCheckboxes =
+        rankingFilters.querySelectorAll(
+            'input[type="checkbox"]'
+        );
+
+    rankingCheckboxes.forEach(
+        function (checkbox) {
+
+            checkbox.checked = false;
+
+        }
+    );
+
+
+    // Vocalを選択
+    const vocalCheckbox =
+        rankingFilters.querySelector(
+            'input[name="ranking-music-type"][value="vocal"]'
+        );
+
+    if (vocalCheckbox) {
+
+        vocalCheckbox.checked = true;
+
+    }
+
+
+    // トリビュート以外のAlbumをすべて選択
+    const albumCheckboxes =
+        rankingFilters.querySelectorAll(
+            'input[name="ranking-album-filter"]'
+        );
+
+    albumCheckboxes.forEach(
+        function (checkbox) {
+
+            checkbox.checked =
+                checkbox.value !== "トリビュート";
+
+        }
+    );
+
+}
+
+
+// ==============================
 // 6. 選択中の楽曲数を更新
 // ==============================
 

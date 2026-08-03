@@ -215,7 +215,7 @@ img {
 
 #settings-screen h2 {
 
-    margin-bottom: 28px;
+    margin-bottom: 20px;
 
 }
 
@@ -294,9 +294,7 @@ img {
 
     justify-content: center;
 
-    gap: 16px;
-
-    margin-top: 24px;
+    margin-top: 16px;
 
 }
 
@@ -323,6 +321,17 @@ img {
     font-weight: 700;
 
     pointer-events: none;
+
+}
+
+#settings-home-button {
+
+    display: flex;
+
+    width: fit-content;
+
+    margin-right: auto;
+    margin-bottom: 16px;
 
 }
 
