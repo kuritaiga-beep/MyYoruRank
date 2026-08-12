@@ -670,6 +670,9 @@ async function startRanking(isReplay = false) {
 
         saveRankingResult(ranking);
 
+        // 完了したので途中保存データを削除
+        localStorage.removeItem("rankingProgress");
+
         displayRankingConditions();
 
         progressPercent = 100;
@@ -729,6 +732,9 @@ async function startRanking(isReplay = false) {
     displayRanking(ranking);
 
     saveRankingResult(ranking);
+
+    // 完了したので途中保存データを削除
+    localStorage.removeItem("rankingProgress");
 
     displayRankingConditions();
 
@@ -885,6 +891,165 @@ function saveRankingResult(ranking) {
         "rankingHistory",
         JSON.stringify(rankingHistory)
     );
+
+}
+
+// ==============================
+// ランキング途中状態を保存
+// ==============================
+
+function saveRankingProgress() {
+
+    const progressData = {
+
+        savedAt:
+            new Date().toISOString(),
+
+        songOrder:
+            currentRankingSongOrder.map(
+                function (song) {
+
+                    return song.title;
+
+                }
+            ),
+
+        comparisonResults:
+            [...comparisonResults],
+
+        conditions:
+            currentRankingConditions
+
+    };
+
+    localStorage.setItem(
+        "rankingProgress",
+        JSON.stringify(progressData)
+    );
+
+}
+
+// ==============================
+// ランキング途中状態を読み込む
+// ==============================
+
+function loadRankingProgress() {
+
+    const savedProgress =
+        localStorage.getItem(
+            "rankingProgress"
+        );
+
+    if (!savedProgress) {
+        return null;
+    }
+
+    try {
+
+        return JSON.parse(
+            savedProgress
+        );
+
+    } catch (error) {
+
+        console.error(
+            "ランキング途中データの読み込みに失敗しました。",
+            error
+        );
+
+        localStorage.removeItem(
+            "rankingProgress"
+        );
+
+        return null;
+
+    }
+
+}
+
+// ==============================
+// ランキング途中状態を復元
+// ==============================
+
+function restoreRankingProgress(
+    savedProgress
+) {
+
+    // 保存時の曲順を復元
+    currentRankingSongOrder =
+        savedProgress.songOrder
+            .map(
+                function (songTitle) {
+
+                    return songs.find(
+                        function (song) {
+
+                            return (
+                                song.title ===
+                                songTitle
+                            );
+
+                        }
+                    );
+
+                }
+            )
+            .filter(
+                function (song) {
+
+                    return song !== undefined;
+
+                }
+            );
+
+
+    // ランキング対象曲も復元
+    rankingTargetSongs =
+        [...currentRankingSongOrder];
+
+
+    // 比較履歴を復元
+    comparisonResults.length = 0;
+
+    comparisonResults.push(
+        ...savedProgress.comparisonResults
+    );
+
+
+    // ランキング条件を復元
+    currentRankingConditions =
+        savedProgress.conditions;
+
+
+    // 保存済みの比較結果を最初から再現
+    replayIndex = 0;
+    isReplaying = true;
+
+}
+
+// ==============================
+// 保存したランキングを再開
+// ==============================
+
+function resumeRanking() {
+
+    const savedProgress =
+        loadRankingProgress();
+
+    if (!savedProgress) {
+        return;
+    }
+
+    restoreRankingProgress(
+        savedProgress
+    );
+
+    hideAllScreens();
+
+    compareScreen.style.display =
+        "block";
+
+    startRanking(true);
 
 }
 

@@ -32,6 +32,9 @@ const startButton =
 const songListButton =
     document.getElementById("song-list-button");
 
+const resumeRankingButton =
+    document.getElementById("resume-ranking-button");
+
 
 // ----------
 // ランキング条件画面
@@ -92,6 +95,9 @@ const rightPreviewButton =
 
 const undoButton =
     document.getElementById("undo-button");
+
+const pauseRankingButton =
+    document.getElementById("pause-ranking-button");
 
 
 // ----------
@@ -231,7 +237,7 @@ let currentRightSong = songs[1];
 let comparisonResolve = null;
 
 // 過去の選択履歴
-const comparisonResults = [];
+let comparisonResults = [];
 
 // 「一つ前に戻る」処理で使用
 let replayIndex = 0;
@@ -331,6 +337,33 @@ function showSongListScreen() {
 
 }
 
+// ==============================
+// ランキング再開ボタンの表示を更新
+// ==============================
+
+function updateResumeRankingButton() {
+
+    const savedProgress =
+        localStorage.getItem(
+            "rankingProgress"
+        );
+
+    if (savedProgress) {
+
+        resumeRankingButton.style.display =
+            "block";
+
+    } else {
+
+        resumeRankingButton.style.display =
+            "none";
+
+    }
+
+}
+
+updateResumeRankingButton();
+
 
 // ==============================
 // 6. 共通リセット処理
@@ -386,6 +419,34 @@ function setupEventListeners() {
     startButton.addEventListener(
         "click",
         function () {
+
+            // 途中保存データがあるか確認
+            const savedProgress =
+                localStorage.getItem(
+                    "rankingProgress"
+                );
+
+            // 途中データがある場合だけ確認
+            if (savedProgress) {
+
+                const shouldStartNewRanking =
+                    window.confirm(
+                        "途中のランキングが保存されています。\n破棄して新しくランキングを始めますか？"
+                    );
+
+                // キャンセルなら何もしない
+                if (!shouldStartNewRanking) {
+                    return;
+                }
+
+                // OKなら途中データを破棄
+                localStorage.removeItem(
+                    "rankingProgress"
+                );
+
+                updateResumeRankingButton();
+
+            }
 
             resetRankingState();
 
@@ -835,6 +896,37 @@ function setupEventListeners() {
                 ) || [];
 
             displayRankingHistory(rankingHistory);
+
+        }
+    );
+
+    // ホーム → ランキングを再開
+    resumeRankingButton.addEventListener(
+        "click",
+        function () {
+
+            resumeRanking();
+
+        }
+    );
+
+    // ランキングを中断
+    pauseRankingButton.addEventListener(
+        "click",
+        function () {
+
+            saveRankingProgress();
+
+            rankingRunId++;
+
+            comparisonResolve = null;
+
+            hideAllScreens();
+
+            homeScreen.style.display =
+                "block";
+
+            updateResumeRankingButton();
 
         }
     );

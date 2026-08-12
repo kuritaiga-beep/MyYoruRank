@@ -205,6 +205,8 @@ function selectLeftSong() {
             currentLeftSong.title
     });
 
+    saveRankingProgress();
+
     undoButton.disabled = false;
 
 
@@ -239,6 +241,8 @@ function selectRightSong() {
         selectedSong:
             currentRightSong.title
     });
+
+    saveRankingProgress();
 
     undoButton.disabled = false;
 
@@ -293,6 +297,9 @@ function undoLastSelection() {
 
     // 最後の選択履歴を削除
     comparisonResults.pop();
+
+    // 中断データも現在の比較履歴に更新
+    saveRankingProgress();
 
 
     // 保存済み履歴を最初から再現する
