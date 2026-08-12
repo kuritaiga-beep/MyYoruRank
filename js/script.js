@@ -106,6 +106,35 @@ const restartButton =
 
 
 // ----------
+// ランキング履歴画面
+// ----------
+
+const rankingHistoryScreen =
+    document.getElementById("ranking-history-screen");
+
+const rankingHistoryButton =
+    document.getElementById("ranking-history-button");
+
+const rankingHistoryHomeButton =
+    document.getElementById("ranking-history-home-button");
+
+const rankingHistoryList =
+    document.getElementById("ranking-history-list");
+
+const rankingHistoryDetailScreen =
+    document.getElementById("ranking-history-detail-screen");
+
+const rankingHistoryDetailSettings =
+    document.getElementById("ranking-history-detail-settings");
+
+const rankingHistoryDetailList =
+    document.getElementById("ranking-history-detail-list");
+
+const rankingHistoryDetailBackButton =
+    document.getElementById("ranking-history-detail-back-button");
+
+
+// ----------
 // 楽曲一覧画面
 // ----------
 
@@ -222,6 +251,9 @@ let rankingTargetSongs = [];
 // 現在のランキングで使用する曲順
 let currentRankingSongOrder = [];
 
+// 今回のランキング条件
+let currentRankingConditions = null;
+
 // ランキング条件を初期化済みか
 let hasInitializedRankingFilters = false;
 
@@ -241,6 +273,8 @@ function hideAllScreens() {
     compareScreen.style.display = "none";
     resultScreen.style.display = "none";
     songListScreen.style.display = "none";
+    rankingHistoryScreen.style.display = "none";
+    rankingHistoryDetailScreen.style.display = "none";
 
 }
 
@@ -521,6 +555,313 @@ function setupEventListeners() {
             resetRankingState();
 
             showHomeScreen();
+
+        }
+    );
+
+    // ==============================
+    // ランキング履歴画面
+    // ==============================
+
+    function displayRankingHistory(rankingHistory) {
+
+        rankingHistoryList.innerHTML = "";
+
+        if (rankingHistory.length === 0) {
+
+            rankingHistoryList.innerHTML = `
+                <p>
+                    保存されたランキングはありません。
+                </p>
+            `;
+
+            return;
+
+        }
+
+        rankingHistory.forEach(
+            function (history) {
+
+                const historyItem =
+                    document.createElement("div");
+
+                historyItem.classList.add(
+                    "ranking-history-item"
+                );
+
+                historyItem.innerHTML = `
+                    <div>
+                        ${new Date(history.date)
+                            .toLocaleString("ja-JP")}
+                    </div>
+
+                    <div>
+                        対象曲数：${history.conditions.songCount}曲
+                    </div>
+
+                    <div>
+                        1位：${history.ranking[0].title}
+                    </div>
+
+                    <button
+                        type="button"
+                        class="ranking-history-view-button"
+                        data-ranking-id="${history.id}"
+                    >
+                        ランキングを見る
+                    </button>
+
+                    <button
+                        type="button"
+                        class="ranking-history-delete-button"
+                        data-ranking-id="${history.id}"
+                    >
+                        削除
+                    </button>
+                `;
+
+                const viewButton =
+                    historyItem.querySelector(
+                        ".ranking-history-view-button"
+                    );
+
+                const deleteButton = historyItem.querySelector(
+                        ".ranking-history-delete-button"
+                    );
+
+                viewButton.addEventListener(
+                    "click",
+                    function () {
+
+                        const rankingId =
+                            Number(
+                                viewButton.dataset.rankingId
+                            );
+
+                        showRankingHistoryDetail(
+                            rankingHistory,
+                            rankingId
+                        );
+
+                    }
+                );
+
+                deleteButton.addEventListener(
+                    "click",
+                    function () {
+
+                        const rankingId =
+                            Number(
+                                deleteButton.dataset.rankingId
+                            );
+
+                        const shouldDelete =
+                            window.confirm(
+                                "このランキング履歴を削除しますか？"
+                            );
+
+                        if (!shouldDelete) {
+                            return;
+                        }
+
+                        console.log(
+                            "削除するランキングID:",
+                            rankingId
+                        );
+
+                        const updatedRankingHistory =
+                            rankingHistory.filter(
+                                function (history) {
+
+                                    return history.id !== rankingId;
+
+                                }
+                            );
+
+                        localStorage.setItem(
+                            "rankingHistory",
+                            JSON.stringify(updatedRankingHistory)
+                        );
+
+                        displayRankingHistory(
+                            updatedRankingHistory
+                        );
+
+                    }
+                );
+
+                rankingHistoryList.appendChild(
+                    historyItem
+                );
+
+            }
+        );
+
+    }
+
+    // ==============================
+    // 保存ランキングの詳細を表示
+    // ==============================
+
+    function showRankingHistoryDetail(
+        rankingHistory,
+        rankingId
+    ) {
+
+        const selectedHistory =
+            rankingHistory.find(
+                function (history) {
+
+                    return history.id === rankingId;
+
+                }
+            );
+
+        rankingHistoryDetailSettings.innerHTML = `
+            <p>
+                対象曲数：${selectedHistory.conditions.songCount}曲
+            </p>
+
+            <p>
+                Type：
+                ${
+                    selectedHistory.conditions.musicTypes.length > 0
+                        ? selectedHistory.conditions.musicTypes.join(" / ")
+                        : "すべて"
+                }
+            </p>
+
+            <p>
+                MV：
+                ${
+                    selectedHistory.conditions.mvStatus.length > 0
+                        ? selectedHistory.conditions.mvStatus.join(" / ")
+                        : "すべて"
+                }
+            </p>
+
+            <p>
+                Category：
+                ${
+                    selectedHistory.conditions.categories.length > 0
+                        ? selectedHistory.conditions.categories.join(" / ")
+                        : "すべて"
+                }
+            </p>
+
+            <p>
+                Album：
+                ${
+                    selectedHistory.conditions.albums.length > 0
+                        ? selectedHistory.conditions.albums.join(" / ")
+                        : "すべて"
+                }
+            </p>
+        `;
+
+        rankingHistoryDetailList.innerHTML = "";
+
+        selectedHistory.ranking.forEach(
+            function (song, index) {
+
+                const rankingItem =
+                    document.createElement("div");
+
+                rankingItem.classList.add(
+                    "ranking-item"
+                );
+
+                const rankingPosition =
+                    getRankingPosition(index);
+
+                rankingItem.innerHTML = `
+                    <span class="ranking-number">
+                        ${rankingPosition}
+                    </span>
+
+                    <img
+                        src="${song.image}"
+                        alt="${song.title}"
+                        class="ranking-image"
+                    >
+
+                    <span class="ranking-title">
+                        ${song.title}
+                    </span>
+                `;
+
+                const rankingImage =
+                    rankingItem.querySelector(
+                        ".ranking-image"
+                    );
+
+                if (
+                    rankingImage &&
+                    song.imageType
+                ) {
+
+                    rankingImage.classList.add(
+                        `${song.imageType}-image`
+                    );
+
+                }
+
+                rankingHistoryDetailList.appendChild(
+                    rankingItem
+                );
+            }
+
+        );
+
+        hideAllScreens();
+
+        rankingHistoryDetailScreen.style.display ="block";
+
+    }
+
+    // ホーム → ランキング履歴
+    rankingHistoryButton.addEventListener(
+        "click",
+        function () {
+
+            hideAllScreens();
+
+            rankingHistoryScreen.style.display =
+                "block";
+
+            const rankingHistory =
+                JSON.parse(
+                    localStorage.getItem("rankingHistory")
+                ) || [];
+
+            displayRankingHistory(rankingHistory);
+
+        }
+    );
+
+
+    // ランキング履歴 → ホーム
+    rankingHistoryHomeButton.addEventListener(
+        "click",
+        function () {
+
+            hideAllScreens();
+
+            homeScreen.style.display =
+                "block";
+
+        }
+    );
+
+    // ランキング履歴詳細 → ランキング履歴
+    rankingHistoryDetailBackButton.addEventListener(
+        "click",
+        function () {
+
+            hideAllScreens();
+
+            rankingHistoryScreen.style.display =
+                "block";
 
         }
     );

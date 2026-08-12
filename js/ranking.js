@@ -13,6 +13,11 @@ const toggleRankingButton =
         "toggle-ranking-button"
     );
 
+const resultRankingSettingsContent =
+    document.getElementById(
+        "result-ranking-settings-content"
+    );
+
 let isShowingAllRanking = false;
 
 
@@ -392,6 +397,25 @@ function updateRankingTargetSongs() {
             return true;
 
         });
+    
+    currentRankingConditions = {
+
+        songCount:
+            rankingTargetSongs.length,
+
+        albums:
+            [...checkedAlbums],
+
+        musicTypes:
+            [...checkedMusicTypes],
+
+        categories:
+            [...checkedCategories],
+
+        mvStatus:
+            [...checkedMvStatus]
+
+    };
 
 }
 
@@ -639,9 +663,14 @@ async function startRanking(isReplay = false) {
 
     if (rankingTargetSongs.length === 1) {
 
-        displayRanking(
-            [...rankingTargetSongs]
-        );
+        const ranking =
+            [...rankingTargetSongs];
+
+        displayRanking(ranking);
+
+        saveRankingResult(ranking);
+
+        displayRankingConditions();
 
         progressPercent = 100;
 
@@ -698,6 +727,10 @@ async function startRanking(isReplay = false) {
         "100%";
 
     displayRanking(ranking);
+
+    saveRankingResult(ranking);
+
+    displayRankingConditions();
 
     showResultScreen();
 
@@ -793,9 +826,137 @@ function displayRanking(ranking) {
 
 }
 
+// ==============================
+// 10. ランキング結果を保存
+// ==============================
+
+function saveRankingResult(ranking) {
+
+    const rankingHistory =
+        JSON.parse(
+            localStorage.getItem("rankingHistory")
+        ) || [];
+
+    const rankingResult = {
+
+        id: Date.now(),
+
+        date: new Date().toISOString(),
+
+        conditions: {
+            songCount:
+                currentRankingConditions.songCount,
+
+            albums: [
+                ...currentRankingConditions.albums
+            ],
+
+            musicTypes: [
+                ...currentRankingConditions.musicTypes
+            ],
+
+            categories: [
+                ...currentRankingConditions.categories
+            ],
+
+            mvStatus: [
+                ...currentRankingConditions.mvStatus
+            ]
+        },
+
+        ranking:
+            ranking.map(function (song) {
+
+                return {
+                    title: song.title,
+                    image: song.image,
+                    imageType: song.imageType
+                };
+
+            })
+
+    };
+
+    rankingHistory.unshift(
+        rankingResult
+    );
+
+    localStorage.setItem(
+        "rankingHistory",
+        JSON.stringify(rankingHistory)
+    );
+
+}
 
 // ==============================
-// 10. 順位の表示文字を作成
+// 10. 今回のランキング条件を表示
+// ==============================
+
+function displayRankingConditions() {
+
+    if (!currentRankingConditions) {
+        return;
+    }
+
+    const {
+        songCount,
+        albums,
+        musicTypes,
+        categories,
+        mvStatus
+    } = currentRankingConditions;
+
+
+    const musicTypeText =
+        musicTypes.length > 0
+            ? musicTypes.join(" / ")
+            : "すべて";
+
+
+    const categoryText =
+        categories.length > 0
+            ? categories.join(" / ")
+            : "すべて";
+
+
+    let mvText = "すべて";
+
+    if (
+        mvStatus.length === 1 &&
+        mvStatus[0] === "true"
+    ) {
+
+        mvText = "MVあり";
+
+    } else if (
+        mvStatus.length === 1 &&
+        mvStatus[0] === "false"
+    ) {
+
+        mvText = "MVなし";
+
+    }
+
+
+    const albumText =
+        albums.length > 0
+            ? albums.join(" / ")
+            : "すべて";
+
+
+    resultRankingSettingsContent.innerHTML = `
+        <p>対象曲数：${songCount}曲</p>
+        <p>Type：${musicTypeText}</p>
+        <p>MV：${mvText}</p>
+        <p>Category：${categoryText}</p>
+        <p>Album：${albumText}</p>
+    `;
+
+}
+
+
+// ==============================
+// 11. 順位の表示文字を作成
 // ==============================
 
 function getRankingPosition(index) {
@@ -818,7 +979,7 @@ function getRankingPosition(index) {
 
 
 // ==============================
-// 11. ランキング表示切り替え
+// 12. ランキング表示切り替え
 // ==============================
 
 function toggleRankingDisplay() {

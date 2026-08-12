@@ -145,6 +145,7 @@ img {
 /* ---------- ボタン ---------- */
 
 #home-screen #start-button,
+#home-screen #ranking-history-button,
 #home-screen #song-list-button {
 
     width: 220px;
@@ -658,7 +659,8 @@ img {
    5. 結果画面
 ======================================== */
 
-#result-screen {
+#result-screen,
+#ranking-history-detail-screen {
     width: min(760px, 92%);
     max-width: 760px;
 
@@ -668,7 +670,8 @@ img {
     text-align: center;
 }
 
-#result-screen h2 {
+#result-screen h2,
+#ranking-history-detail-screen h2 {
     margin-bottom: 40px;
 
     color: var(--color-text);
@@ -677,7 +680,8 @@ img {
     font-weight: 700;
 }
 
-#result-screen #ranking-list {
+#result-screen #ranking-list,
+#ranking-history-detail-screen #ranking-history-detail-list {
     width: 100%;
 
     margin-bottom: 40px;
@@ -692,9 +696,14 @@ img {
     display: flex !important;
 }
 
+#ranking-history-detail-settings {
+    margin-bottom: 40px;
+}
+
 /* ---------- ランキングカード ---------- */
 
-#result-screen .ranking-item {
+#result-screen .ranking-item,
+#ranking-history-detail-screen .ranking-item {
     display: flex;
     align-items: center;
     gap: 40px;
@@ -712,7 +721,8 @@ img {
     text-align: left;
 }
 
-#result-screen .ranking-number {
+#result-screen .ranking-number,
+#ranking-history-detail-screen .ranking-number {
     width: 70px;
     flex-shrink: 0;
 
@@ -725,7 +735,8 @@ img {
     white-space: nowrap;
 }
 
-#result-screen .ranking-image {
+#result-screen .ranking-image,
+#ranking-history-detail-screen .ranking-image {
     width: 65px;
     height: 65px;
     flex-shrink: 0;
@@ -733,13 +744,15 @@ img {
     border-radius: 8px;
 }
 
-#result-screen .ranking-image.jacket-image {
+#result-screen .ranking-image.jacket-image,
+#ranking-history-detail-screen .ranking-image.jacket-image {
     object-fit: cover;
 
     background-color: #ffffff;
 }
 
-#result-screen .ranking-image.mv-image {
+#result-screen .ranking-image.mv-image,
+#ranking-history-detail-screen .ranking-image.mv-image {
     width: 96px;
     height: 65px;
 
@@ -751,17 +764,17 @@ img {
     background-color: #ffffff;
 }
 
-#result-screen .ranking-title {
+#result-screen .ranking-title,
+#ranking-history-detail-screen .ranking-title {
     color: var(--color-surface-text);
 
     font-size: 22px;
     font-weight: 700;
 }
 
-#result-screen .ranking-item:nth-child(-n + 3) .ranking-number {
-
+#result-screen .ranking-item:nth-child(-n + 3) .ranking-number,
+#ranking-history-detail-screen .ranking-item:nth-child(-n + 3) .ranking-number {
     font-size: 30px;
-
 }
 
 /* ---------- 結果画面のボタン ---------- */
@@ -811,6 +824,48 @@ img {
     transform: translateY(0);
 }
 
+/* ========================================
+   5.1 ランキング履歴詳細画面
+======================================== */
+
+#ranking-history-detail-settings {
+    margin-bottom: 40px;
+}
+
+#ranking-history-detail-back-button {
+    width: min(320px, 100%);
+    min-height: 52px;
+
+    padding: 14px 24px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#ranking-history-detail-back-button:hover {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+}
+
+#ranking-history-detail-back-button:active {
+    transform: translateY(0);
+}
 
 
 /* ========================================
@@ -1469,6 +1524,7 @@ img {
     }
 
     #start-button,
+    #ranking-history-button,
     #song-list-button {
         width: min(100%, 280px);
     }

@@ -47,6 +47,13 @@
         </button>
 
         <button
+            id="ranking-history-button"
+            type="button"
+        >
+            ランキング履歴
+        </button>
+
+        <button
             id="song-list-button"
             type="button"
         >
@@ -386,6 +393,18 @@
             My Yoru Ranking
         </h2>
 
+        <!-- 今回のランキング条件 -->
+
+        <div id="result-ranking-settings">
+
+            <h3>
+                ランキング条件
+            </h3>
+
+            <div id="result-ranking-settings-content"></div>
+
+        </div>
+
         <div id="ranking-list"></div>
 
         <div class="result-button-group">
@@ -405,6 +424,58 @@
         </button>
 
 </div>
+
+    </main>
+
+    <!-- ==========================
+        ランキング履歴画面
+    =========================== -->
+
+    <main
+        id="ranking-history-screen"
+        class="container"
+        style="display: none;"
+    >
+
+        <h2>
+            ランキング履歴
+        </h2>
+
+        <div id="ranking-history-list"></div>
+
+        <button
+            id="ranking-history-home-button"
+            type="button"
+        >
+            ← ホームに戻る
+        </button>
+
+    </main>
+
+    <!-- ==========================
+        ランキング履歴詳細画面
+    =========================== -->
+
+    <main
+        id="ranking-history-detail-screen"
+        class="container"
+        style="display: none;"
+    >
+
+        <h2>
+            保存ランキング
+        </h2>
+
+        <div id="ranking-history-detail-settings"></div>
+
+        <div id="ranking-history-detail-list"></div>
+
+        <button
+            id="ranking-history-detail-back-button"
+            type="button"
+        >
+            ← 履歴一覧に戻る
+        </button>
 
     </main>
 
