@@ -272,6 +272,26 @@ let hasInitializedRankingSettings = false;
 // 5. 画面切り替え
 // ==============================
 
+// ==============================
+// ブラウザ履歴に画面状態を保存
+// ==============================
+
+function pushScreenHistory(
+    screenName,
+    extraState = {}
+) {
+
+    history.pushState(
+        {
+            screen: screenName,
+            ...extraState
+        },
+        "",
+        `#${screenName}`
+    );
+
+}
+
 function hideAllScreens() {
 
     homeScreen.style.display = "none";
@@ -310,6 +330,10 @@ function showSettingsScreen() {
 
     settingsScreen.style.display = "block";
 
+    pushScreenHistory(
+        "settings"
+    );
+
 }
 
 
@@ -319,13 +343,32 @@ function showCompareScreen() {
 
     compareScreen.style.display = "block";
 
+    pushScreenHistory("compare");
+
 }
 
-function showResultScreen() {
+function showResultScreen(
+    resultId = null
+) {
+
+    console.log(
+        "showResultScreen に渡された resultId:",
+        resultId
+    );
 
     hideAllScreens();
 
-    resultScreen.style.display = "block";
+    resultScreen.style.display =
+        "block";
+
+    history.replaceState(
+        {
+            screen: "result",
+            resultId: resultId
+        },
+        "",
+        "#result"
+    );
 
 }
 
@@ -334,6 +377,8 @@ function showSongListScreen() {
     hideAllScreens();
 
     songListScreen.style.display = "block";
+
+    pushScreenHistory("song-list");
 
 }
 
@@ -363,6 +408,162 @@ function updateResumeRankingButton() {
 }
 
 updateResumeRankingButton();
+
+history.replaceState(
+    {
+        screen: "home"
+    },
+    "",
+    "#home"
+);
+
+window.addEventListener(
+    "popstate",
+    function (event) {
+
+        if (!event.state) {
+            return;
+        }
+
+        const screenName =
+            event.state.screen;
+
+        // 比較画面から別画面へ移動する場合は
+        // 現在のランキングを中断して保存する
+        if (
+            compareScreen.style.display !== "none" &&
+            screenName !== "compare"
+        ) {
+
+            saveRankingProgress();
+
+            rankingRunId++;
+
+            comparisonResolve = null;
+
+            updateResumeRankingButton();
+
+        }
+
+        if (screenName === "home") {
+
+            hideAllScreens();
+
+            homeScreen.style.display =
+                "block";
+
+        }
+
+        if (screenName === "settings") {
+
+            hideAllScreens();
+
+            settingsScreen.style.display =
+                "block";
+
+        }
+
+        if (screenName === "compare") {
+
+            resumeRanking();
+
+        }
+
+        if (screenName === "song-list") {
+
+            hideAllScreens();
+
+            songListScreen.style.display =
+                "block";
+
+        }
+
+        if (screenName === "ranking-history") {
+
+            hideAllScreens();
+
+            rankingHistoryScreen.style.display =
+                "block";
+
+        }
+
+        if (screenName === "ranking-history-detail") {
+
+            const rankingHistory =
+                JSON.parse(
+                    localStorage.getItem(
+                        "rankingHistory"
+                    )
+                ) || [];
+
+            const rankingId =
+                event.state.rankingId;
+
+            showRankingHistoryDetail(
+                rankingHistory,
+                rankingId,
+                false
+            );
+
+        }
+
+        if (screenName === "result") {
+
+            const resultId =
+                event.state.resultId;
+
+            console.log(
+                "復元する結果ID:",
+                resultId
+            );
+
+            const rankingHistory =
+                JSON.parse(
+                    localStorage.getItem("rankingHistory")
+                ) || [];
+
+            const savedRanking =
+                rankingHistory.find(function (item) {
+
+                    return item.id === resultId;
+
+                });
+
+            console.log(
+                "見つかったランキング:",
+                savedRanking
+            );
+
+            if (savedRanking) {
+
+                displayRanking(
+                    savedRanking.ranking
+                );
+
+                displayRankingConditions(
+                    savedRanking.conditions
+                );
+
+                hideAllScreens();
+
+                resultScreen.style.display =
+                    "block";
+
+            } else {
+
+                console.warn(
+                    "復元するランキングが見つかりませんでした:",
+                    resultId
+                );
+
+                showHomeScreen();
+
+            }
+
+        }
+
+    }
+);
 
 
 // ==============================
@@ -766,7 +967,8 @@ function setupEventListeners() {
 
     function showRankingHistoryDetail(
         rankingHistory,
-        rankingId
+        rankingId,
+        shouldPushHistory = true
     ) {
 
         const selectedHistory =
@@ -878,7 +1080,18 @@ function setupEventListeners() {
 
         rankingHistoryDetailScreen.style.display ="block";
 
+        if (shouldPushHistory) {
+
+            pushScreenHistory(
+                "ranking-history-detail",
+                {rankingId: rankingId}
+            );
+
+        }
     }
+
+    window.showRankingHistoryDetail =
+        showRankingHistoryDetail;
 
     // ホーム → ランキング履歴
     rankingHistoryButton.addEventListener(
@@ -896,6 +1109,8 @@ function setupEventListeners() {
                 ) || [];
 
             displayRankingHistory(rankingHistory);
+
+            pushScreenHistory("ranking-history");
 
         }
     );

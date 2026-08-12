@@ -731,14 +731,20 @@ async function startRanking(isReplay = false) {
 
     displayRanking(ranking);
 
-    saveRankingResult(ranking);
+    const resultId =
+        saveRankingResult(ranking);
+
+    console.log(
+        "saveRankingResultから返ったID:",
+        resultId
+    );
 
     // 完了したので途中保存データを削除
     localStorage.removeItem("rankingProgress");
 
     displayRankingConditions();
 
-    showResultScreen();
+    showResultScreen(resultId);
 
 }
 
@@ -891,6 +897,8 @@ function saveRankingResult(ranking) {
         "rankingHistory",
         JSON.stringify(rankingHistory)
     );
+    
+    return rankingResult.id;
 
 }
 
@@ -928,6 +936,7 @@ function saveRankingProgress() {
     );
 
 }
+
 
 // ==============================
 // ランキング途中状態を読み込む
@@ -1057,9 +1066,11 @@ function resumeRanking() {
 // 10. 今回のランキング条件を表示
 // ==============================
 
-function displayRankingConditions() {
+function displayRankingConditions(
+    conditions = currentRankingConditions
+) {
 
-    if (!currentRankingConditions) {
+    if (!conditions) {
         return;
     }
 
@@ -1069,7 +1080,7 @@ function displayRankingConditions() {
         musicTypes,
         categories,
         mvStatus
-    } = currentRankingConditions;
+    } = conditions;
 
 
     const musicTypeText =
