@@ -110,6 +110,18 @@ const rankingList =
 const restartButton =
     document.getElementById("restart-button");
 
+const resultConditionsToggleButton =
+    document.getElementById("result-ranking-conditions-toggle");
+
+const resultConditionsToggleText =
+    document.getElementById("result-ranking-conditions-toggle-text");
+
+const resultConditionsToggleIcon =
+    document.getElementById("result-ranking-conditions-toggle-icon");
+
+const resultConditionsContent =
+    document.getElementById("result-ranking-settings-content");
+
 
 // ----------
 // ランキング履歴画面
@@ -809,6 +821,37 @@ function setupEventListeners() {
     // 結果画面
     // ----------
 
+
+    // ランキング条件の開閉
+    resultConditionsToggleButton.addEventListener(
+        "click",
+        function () {
+
+            const isExpanded =
+                resultConditionsToggleButton.getAttribute(
+                    "aria-expanded"
+                ) === "true";
+
+            resultConditionsToggleButton.setAttribute(
+                "aria-expanded",
+                String(!isExpanded)
+            );
+
+            resultConditionsContent.hidden =
+                isExpanded;
+
+            resultConditionsToggleIcon.textContent =
+                isExpanded ? "▼" : "▲";
+
+            resultConditionsToggleText.textContent =
+                isExpanded
+                    ? "条件を見る"
+                    : "条件を閉じる";
+
+        }
+    );
+
+
     // ホーム画面へ戻る
     restartButton.addEventListener(
         "click",
@@ -852,34 +895,42 @@ function setupEventListeners() {
                 );
 
                 historyItem.innerHTML = `
-                    <div>
-                        ${new Date(history.date)
-                            .toLocaleString("ja-JP")}
+                    <div class="ranking-history-info">
+
+                        <div>
+                            ${new Date(history.date)
+                                .toLocaleString("ja-JP")}
+                        </div>
+
+                        <div>
+                            対象曲数：${history.conditions.songCount}曲
+                        </div>
+
+                        <div class="ranking-history-first">
+                            1位：${history.ranking[0].title}
+                        </div>
+
                     </div>
 
-                    <div>
-                        対象曲数：${history.conditions.songCount}曲
+                    <div class="ranking-history-actions">
+
+                        <button
+                            type="button"
+                            class="ranking-history-view-button"
+                            data-ranking-id="${history.id}"
+                        >
+                            ランキングを見る
+                        </button>
+
+                        <button
+                            type="button"
+                            class="ranking-history-delete-button"
+                            data-ranking-id="${history.id}"
+                        >
+                            削除
+                        </button>
+
                     </div>
-
-                    <div>
-                        1位：${history.ranking[0].title}
-                    </div>
-
-                    <button
-                        type="button"
-                        class="ranking-history-view-button"
-                        data-ranking-id="${history.id}"
-                    >
-                        ランキングを見る
-                    </button>
-
-                    <button
-                        type="button"
-                        class="ranking-history-delete-button"
-                        data-ranking-id="${history.id}"
-                    >
-                        削除
-                    </button>
                 `;
 
                 const viewButton =
@@ -981,46 +1032,116 @@ function setupEventListeners() {
             );
 
         rankingHistoryDetailSettings.innerHTML = `
-            <p>
-                対象曲数：${selectedHistory.conditions.songCount}曲
-            </p>
+            <button
+                id="ranking-history-conditions-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="ranking-history-conditions"
+            >
+                <span id="ranking-history-conditions-toggle-text">
+                    条件を見る
+                </span>
 
-            <p>
-                Type：
-                ${
-                    selectedHistory.conditions.musicTypes.length > 0
-                        ? selectedHistory.conditions.musicTypes.join(" / ")
-                        : "すべて"
-                }
-            </p>
+                <span id="ranking-history-conditions-toggle-icon">
+                    ▼
+                </span>
+            </button>
 
-            <p>
-                MV：
-                ${
-                    selectedHistory.conditions.mvStatus.length > 0
-                        ? selectedHistory.conditions.mvStatus.join(" / ")
-                        : "すべて"
-                }
-            </p>
+            <div
+                id="ranking-history-conditions"
+                hidden
+            >
+                <p>
+                    対象曲数：${selectedHistory.conditions.songCount}曲
+                </p>
 
-            <p>
-                Category：
-                ${
-                    selectedHistory.conditions.categories.length > 0
-                        ? selectedHistory.conditions.categories.join(" / ")
-                        : "すべて"
-                }
-            </p>
+                <p>
+                    Type：
+                    ${
+                        selectedHistory.conditions.musicTypes.length > 0
+                            ? selectedHistory.conditions.musicTypes.join(" / ")
+                            : "すべて"
+                    }
+                </p>
 
-            <p>
-                Album：
-                ${
-                    selectedHistory.conditions.albums.length > 0
-                        ? selectedHistory.conditions.albums.join(" / ")
-                        : "すべて"
-                }
-            </p>
+                <p>
+                    MV：
+                    ${
+                        selectedHistory.conditions.mvStatus.length > 0
+                            ? selectedHistory.conditions.mvStatus.join(" / ")
+                            : "すべて"
+                    }
+                </p>
+
+                <p>
+                    Category：
+                    ${
+                        selectedHistory.conditions.categories.length > 0
+                            ? selectedHistory.conditions.categories.join(" / ")
+                            : "すべて"
+                    }
+                </p>
+
+                <p>
+                    Album：
+                    ${
+                        selectedHistory.conditions.albums.length > 0
+                            ? selectedHistory.conditions.albums.join(" / ")
+                            : "すべて"
+                    }
+                </p>
+
+            </div>
+
         `;
+
+        const conditionsToggleButton =
+            document.getElementById(
+                "ranking-history-conditions-toggle"
+            );
+
+        const conditionsToggleText =
+            document.getElementById(
+                "ranking-history-conditions-toggle-text"
+            );
+
+        const conditionsToggleIcon =
+            document.getElementById(
+                "ranking-history-conditions-toggle-icon"
+            );
+
+        const conditionsContent =
+            document.getElementById(
+                "ranking-history-conditions"
+            );
+
+        conditionsToggleButton.addEventListener(
+            "click",
+            function () {
+
+                const isExpanded =
+                    conditionsToggleButton.getAttribute(
+                        "aria-expanded"
+                    ) === "true";
+
+                conditionsToggleButton.setAttribute(
+                    "aria-expanded",
+                    String(!isExpanded)
+                );
+
+                conditionsContent.hidden =
+                    isExpanded;
+
+                conditionsToggleIcon.textContent =
+                    isExpanded ? "▼" : "▲";
+
+                conditionsToggleText.textContent =
+                    isExpanded
+                        ? "条件を見る"
+                        : "条件を閉じる";
+
+            }
+        );
 
         rankingHistoryDetailList.innerHTML = "";
 

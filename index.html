@@ -407,22 +407,36 @@
             My Yoru Ranking
         </h2>
 
+        <div id="ranking-list"></div>
+
         <!-- 今回のランキング条件 -->
 
         <div id="result-ranking-settings">
 
-            <h3>
-                ランキング条件
-            </h3>
+            <button
+                id="result-ranking-conditions-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="result-ranking-settings-content"
+            >
+                <span id="result-ranking-conditions-toggle-text">
+                    条件を見る
+                </span>
 
-            <div id="result-ranking-settings-content"></div>
+                <span id="result-ranking-conditions-toggle-icon">
+                    ▼
+                </span>
+            </button>
+
+            <div
+                id="result-ranking-settings-content"
+                hidden
+            ></div>
 
         </div>
 
-        <div id="ranking-list"></div>
-
         <div class="result-button-group">
-
+            
         <button
             id="toggle-ranking-button"
             type="button"
@@ -436,8 +450,6 @@
         >
             もう一度ランキングする
         </button>
-
-</div>
 
     </main>
 
@@ -480,9 +492,9 @@
             保存ランキング
         </h2>
 
-        <div id="ranking-history-detail-settings"></div>
-
         <div id="ranking-history-detail-list"></div>
+
+        <div id="ranking-history-detail-settings"></div>
 
         <button
             id="ranking-history-detail-back-button"

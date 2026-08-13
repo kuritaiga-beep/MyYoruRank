@@ -145,6 +145,7 @@ img {
 /* ---------- ボタン ---------- */
 
 #home-screen #start-button,
+#home-screen #resume-ranking-button,
 #home-screen #ranking-history-button,
 #home-screen #song-list-button {
 
@@ -170,11 +171,15 @@ img {
         box-shadow 0.2s ease;
 }
 
+#home-screen #resume-ranking-button,
+#home-screen #ranking-history-button,
 #home-screen #song-list-button {
     margin-top: 15px;
 }
 
 #home-screen #start-button:hover,
+#home-screen #resume-ranking-button:hover,
+#home-screen #ranking-history-button:hover,
 #home-screen #song-list-button:hover {
 
     background-color: var(--color-surface-hover);
@@ -185,6 +190,8 @@ img {
 }
 
 #home-screen #start-button:active,
+#home-screen #resume-ranking-button:active,
+#home-screen #ranking-history-button:active,
 #home-screen #song-list-button:active {
 
     transform: translateY(0);
@@ -626,6 +633,44 @@ img {
         opacity 0.2s ease;
 }
 
+#compare-screen #pause-ranking-button {
+    display: block;
+
+    min-width: 220px;
+
+    margin: 12px auto 0;
+    padding: 12px 24px;
+
+    background-color: #fff1f1;
+    color: #b94a4a;
+
+    border: 1px solid #e6b8b8;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#compare-screen #pause-ranking-button:hover {
+    background-color: #ffe5e5;
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+}
+
+#compare-screen #pause-ranking-button:active {
+    transform: translateY(0);
+}
+
 #compare-screen .undo-button:hover:not(:disabled) {
     background-color: var(--color-surface-hover);
 
@@ -777,6 +822,85 @@ img {
     font-size: 30px;
 }
 
+/* ---------- 結果画面のランキング条件 ---------- */
+
+#result-ranking-settings {
+    margin-bottom: 28px;
+}
+
+#result-ranking-conditions-toggle {
+    min-height: 42px;
+
+    padding: 10px 16px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#result-ranking-conditions-toggle:hover {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+}
+
+#result-ranking-conditions-toggle:active {
+    transform: translateY(0);
+}
+
+
+/* 条件内容 */
+
+#result-ranking-settings-content {
+    width: fit-content;
+    max-width: 90%;
+
+    box-sizing: border-box;
+
+    margin: 10px auto 0;
+    padding: 14px 18px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    box-shadow: var(--shadow-card);
+
+    text-align: left;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+}
+
+#result-ranking-settings-content[hidden] {
+    display: none;
+}
+
+#result-ranking-settings-content p {
+    margin: 4px 0;
+
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
 /* ---------- 結果画面のボタン ---------- */
 
 #result-screen .result-button-group {
@@ -832,7 +956,8 @@ img {
     margin-bottom: 40px;
 }
 
-#ranking-history-detail-back-button {
+#ranking-history-detail-back-button,
+#ranking-history-home-button {
     width: min(320px, 100%);
     min-height: 52px;
 
@@ -855,7 +980,8 @@ img {
         box-shadow 0.2s ease;
 }
 
-#ranking-history-detail-back-button:hover {
+#ranking-history-detail-back-button:hover,
+#ranking-history-home-button:hover {
     background-color: var(--color-surface-hover);
 
     transform: translateY(-2px);
@@ -863,8 +989,186 @@ img {
     box-shadow: var(--shadow-card);
 }
 
-#ranking-history-detail-back-button:active {
+#ranking-history-detail-back-button:active,
+#ranking-history-home-button:active {
     transform: translateY(0);
+}
+
+.ranking-history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+
+    margin-bottom: 12px;
+    padding: 18px 24px;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+
+    box-shadow: var(--shadow-card);
+
+    text-align: left;
+}
+
+.ranking-history-info {
+    color: var(--color-surface-text);
+
+    font-weight: 600;
+}
+
+.ranking-history-view-button {
+    min-height: 42px;
+
+    padding: 10px 16px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.ranking-history-view-button:hover {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+}
+
+.ranking-history-view-button:active {
+    transform: translateY(0);
+}
+
+.ranking-history-delete-button {
+    min-height: 36px;
+
+    padding: 8px 12px;
+
+    background-color: transparent;
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    opacity: 0.75;
+
+    transition:
+        background-color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.ranking-history-delete-button:hover {
+    background-color: var(--color-surface-hover);
+    opacity: 1;
+
+    transform: translateY(-1px);
+}
+
+.ranking-history-delete-button:active {
+    transform: translateY(0);
+}
+
+.ranking-history-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ranking-history-first {
+    margin-top: 4px;
+
+    font-weight: 700;
+}
+
+#ranking-history-conditions-toggle {
+    min-height: 42px;
+
+    padding: 10px 16px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#ranking-history-conditions-toggle:hover {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+}
+
+#ranking-history-conditions-toggle:active {
+    transform: translateY(0);
+}
+
+#ranking-history-conditions {
+    width: fit-content;
+    max-width: 90%;
+
+    box-sizing: border-box;
+
+    margin: 10px auto 0;
+    padding: 14px 18px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    box-shadow: var(--shadow-card);
+
+    text-align: left;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+
+}
+
+#ranking-history-conditions[hidden] {
+    display: none;
+}
+    
+#ranking-history-conditions p {
+    margin: 4px 0;
+
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
 }
 
 
@@ -1754,31 +2058,103 @@ img {
         font-size: 14px;
     }
 
-}
+    /* ------------------------------
+    ランキング履歴画面
+    ------------------------------ */
 
-
-/* ========================================
-   18. 小さいスマートフォン対応
-======================================== */
-
-@media (max-width: 380px) {
-
-    h1 {
-        font-size: 31px;
+    .ranking-history-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
     }
 
-    .image-container {
-        height: 210px;
+    .ranking-history-actions {
+        width: 100%;
     }
 
-    .song-card h3 {
-        font-size: 1.2rem;
+    .ranking-history-view-button {
+        flex: 1;
     }
 
-    .filter-button {
-        padding: 9px 12px;
+    #ranking-history-conditions {
+        width: 100%;
+        max-width: none;
 
-        font-size: 13px;
+        flex-direction: column;
+        gap: 0;
     }
 
+    /* ------------------------------
+    ランキング履歴詳細画面
+    ------------------------------ */
+
+    #ranking-history-detail-list .ranking-item {
+        display: grid;
+
+        grid-template-columns:
+            48px 56px minmax(0, 1fr);
+
+        align-items: center;
+        gap: 10px;
+
+        padding: 12px 14px;
+    }
+
+    #ranking-history-detail-list .ranking-number {
+        width: auto;
+
+        font-size: 17px;
+        text-align: center;
+    }
+
+    #ranking-history-detail-list .ranking-image {
+        width: 48px;
+        height: 48px;
+
+        margin: 0;
+    }
+
+    #ranking-history-detail-list .ranking-image.mv-image {
+        width: 56px;
+        height: 40px;
+
+        margin: 0;
+    }
+
+    #ranking-history-detail-list .ranking-title {
+        min-width: 0;
+
+        font-size: 15px;
+        line-height: 1.4;
+
+        text-align: left;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    /* ========================================
+    18. 小さいスマートフォン対応
+    ======================================== */
+
+    @media (max-width: 380px) {
+
+        h1 {
+            font-size: 31px;
+        }
+
+        .image-container {
+            height: 210px;
+        }
+
+        .song-card h3 {
+            font-size: 1.2rem;
+        }
+
+        .filter-button {
+            padding: 9px 12px;
+
+            font-size: 13px;
+        }
+    }
 }

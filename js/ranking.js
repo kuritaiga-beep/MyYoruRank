@@ -744,6 +744,16 @@ async function startRanking(isReplay = false) {
 
     displayRankingConditions();
 
+    console.log(
+        "結果画面のcurrentRankingConditions:",
+        currentRankingConditions
+    );
+
+    console.log(
+        "条件欄の中身:",
+        resultRankingSettingsContent.innerHTML
+    );
+
     showResultScreen(resultId);
 
 }
