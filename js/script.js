@@ -1012,6 +1012,8 @@ function setupEventListeners() {
 
     }
 
+    let isShowingAllHistoryRanking = false;
+
     // ==============================
     // 保存ランキングの詳細を表示
     // ==============================
@@ -1031,7 +1033,36 @@ function setupEventListeners() {
                 }
             );
 
+        const rankingHistoryDetailTitle =
+            document.getElementById(
+                "ranking-history-detail-title"
+            );
+
+        const savedDate =
+            new Date(
+                selectedHistory.date
+            );
+
+        const formattedDate =
+            savedDate.toLocaleDateString(
+                "ja-JP"
+            );
+
+        rankingHistoryDetailTitle.textContent =
+            `My Yoru Rank - ${formattedDate}`;
+
+        // ----------
+        // 履歴ランキング表示を初期化
+        // ----------
+
+        isShowingAllHistoryRanking = false;
+
+        rankingHistoryDetailScreen.classList.remove(
+            "show-all-ranking"
+        );
+
         rankingHistoryDetailSettings.innerHTML = `
+
             <button
                 id="ranking-history-conditions-toggle"
                 type="button"
@@ -1095,6 +1126,31 @@ function setupEventListeners() {
 
         `;
 
+        const rankingToggleButton =
+            document.getElementById(
+                "ranking-history-toggle-button"
+            );
+
+        rankingToggleButton.addEventListener(
+            "click",
+            function () {
+
+                isShowingAllHistoryRanking =
+                    !isShowingAllHistoryRanking;
+
+                rankingHistoryDetailScreen.classList.toggle(
+                    "show-all-ranking",
+                    isShowingAllHistoryRanking
+                );
+
+                rankingToggleButton.textContent =
+                    isShowingAllHistoryRanking
+                        ? "トップ10だけ表示"
+                        : "全曲ランキングを表示";
+
+            }
+        );
+
         const conditionsToggleButton =
             document.getElementById(
                 "ranking-history-conditions-toggle"
@@ -1155,6 +1211,14 @@ function setupEventListeners() {
                     "ranking-item"
                 );
 
+                if (index >= 10) {
+
+                    rankingItem.classList.add(
+                        "ranking-hidden-item"
+                    );
+
+                }
+
                 const rankingPosition =
                     getRankingPosition(index);
 
@@ -1200,6 +1264,12 @@ function setupEventListeners() {
         hideAllScreens();
 
         rankingHistoryDetailScreen.style.display ="block";
+
+        // 画像保存・共有用に保存ランキングデータを渡す
+        setRankingImageTarget(
+            selectedHistory.ranking,
+            selectedHistory.conditions
+        );
 
         if (shouldPushHistory) {
 

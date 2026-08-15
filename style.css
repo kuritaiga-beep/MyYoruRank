@@ -732,11 +732,14 @@ img {
     margin-bottom: 40px;
 }
 
-#result-screen .ranking-item.ranking-hidden-item {
+#result-screen .ranking-item.ranking-hidden-item,
+#ranking-history-detail-screen .ranking-item.ranking-hidden-item {
     display: none !important;
 }
 
 #result-screen.show-all-ranking
+.ranking-item.ranking-hidden-item,
+#ranking-history-detail-screen.show-all-ranking
 .ranking-item.ranking-hidden-item {
     display: flex !important;
 }
@@ -911,6 +914,7 @@ img {
 }
 
 #result-screen #toggle-ranking-button,
+#result-screen #save-ranking-image-button,
 #result-screen #restart-button {
     width: min(320px, 100%);
     min-height: 52px;
@@ -935,6 +939,7 @@ img {
 }
 
 #result-screen #toggle-ranking-button:hover,
+#result-screen #save-ranking-image-button:hover,
 #result-screen #restart-button:hover {
     background-color: var(--color-surface-hover);
 
@@ -944,6 +949,7 @@ img {
 }
 
 #result-screen #toggle-ranking-button:active,
+#result-screen #save-ranking-image-button:active,
 #result-screen #restart-button:active {
     transform: translateY(0);
 }
@@ -951,6 +957,54 @@ img {
 /* ========================================
    5.1 ランキング履歴詳細画面
 ======================================== */
+
+/* ---------- 履歴詳細画面のボタン ---------- */
+
+#ranking-history-detail-screen
+.ranking-history-detail-button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+#ranking-history-detail-screen
+.ranking-history-detail-button-group button {
+    width: min(320px, 100%);
+    min-height: 52px;
+
+    padding: 14px 24px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#ranking-history-detail-screen
+.ranking-history-detail-button-group button:hover {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+}
+
+#ranking-history-detail-screen
+.ranking-history-detail-button-group button:active {
+    transform: translateY(0);
+}
 
 #ranking-history-detail-settings {
     margin-bottom: 40px;
@@ -1549,11 +1603,6 @@ img {
         box-shadow 0.2s;
 }
 
-.song-item:hover {
-    transform: translateY(-4px);
-
-    box-shadow: var(--shadow-card);
-}
 
 /* ========================================
    6.11 楽曲画像
@@ -1754,6 +1803,253 @@ img {
 .back-to-top-button:active,
 #song-list-back-button:active {
     transform: translateY(0);
+}
+
+/* ========================================
+   7. ランキング画像 保存・共有モーダル
+======================================== */
+
+#ranking-image-modal {
+    position: fixed;
+    inset: 0;
+
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+#ranking-image-modal[hidden] {
+    display: none;
+}
+
+#ranking-image-modal-content {
+    width: min(520px, 100%);
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    padding: 28px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+
+    box-shadow: var(--shadow-card);
+
+    text-align: left;
+}
+
+#ranking-image-modal-content h2 {
+    margin: 0 0 24px;
+
+    text-align: center;
+
+    font-size: 28px;
+}
+
+.ranking-image-option-group {
+    margin-bottom: 24px;
+}
+
+.ranking-image-option-group > p {
+    margin: 0 0 10px;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.ranking-image-option-group label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-right: 16px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#ranking-image-name-input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-top: 12px;
+    padding: 10px 12px;
+
+    background-color: #ffffff;
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 14px;
+}
+
+#ranking-image-name-input:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+#ranking-image-title-preview {
+    margin: 12px 0 0;
+
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.ranking-image-modal-actions {
+    display: flex;
+    gap: 12px;
+
+    width: 100%;
+    margin-top: 28px;
+}
+
+.ranking-image-modal-actions button {
+    flex: 1;
+
+    min-height: 44px;
+
+    padding: 10px 16px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.ranking-image-modal-actions button:hover {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+}
+
+.ranking-image-modal-actions button:active {
+    transform: translateY(0);
+}
+
+#ranking-image-preview-container {
+    margin: 24px 0;
+    text-align: center;
+
+    background-color: transparent;
+}
+
+#ranking-image-preview-container[hidden] {
+    display: none;
+}
+
+#ranking-image-canvas {
+    display: block;
+
+    width: min(240px, 100%);
+    height: auto;
+
+    margin: 0 auto;
+
+    background-color: transparent;
+
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+
+    box-shadow: var(--shadow-card);
+}
+
+/* ========================================
+   全曲版 ページ切り替え
+======================================== */
+
+#ranking-image-page-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+
+    margin: 16px 0 0;
+}
+
+#ranking-image-page-controls[hidden] {
+    display: none;
+}
+
+#ranking-image-page-controls button {
+    min-width: 80px;
+    min-height: 40px;
+
+    padding: 8px 14px;
+
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#ranking-image-page-controls button:hover:not(:disabled) {
+    background-color: var(--color-surface-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-card);
+}
+
+#ranking-image-page-controls button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+#ranking-image-page-controls button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#ranking-image-page-indicator {
+    min-width: 52px;
+
+    text-align: center;
+
+    font-size: 14px;
+    font-weight: 700;
 }
 
 
@@ -2016,9 +2312,15 @@ img {
     }
 
     #result-screen .ranking-item {
-        gap: 12px;
+        display: grid;
 
-        padding: 10px 12px;
+        grid-template-columns:
+            48px 56px minmax(0, 1fr);
+
+        align-items: center;
+        gap: 10px;
+
+        padding: 12px 14px;
     }
 
     #result-screen .ranking-number {
@@ -2033,11 +2335,10 @@ img {
     }
 
     #result-screen .ranking-image.mv-image {
-        width: 72px;
-        height: 48px;
+        width: 56px;
+        height: 40px;
 
-        margin-left: -12px;
-        margin-right: -12px;
+        margin: 0;
     }
 
     #result-screen .ranking-title {

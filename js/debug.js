@@ -94,13 +94,38 @@
 
     updateRankingTargetSongs();
 
-    const debugRanking = [...rankingTargetSongs];
+    const debugRanking =
+        [...rankingTargetSongs];
 
-    displayRanking(debugRanking);
+
+    // ========================================
+    // デバッグ結果を画像保存・共有の対象にする
+    // ========================================
+
+    const debugConditions = {
+        songCount: debugRanking.length,
+        musicTypes: [],
+        categories: [],
+        mvStatus: [],
+        albums: []
+    };
+
+    setRankingImageTarget(
+        debugRanking,
+        debugConditions
+    );
+
+
+    // ========================================
+    // 結果画面を表示
+    // ========================================
+
+    displayRanking(
+        debugRanking
+    );
 
     showResultScreen();
-
-}
+    }
 
     // ==============================
     // 4. 画像デバッグ

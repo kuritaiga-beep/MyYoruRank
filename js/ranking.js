@@ -731,6 +731,12 @@ async function startRanking(isReplay = false) {
 
     displayRanking(ranking);
 
+    // 画像保存・共有用にランキングデータを渡す
+    setRankingImageTarget(
+        ranking,
+        currentRankingConditions
+    );
+
     const resultId =
         saveRankingResult(ranking);
 
@@ -743,16 +749,6 @@ async function startRanking(isReplay = false) {
     localStorage.removeItem("rankingProgress");
 
     displayRankingConditions();
-
-    console.log(
-        "結果画面のcurrentRankingConditions:",
-        currentRankingConditions
-    );
-
-    console.log(
-        "条件欄の中身:",
-        resultRankingSettingsContent.innerHTML
-    );
 
     showResultScreen(resultId);
 
