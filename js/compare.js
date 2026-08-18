@@ -116,6 +116,20 @@ function compareSongs(
 
             replayIndex++;
 
+            // 保存済み履歴をすべて再現した場合は
+            // ここでリプレイ状態を終了する
+            if (
+                replayIndex >=
+                comparisonResults.length
+            ) {
+
+                isReplaying = false;
+
+                undoButton.disabled =
+                    comparisonResults.length === 0;
+
+            }
+
             if (
                 savedResult.selectedSong ===
                 leftSong.title
@@ -205,6 +219,21 @@ function selectLeftSong() {
             currentLeftSong.title
     });
 
+
+    // 新マージ方式での比較なら、
+    // 使用したマージタスクも同時に記録
+    if (
+        currentMergeTaskId !== null
+    ) {
+
+        mergeTaskSelectionHistory.push(
+            currentMergeTaskId
+        );
+
+    }
+
+    pendingMergeTaskId = null;
+
     saveRankingProgress();
 
     undoButton.disabled = false;
@@ -241,6 +270,21 @@ function selectRightSong() {
         selectedSong:
             currentRightSong.title
     });
+
+
+    // 新マージ方式での比較なら、
+    // 使用したマージタスクも同時に記録
+    if (
+        currentMergeTaskId !== null
+    ) {
+
+        mergeTaskSelectionHistory.push(
+            currentMergeTaskId
+        );
+
+    }
+
+    pendingMergeTaskId =null;
 
     saveRankingProgress();
 
@@ -297,6 +341,29 @@ function undoLastSelection() {
 
     // 最後の選択履歴を削除
     comparisonResults.pop();
+
+
+    // Undoした比較のマージタスクIDを保存
+    if (
+        mergeTaskSelectionHistory.length > 0
+    ) {
+
+        forcedNextMergeTaskId =
+            mergeTaskSelectionHistory[
+                mergeTaskSelectionHistory.length - 1
+            ];
+
+        mergeTaskSelectionHistory.pop();
+
+        // Undoでは現在表示中の未回答比較は破棄
+        pendingMergeTaskId =null;
+
+    } else {
+
+        forcedNextMergeTaskId =
+            null;
+
+    }
 
     // 中断データも現在の比較履歴に更新
     saveRankingProgress();
