@@ -736,13 +736,20 @@ function setupEventListeners() {
         "click",
         function () {
 
+            const didStart =
+                beginNewRanking();
+
+            if (!didStart) {
+                return;
+            }
+
             showCompareScreen();
 
-            beginNewRanking();
+            startRanking();
 
         }
     );
-
+    
     // ホーム画面へ戻る
     settingsHomeButton.addEventListener(
         "click",

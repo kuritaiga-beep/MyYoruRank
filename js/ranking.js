@@ -1484,12 +1484,44 @@ function shuffleSongs(
 
 function beginNewRanking() {
 
+    const savedProgress =
+        localStorage.getItem(
+            "rankingProgress"
+        );
+
+
+    // 途中ランキングがある場合は確認
+    if (savedProgress) {
+
+        const shouldStartNewRanking =
+            window.confirm(
+                "途中のランキングがあります。\n\n" +
+                "新しくランキングを開始すると、現在の途中データは削除されます。\n\n" +
+                "途中のランキングを再開したい場合は、ホームに戻り「ランキングを再開」ボタンを押してください。\n\n" +
+                "新しくランキングを開始しますか？"
+            );
+
+
+        // キャンセルなら何もしない
+        if (!shouldStartNewRanking) {
+            return false;
+        }
+
+        // 途中データを削除
+        localStorage.removeItem(
+            "rankingProgress"
+        );
+
+        updateResumeRankingButton();
+
+    }
+
+
     updateRankingTargetSongs();
 
-    startRanking();
+    return true;
 
 }
-
 
 // ==============================
 // 8. ランキングを開始
