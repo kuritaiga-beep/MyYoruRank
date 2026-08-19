@@ -9,20 +9,16 @@
 
 function displaySongs() {
   leftTitle.textContent = currentLeftSong.title;
-
   rightTitle.textContent = currentRightSong.title;
 
   leftImage.src = currentLeftSong.image;
-
   rightImage.src = currentRightSong.image;
 
   leftImage.alt = currentLeftSong.title;
-
   rightImage.alt = currentRightSong.title;
 
   // 前回の画像タイプをリセット
   leftImage.classList.remove("mv-image", "jacket-image");
-
   rightImage.classList.remove("mv-image", "jacket-image");
 
   // 現在の画像タイプを適用
@@ -111,81 +107,58 @@ function compareSongs(leftSong, rightSong) {
 }
 
 // ==============================
-// 3. 左側の楽曲を選択
+// 3. 楽曲を選択
+// ==============================
+
+function selectSong(selectedSong) {
+  // 比較待ちでない場合は何もしない
+  if (comparisonResolve === null) {
+    return;
+  }
+
+  comparisonResults.push({
+    leftSong: currentLeftSong.title,
+    rightSong: currentRightSong.title,
+    selectedSong: selectedSong.title,
+  });
+
+  // 新マージ方式での比較なら、
+  // 使用したマージタスクも同時に記録
+  if (currentMergeTaskId !== null) {
+    mergeTaskSelectionHistory.push(currentMergeTaskId);
+  }
+
+  pendingMergeTaskId = null;
+
+  saveRankingProgress();
+
+  undoButton.disabled = false;
+
+  const resolve = comparisonResolve;
+
+  comparisonResolve = null;
+
+  resolve(selectedSong);
+}
+
+// ==============================
+// 4. 左側の楽曲を選択
 // ==============================
 
 function selectLeftSong() {
-  // 比較待ちでない場合は何もしない
-  if (comparisonResolve === null) {
-    return;
-  }
-
-  comparisonResults.push({
-    leftSong: currentLeftSong.title,
-
-    rightSong: currentRightSong.title,
-
-    selectedSong: currentLeftSong.title,
-  });
-
-  // 新マージ方式での比較なら、
-  // 使用したマージタスクも同時に記録
-  if (currentMergeTaskId !== null) {
-    mergeTaskSelectionHistory.push(currentMergeTaskId);
-  }
-
-  pendingMergeTaskId = null;
-
-  saveRankingProgress();
-
-  undoButton.disabled = false;
-
-  const resolve = comparisonResolve;
-
-  comparisonResolve = null;
-
-  resolve(currentLeftSong);
+  selectSong(currentLeftSong);
 }
 
 // ==============================
-// 4. 右側の楽曲を選択
+// 5. 右側の楽曲を選択
 // ==============================
 
 function selectRightSong() {
-  // 比較待ちでない場合は何もしない
-  if (comparisonResolve === null) {
-    return;
-  }
-
-  comparisonResults.push({
-    leftSong: currentLeftSong.title,
-
-    rightSong: currentRightSong.title,
-
-    selectedSong: currentRightSong.title,
-  });
-
-  // 新マージ方式での比較なら、
-  // 使用したマージタスクも同時に記録
-  if (currentMergeTaskId !== null) {
-    mergeTaskSelectionHistory.push(currentMergeTaskId);
-  }
-
-  pendingMergeTaskId = null;
-
-  saveRankingProgress();
-
-  undoButton.disabled = false;
-
-  const resolve = comparisonResolve;
-
-  comparisonResolve = null;
-
-  resolve(currentRightSong);
+  selectSong(currentRightSong);
 }
 
 // ==============================
-// 5. YouTubeで楽曲を確認
+// 6. YouTubeで楽曲を確認
 // ==============================
 
 function openSongPreview(song) {
@@ -199,7 +172,7 @@ function openSongPreview(song) {
 }
 
 // ==============================
-// 6. 一つ前の選択に戻る
+// 7. 一つ前の選択に戻る
 // ==============================
 
 function undoLastSelection() {
@@ -241,7 +214,7 @@ function undoLastSelection() {
 }
 
 // ==============================
-// 7-3. 比較画面
+// 8. 比較画面イベント
 // ==============================
 
 function setupCompareEvents() {
