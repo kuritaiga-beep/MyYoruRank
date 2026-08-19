@@ -258,11 +258,11 @@ function resetSongListFilters() {
 // 7. イベント登録
 // ==============================
 
-function setupEventListeners() {
-  // ----------
-  // ホーム画面
-  // ----------
+// ==============================
+// 7-1. ホーム画面
+// ==============================
 
+function setupHomeEvents() {
   // ランキング条件画面を開く
   startButton.addEventListener("click", function () {
     // 途中保存データがあるか確認
@@ -306,11 +306,13 @@ function setupEventListeners() {
 
     showSongListScreen();
   });
+}
 
-  // ----------
-  // ランキング条件画面
-  // ----------
+// ==============================
+// 7-2. ランキング条件画面
+// ==============================
 
+function setupRankingSettingsEvents() {
   // ランキング条件フィルターの変更を反映
   rankingFilters.addEventListener("change", function () {
     updateRankingSongCount();
@@ -348,11 +350,13 @@ function setupEventListeners() {
 
     showHomeScreen();
   });
+}
 
-  // ----------
-  // 比較画面
-  // ----------
+// ==============================
+// 7-3. 比較画面
+// ==============================
 
+function setupCompareEvents() {
   // 左側の楽曲を選択
   leftCard.addEventListener("click", function () {
     selectLeftSong();
@@ -381,11 +385,13 @@ function setupEventListeners() {
   undoButton.addEventListener("click", function () {
     undoLastSelection();
   });
+}
 
-  // ----------
-  // 結果画面
-  // ----------
+// ==============================
+// 7-4. 結果画面
+// ==============================
 
+function setupResultEvents() {
   // ランキング条件の開閉
   resultConditionsToggleButton.addEventListener("click", function () {
     const isExpanded =
@@ -411,10 +417,13 @@ function setupEventListeners() {
 
     showHomeScreen();
   });
+}
 
-  setupRankingHistoryEvents();
+// ==============================
+// 7-5. ランキング途中保存・再開
+// ==============================
 
-  
+function setupRankingProgressEvents() {
   // ホーム → ランキングを再開
   resumeRankingButton.addEventListener("click", function () {
     resumeRanking();
@@ -434,11 +443,13 @@ function setupEventListeners() {
 
     updateResumeRankingButton();
   });
+}
 
-  // ----------
-  // 楽曲一覧画面
-  // ----------
+// ==============================
+// 7-6. 楽曲一覧画面
+// ==============================
 
+function setupSongListEvents() {
   // 楽曲一覧からホームへ戻る
   songListBackButton.addEventListener("click", showHomeScreen);
 
@@ -460,6 +471,20 @@ function setupEventListeners() {
 
     filterToggleIcon.textContent = isExpanded ? "▼" : "▲";
   });
+}
+
+// ==============================
+// 7-7. 全イベントを登録
+// ==============================
+
+function setupEventListeners() {
+  setupHomeEvents();
+  setupRankingSettingsEvents();
+  setupCompareEvents();
+  setupResultEvents();
+  setupRankingHistoryEvents();
+  setupRankingProgressEvents();
+  setupSongListEvents();
 }
 
 // ==============================

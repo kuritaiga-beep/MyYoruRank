@@ -1,10 +1,10 @@
 // ==============================
 // ranking.js
-// ランキング処理・進捗表示・結果表示
+// ランキング生成・マージ処理・進捗管理
 // ==============================
 
 // ==============================
-// 0-1. 新マージ方式の状態
+// 1. 新マージ方式の状態
 // ==============================
 
 let mergeTasks = [];
@@ -20,7 +20,7 @@ let forcedNextMergeTaskId = null;
 let pendingMergeTaskId = null;
 
 // ==============================
-// 0-2. マージタスクを作成
+// 2. マージタスクを作成
 // ==============================
 
 function createMergeTasks(songList) {
@@ -84,15 +84,11 @@ function createMergeTasks(songList) {
   // タスク木のルートを作成
   const rootSource = buildTaskTree(songList);
 
-  console.log("作成したマージタスク:", mergeTasks);
-
-  console.log("ルート:", rootSource);
-
   return rootSource;
 }
 
 // ==============================
-// 0-3. 実行可能なマージタスクを取得
+// 3. 実行可能なマージタスクを取得
 // ==============================
 
 function getAvailableMergeTasks() {
@@ -113,7 +109,7 @@ function getAvailableMergeTasks() {
 }
 
 // ==============================
-// 0-4. マージ元が使用可能か確認
+// 4. マージ元が使用可能か確認
 // ==============================
 
 function isMergeSourceReady(source) {
@@ -136,7 +132,7 @@ function isMergeSourceReady(source) {
 }
 
 // ==============================
-// 0-5. 実行可能なタスクから
+// 5. 実行可能なタスクから
 //      ランダムに1つ選ぶ
 // ==============================
 
@@ -156,7 +152,7 @@ function selectRandomMergeTask() {
 }
 
 // ==============================
-// 0-6. 次に進めるマージタスクを取得
+// 6. 次に進めるマージタスクを取得
 // ==============================
 
 function selectNextMergeTask() {
@@ -253,7 +249,7 @@ function selectNextMergeTask() {
 }
 
 // ==============================
-// 0-6. マージ元から並びを取得
+// 7. マージ元から並びを取得
 // ==============================
 
 function getMergeSourceList(source) {
@@ -277,7 +273,7 @@ function getMergeSourceList(source) {
 }
 
 // ==============================
-// 0-7. マージタスクを1比較だけ進める
+// 8. マージタスクを1比較だけ進める
 // ==============================
 
 async function advanceMergeTask(task) {
@@ -396,7 +392,7 @@ async function advanceMergeTask(task) {
 }
 
 // ==============================
-// 0-8. ランダム化マージソートを実行
+// 9. ランダム化マージソートを実行
 // ==============================
 
 async function runRandomizedMergeSort(songList, currentRunId) {
@@ -489,7 +485,7 @@ async function runRandomizedMergeSort(songList, currentRunId) {
 }
 
 // ==============================
-// 1. 比較処理の総ステップ数を計算
+// 10. 比較処理の総ステップ数を計算
 // ==============================
 
 function calculateTotalMergeSteps(length) {
@@ -509,7 +505,7 @@ function calculateTotalMergeSteps(length) {
 }
 
 // ==============================
-// 2. 進捗表示を更新
+// 11. 進捗表示を更新
 // ==============================
 
 function updateProgress() {
@@ -527,9 +523,8 @@ function updateProgress() {
   progressFill.style.width = `${progressPercent}%`;
 }
 
-
 // ==============================
-// 6. 楽曲の順番をシャッフル
+// 12. 楽曲の順番をシャッフル
 // ==============================
 
 function shuffleSongs(songListToShuffle) {
@@ -547,10 +542,8 @@ function shuffleSongs(songListToShuffle) {
   return shuffledSongs;
 }
 
-
-
 // ==============================
-// 8. ランキングを開始
+// 13. ランキングを開始
 // ==============================
 
 async function startRanking(isReplay = false) {
@@ -669,8 +662,6 @@ async function startRanking(isReplay = false) {
 
   const resultId = saveRankingResult(ranking);
 
-  console.log("saveRankingResultから返ったID:", resultId);
-
   // 完了したので途中保存データを削除
   localStorage.removeItem("rankingProgress");
 
@@ -681,155 +672,3 @@ async function startRanking(isReplay = false) {
 
   showResultScreen(resultId);
 }
-
-
-// ==============================
-// 10. ランキング結果を保存
-// ==============================
-
-function saveRankingResult(ranking) {
-  const rankingHistory =
-    JSON.parse(localStorage.getItem("rankingHistory")) || [];
-
-  const rankingResult = {
-    id: Date.now(),
-
-    date: new Date().toISOString(),
-
-    conditions: {
-      songCount: currentRankingConditions.songCount,
-
-      albums: [...currentRankingConditions.albums],
-
-      musicTypes: [...currentRankingConditions.musicTypes],
-
-      categories: [...currentRankingConditions.categories],
-
-      mvStatus: [...currentRankingConditions.mvStatus],
-    },
-
-    ranking: ranking.map(function (song) {
-      return {
-        title: song.title,
-        image: song.image,
-        imageType: song.imageType,
-      };
-    }),
-  };
-
-  rankingHistory.unshift(rankingResult);
-
-  localStorage.setItem("rankingHistory", JSON.stringify(rankingHistory));
-
-  return rankingResult.id;
-}
-
-// ==============================
-// ランキング途中状態を保存
-// ==============================
-
-function saveRankingProgress() {
-  const progressData = {
-    savedAt: new Date().toISOString(),
-
-    songOrder: currentRankingSongOrder.map(function (song) {
-      return song.title;
-    }),
-
-    comparisonResults: [...comparisonResults],
-
-    mergeTaskSelectionHistory: [...mergeTaskSelectionHistory],
-
-    pendingMergeTaskId: pendingMergeTaskId,
-
-    conditions: currentRankingConditions,
-  };
-
-  localStorage.setItem("rankingProgress", JSON.stringify(progressData));
-}
-
-// ==============================
-// ランキング途中状態を読み込む
-// ==============================
-
-function loadRankingProgress() {
-  const savedProgress = localStorage.getItem("rankingProgress");
-
-  if (!savedProgress) {
-    return null;
-  }
-
-  try {
-    return JSON.parse(savedProgress);
-  } catch (error) {
-    console.error("ランキング途中データの読み込みに失敗しました。", error);
-
-    localStorage.removeItem("rankingProgress");
-
-    return null;
-  }
-}
-
-// ==============================
-// ランキング途中状態を復元
-// ==============================
-
-function restoreRankingProgress(savedProgress) {
-  // 保存時の曲順を復元
-  currentRankingSongOrder = savedProgress.songOrder
-    .map(function (songTitle) {
-      return songs.find(function (song) {
-        return song.title === songTitle;
-      });
-    })
-    .filter(function (song) {
-      return song !== undefined;
-    });
-
-  // ランキング対象曲も復元
-  rankingTargetSongs = [...currentRankingSongOrder];
-
-  // 比較履歴を復元
-  comparisonResults.length = 0;
-
-  comparisonResults.push(...savedProgress.comparisonResults);
-
-  // マージタスク選択履歴を復元
-  mergeTaskSelectionHistory.length = 0;
-
-  mergeTaskSelectionHistory.push(
-    ...(savedProgress.mergeTaskSelectionHistory || []),
-  );
-
-  // 中断時に表示されていた未回答タスクを復元
-  pendingMergeTaskId = savedProgress.pendingMergeTaskId || null;
-
-  // ランキング条件を復元
-  currentRankingConditions = savedProgress.conditions;
-
-  // 保存済みの比較結果を最初から再現
-  mergeTaskReplayIndex = 0;
-  replayIndex = 0;
-  isReplaying = true;
-}
-
-// ==============================
-// 保存したランキングを再開
-// ==============================
-
-function resumeRanking() {
-  const savedProgress = loadRankingProgress();
-
-  if (!savedProgress) {
-    return;
-  }
-
-  restoreRankingProgress(savedProgress);
-
-  hideAllScreens();
-
-  compareScreen.style.display = "block";
-
-  startRanking(true);
-}
-
