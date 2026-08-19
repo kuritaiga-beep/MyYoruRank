@@ -4,23 +4,7 @@
 // アルバムごとのグループ表示とフィルター処理
 // ==============================
 
-// ==============================
-// 1. 楽曲一覧の設定
-// ==============================
 
-// 表示したいアルバム順
-const albumOrder = [
-  "夏草が邪魔をする",
-  "負け犬にアンコールはいらない",
-  "だから僕は音楽を辞めた",
-  "エルマ",
-  "盗作",
-  "創作",
-  "幻燈",
-  "二人称",
-  "シングル",
-  "トリビュート",
-];
 
 // ==============================
 // 2. 楽曲一覧を生成
@@ -44,25 +28,6 @@ function createSongList() {
   applySongListFilters();
 }
 
-// ==============================
-// 3. 楽曲をアルバムごとに分類
-// ==============================
-
-function groupSongsByAlbum(songData) {
-  const groupedSongs = new Map();
-
-  songData.forEach(function (song) {
-    const albumName = getDisplayAlbumName(song);
-
-    if (!groupedSongs.has(albumName)) {
-      groupedSongs.set(albumName, []);
-    }
-
-    groupedSongs.get(albumName).push(song);
-  });
-
-  return groupedSongs;
-}
 
 // ========================================
 // 3.1 フィルター機能
@@ -400,44 +365,6 @@ function updateSongListSummary(
   }
 }
 
-// ==============================
-// 4. 一覧で表示するアルバム名を取得
-// ==============================
-
-function getDisplayAlbumName(song) {
-  // albumが空文字の曲は
-  // シングルとしてまとめる
-  if (typeof song.album !== "string" || song.album.trim() === "") {
-    return "シングル";
-  }
-
-  return song.album.trim();
-}
-
-// ==============================
-// 5. アルバムの表示順を作る
-// ==============================
-
-function getOrderedAlbumNames(groupedSongs) {
-  const orderedAlbumNames = [];
-
-  // 指定済みのアルバム順で追加
-  albumOrder.forEach(function (albumName) {
-    if (groupedSongs.has(albumName)) {
-      orderedAlbumNames.push(albumName);
-    }
-  });
-
-  // albumOrderにない新しいアルバムも
-  // 一覧から消えないよう最後に追加
-  groupedSongs.forEach(function (_, albumName) {
-    if (!orderedAlbumNames.includes(albumName)) {
-      orderedAlbumNames.push(albumName);
-    }
-  });
-
-  return orderedAlbumNames;
-}
 
 // ==============================
 // 6. アルバムセクションを作成
