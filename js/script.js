@@ -6,225 +6,178 @@
 // 画面
 // ----------
 
-const homeScreen =
-    document.getElementById("home-screen");
+const homeScreen = document.getElementById("home-screen");
 
-const settingsScreen =
-    document.getElementById("settings-screen");
+const settingsScreen = document.getElementById("settings-screen");
 
-const compareScreen =
-    document.getElementById("compare-screen");
+const compareScreen = document.getElementById("compare-screen");
 
-const resultScreen =
-    document.getElementById("result-screen");
+const resultScreen = document.getElementById("result-screen");
 
-const songListScreen =
-    document.getElementById("song-list-screen");
-
+const songListScreen = document.getElementById("song-list-screen");
 
 // ----------
 // ホーム画面
 // ----------
 
-const startButton =
-    document.getElementById("start-button");
+const startButton = document.getElementById("start-button");
 
-const songListButton =
-    document.getElementById("song-list-button");
+const songListButton = document.getElementById("song-list-button");
 
-const resumeRankingButton =
-    document.getElementById("resume-ranking-button");
-
+const resumeRankingButton = document.getElementById("resume-ranking-button");
 
 // ----------
 // ランキング条件画面
 // ----------
 
-const rankingStartButton =
-    document.getElementById("ranking-start-button");
+const rankingStartButton = document.getElementById("ranking-start-button");
 
-const rankingAlbumFilterOptions =
-    document.getElementById("ranking-album-filter-options");
+const rankingAlbumFilterOptions = document.getElementById(
+  "ranking-album-filter-options",
+);
 
-const rankingSongCount =
-    document.getElementById("ranking-song-count");
+const rankingSongCount = document.getElementById("ranking-song-count");
 
-const rankingFilters =
-    document.getElementById("ranking-filters");
+const rankingFilters = document.getElementById("ranking-filters");
 
-const rankingFilterResetButton =
-    document.getElementById("ranking-filter-reset-button");
+const rankingFilterResetButton = document.getElementById(
+  "ranking-filter-reset-button",
+);
 
-const settingsHomeButton =
-    document.getElementById("settings-home-button");
-
+const settingsHomeButton = document.getElementById("settings-home-button");
 
 // ----------
 // 比較画面
 // ----------
 
-const progressText =
-    document.getElementById("progress-text");
+const progressText = document.getElementById("progress-text");
 
-const progressFill =
-    document.querySelector(".progress-fill");
+const progressFill = document.querySelector(".progress-fill");
 
-const leftCard =
-    document.getElementById("left-card");
+const leftCard = document.getElementById("left-card");
 
-const rightCard =
-    document.getElementById("right-card");
+const rightCard = document.getElementById("right-card");
 
-const leftTitle =
-    document.getElementById("left-title");
+const leftTitle = document.getElementById("left-title");
 
-const rightTitle =
-    document.getElementById("right-title");
+const rightTitle = document.getElementById("right-title");
 
-const leftImage =
-    document.getElementById("left-image");
+const leftImage = document.getElementById("left-image");
 
-const rightImage =
-    document.getElementById("right-image");
+const rightImage = document.getElementById("right-image");
 
-const leftPreviewButton =
-    document.getElementById("left-preview-button");
+const leftPreviewButton = document.getElementById("left-preview-button");
 
-const rightPreviewButton =
-    document.getElementById("right-preview-button");
+const rightPreviewButton = document.getElementById("right-preview-button");
 
-const undoButton =
-    document.getElementById("undo-button");
+const undoButton = document.getElementById("undo-button");
 
-const pauseRankingButton =
-    document.getElementById("pause-ranking-button");
-
+const pauseRankingButton = document.getElementById("pause-ranking-button");
 
 // ----------
 // 結果画面
 // ----------
 
-const rankingList =
-    document.getElementById("ranking-list");
+const rankingList = document.getElementById("ranking-list");
 
-const restartButton =
-    document.getElementById("restart-button");
+const restartButton = document.getElementById("restart-button");
 
-const resultConditionsToggleButton =
-    document.getElementById("result-ranking-conditions-toggle");
+const resultConditionsToggleButton = document.getElementById(
+  "result-ranking-conditions-toggle",
+);
 
-const resultConditionsToggleText =
-    document.getElementById("result-ranking-conditions-toggle-text");
+const resultConditionsToggleText = document.getElementById(
+  "result-ranking-conditions-toggle-text",
+);
 
-const resultConditionsToggleIcon =
-    document.getElementById("result-ranking-conditions-toggle-icon");
+const resultConditionsToggleIcon = document.getElementById(
+  "result-ranking-conditions-toggle-icon",
+);
 
-const resultConditionsContent =
-    document.getElementById("result-ranking-settings-content");
-
+const resultConditionsContent = document.getElementById(
+  "result-ranking-settings-content",
+);
 
 // ----------
 // ランキング履歴画面
 // ----------
 
-const rankingHistoryScreen =
-    document.getElementById("ranking-history-screen");
+const rankingHistoryScreen = document.getElementById("ranking-history-screen");
 
-const rankingHistoryButton =
-    document.getElementById("ranking-history-button");
+const rankingHistoryButton = document.getElementById("ranking-history-button");
 
-const rankingHistoryHomeButton =
-    document.getElementById("ranking-history-home-button");
+const rankingHistoryHomeButton = document.getElementById(
+  "ranking-history-home-button",
+);
 
-const rankingHistoryList =
-    document.getElementById("ranking-history-list");
+const rankingHistoryList = document.getElementById("ranking-history-list");
 
-const rankingHistoryDetailScreen =
-    document.getElementById("ranking-history-detail-screen");
+const rankingHistoryDetailScreen = document.getElementById(
+  "ranking-history-detail-screen",
+);
 
-const rankingHistoryDetailSettings =
-    document.getElementById("ranking-history-detail-settings");
+const rankingHistoryDetailSettings = document.getElementById(
+  "ranking-history-detail-settings",
+);
 
-const rankingHistoryDetailList =
-    document.getElementById("ranking-history-detail-list");
+const rankingHistoryDetailList = document.getElementById(
+  "ranking-history-detail-list",
+);
 
-const rankingHistoryDetailBackButton =
-    document.getElementById("ranking-history-detail-back-button");
-
+const rankingHistoryDetailBackButton = document.getElementById(
+  "ranking-history-detail-back-button",
+);
 
 // ----------
 // 楽曲一覧画面
 // ----------
 
-const songList =
-    document.getElementById("song-list");
+const songList = document.getElementById("song-list");
 
-const songListHomeButton =
-    document.getElementById("song-list-home-button");
+const songListHomeButton = document.getElementById("song-list-home-button");
 
-const songListBackButton =
-    document.getElementById("song-list-back-button");
+const songListBackButton = document.getElementById("song-list-back-button");
 
-const songListFilters =
-    document.getElementById("song-list-filters");
+const songListFilters = document.getElementById("song-list-filters");
 
-const songSearchInput =
-    document.getElementById("song-search-input");
+const songSearchInput = document.getElementById("song-search-input");
 
-const filterResetButton =
-    document.getElementById("filter-reset-button");
+const filterResetButton = document.getElementById("filter-reset-button");
 
-const albumFilterOptions =
-    document.getElementById("album-filter-options");
+const albumFilterOptions = document.getElementById("album-filter-options");
 
-const musicTypeCheckboxes =
-    document.querySelectorAll(
-        'input[name="music-type"]'
-    );
+const musicTypeCheckboxes = document.querySelectorAll(
+  'input[name="music-type"]',
+);
 
-const mvStatusCheckboxes =
-    document.querySelectorAll(
-        'input[name="mv-status"]'
-    );
+const mvStatusCheckboxes = document.querySelectorAll('input[name="mv-status"]');
 
-const songCategoryCheckboxes =
-    document.querySelectorAll(
-        'input[name="song-category"]'
-    );
+const songCategoryCheckboxes = document.querySelectorAll(
+  'input[name="song-category"]',
+);
 
-const totalSongCount =
-    document.getElementById("total-song-count");
+const totalSongCount = document.getElementById("total-song-count");
 
-const mvSongCount =
-    document.getElementById("mv-song-count");
+const mvSongCount = document.getElementById("mv-song-count");
 
-const instrumentalSongCount =
-    document.getElementById("instrumental-song-count");
+const instrumentalSongCount = document.getElementById(
+  "instrumental-song-count",
+);
 
-const filterToggleButton =
-    document.getElementById(
-        "filter-toggle-button"
-    );
+const filterToggleButton = document.getElementById("filter-toggle-button");
 
-const filterToggleIcon =
-    document.getElementById(
-        "filter-toggle-icon"
-    );
-
+const filterToggleIcon = document.getElementById("filter-toggle-icon");
 
 // ----------
 // デバッグ表示
 // ----------
 
-const imageErrorSummary =
-    document.getElementById("image-error-summary");
+const imageErrorSummary = document.getElementById("image-error-summary");
 
-const imageErrorCount =
-    document.getElementById("image-error-count");
+const imageErrorCount = document.getElementById("image-error-count");
 // ==========================
 // 2. ランキング条件画面
 // ==========================
-
 
 // ==============================
 // 3. 共通設定
@@ -233,9 +186,7 @@ const imageErrorCount =
 // URLの末尾に「?debug=true」を付けると
 // デバッグモードが有効になる
 const isDebugMode =
-    new URLSearchParams(window.location.search)
-        .get("debug") === "true";
-
+  new URLSearchParams(window.location.search).get("debug") === "true";
 
 // ==============================
 // 4. ランキングの共通状態
@@ -277,636 +228,237 @@ let hasInitializedRankingFilters = false;
 
 let hasInitializedRankingSettings = false;
 
-
-
-
-// ==============================
-// 5. 画面切り替え
-// ==============================
-
-// ==============================
-// ブラウザ履歴に画面状態を保存
-// ==============================
-
-function pushScreenHistory(
-    screenName,
-    extraState = {}
-) {
-
-    history.pushState(
-        {
-            screen: screenName,
-            ...extraState
-        },
-        "",
-        `#${screenName}`
-    );
-
-}
-
-function hideAllScreens() {
-
-    homeScreen.style.display = "none";
-    settingsScreen.style.display = "none";
-    compareScreen.style.display = "none";
-    resultScreen.style.display = "none";
-    songListScreen.style.display = "none";
-    rankingHistoryScreen.style.display = "none";
-    rankingHistoryDetailScreen.style.display = "none";
-
-}
-
-function showHomeScreen() {
-
-    hideAllScreens();
-
-    homeScreen.style.display = "block";
-
-}
-
-function showSettingsScreen() {
-
-    hideAllScreens();
-
-    createRankingAlbumFilterOptions();
-
-    if (!hasInitializedRankingSettings) {
-
-        applyRecommendedRankingFilters();
-
-        hasInitializedRankingSettings = true;
-
-    }
-
-    updateRankingSongCount();
-
-    settingsScreen.style.display = "block";
-
-    pushScreenHistory(
-        "settings"
-    );
-
-}
-
-
-function showCompareScreen() {
-
-    hideAllScreens();
-
-    compareScreen.style.display = "block";
-
-    pushScreenHistory("compare");
-
-}
-
-function showResultScreen(
-    resultId = null
-) {
-
-    console.log(
-        "showResultScreen に渡された resultId:",
-        resultId
-    );
-
-    hideAllScreens();
-
-    resultScreen.style.display =
-        "block";
-
-    history.replaceState(
-        {
-            screen: "result",
-            resultId: resultId
-        },
-        "",
-        "#result"
-    );
-
-}
-
-function showSongListScreen() {
-
-    hideAllScreens();
-
-    songListScreen.style.display = "block";
-
-    pushScreenHistory("song-list");
-
-}
-
 // ==============================
 // ランキング再開ボタンの表示を更新
 // ==============================
 
 function updateResumeRankingButton() {
+  const savedProgress = localStorage.getItem("rankingProgress");
 
-    const savedProgress =
-        localStorage.getItem(
-            "rankingProgress"
-        );
-
-    if (savedProgress) {
-
-        resumeRankingButton.style.display =
-            "block";
-
-    } else {
-
-        resumeRankingButton.style.display =
-            "none";
-
-    }
-
+  if (savedProgress) {
+    resumeRankingButton.style.display = "block";
+  } else {
+    resumeRankingButton.style.display = "none";
+  }
 }
 
 updateResumeRankingButton();
-
-history.replaceState(
-    {
-        screen: "home"
-    },
-    "",
-    "#home"
-);
-
-window.addEventListener(
-    "popstate",
-    function (event) {
-
-        if (!event.state) {
-            return;
-        }
-
-        const screenName =
-            event.state.screen;
-
-        // 比較画面から別画面へ移動する場合は
-        // 現在のランキングを中断して保存する
-        if (
-            compareScreen.style.display !== "none" &&
-            screenName !== "compare"
-        ) {
-
-            saveRankingProgress();
-
-            rankingRunId++;
-
-            comparisonResolve = null;
-
-            updateResumeRankingButton();
-
-        }
-
-        if (screenName === "home") {
-
-            hideAllScreens();
-
-            homeScreen.style.display =
-                "block";
-
-        }
-
-        if (screenName === "settings") {
-
-            hideAllScreens();
-
-            settingsScreen.style.display =
-                "block";
-
-        }
-
-        if (screenName === "compare") {
-
-            resumeRanking();
-
-        }
-
-        if (screenName === "song-list") {
-
-            hideAllScreens();
-
-            songListScreen.style.display =
-                "block";
-
-        }
-
-        if (screenName === "ranking-history") {
-
-            hideAllScreens();
-
-            rankingHistoryScreen.style.display =
-                "block";
-
-        }
-
-        if (screenName === "ranking-history-detail") {
-
-            const rankingHistory =
-                JSON.parse(
-                    localStorage.getItem(
-                        "rankingHistory"
-                    )
-                ) || [];
-
-            const rankingId =
-                event.state.rankingId;
-
-            showRankingHistoryDetail(
-                rankingHistory,
-                rankingId,
-                false
-            );
-
-        }
-
-        if (screenName === "result") {
-
-            const resultId =
-                event.state.resultId;
-
-            console.log(
-                "復元する結果ID:",
-                resultId
-            );
-
-            const rankingHistory =
-                JSON.parse(
-                    localStorage.getItem("rankingHistory")
-                ) || [];
-
-            const savedRanking =
-                rankingHistory.find(function (item) {
-
-                    return item.id === resultId;
-
-                });
-
-            console.log(
-                "見つかったランキング:",
-                savedRanking
-            );
-
-            if (savedRanking) {
-
-                displayRanking(
-                    savedRanking.ranking
-                );
-
-                displayRankingConditions(
-                    savedRanking.conditions
-                );
-
-                hideAllScreens();
-
-                resultScreen.style.display =
-                    "block";
-
-            } else {
-
-                console.warn(
-                    "復元するランキングが見つかりませんでした:",
-                    resultId
-                );
-
-                showHomeScreen();
-
-            }
-
-        }
-
-    }
-);
-
 
 // ==============================
 // 6. 共通リセット処理
 // ==============================
 
 function resetRankingState() {
+  // 実行中の古いランキング処理を無効にする
+  rankingRunId++;
 
-    // 実行中の古いランキング処理を無効にする
-    rankingRunId++;
+  // 比較状態
+  comparisonResolve = null;
+  comparisonResults.length = 0;
+  replayIndex = 0;
+  isReplaying = false;
 
-    // 比較状態
-    comparisonResolve = null;
-    comparisonResults.length = 0;
-    replayIndex = 0;
-    isReplaying = false;
+  // 進捗状態
+  completedMergeSteps = 0;
+  progressPercent = 0;
 
-    // 進捗状態
-    completedMergeSteps = 0;
-    progressPercent = 0;
+  // UI
+  undoButton.disabled = true;
 
-    // UI
-    undoButton.disabled = true;
-
-    progressText.textContent = "進捗 0%";
-    progressFill.style.width = "0%";
-
+  progressText.textContent = "進捗 0%";
+  progressFill.style.width = "0%";
 }
 function resetSongListFilters() {
-
-    if (
-        typeof resetSongListFilterState ===
-        "function"
-    ) {
-
-        resetSongListFilterState();
-
-    }
-
+  if (typeof resetSongListFilterState === "function") {
+    resetSongListFilterState();
+  }
 }
-
 
 // ==============================
 // 7. イベント登録
 // ==============================
 
 function setupEventListeners() {
+  // ----------
+  // ホーム画面
+  // ----------
 
-    // ----------
-    // ホーム画面
-    // ----------
+  // ランキング条件画面を開く
+  startButton.addEventListener("click", function () {
+    // 途中保存データがあるか確認
+    const savedProgress = localStorage.getItem("rankingProgress");
 
-    // ランキング条件画面を開く
-    startButton.addEventListener(
-        "click",
-        function () {
+    // 途中データがある場合だけ確認
+    if (savedProgress) {
+      const shouldStartNewRanking = window.confirm(
+        "途中のランキングが保存されています。\n破棄して新しくランキングを始めますか？",
+      );
 
-            // 途中保存データがあるか確認
-            const savedProgress =
-                localStorage.getItem(
-                    "rankingProgress"
-                );
+      // キャンセルなら何もしない
+      if (!shouldStartNewRanking) {
+        return;
+      }
 
-            // 途中データがある場合だけ確認
-            if (savedProgress) {
+      // OKなら途中データを破棄
+      localStorage.removeItem("rankingProgress");
 
-                const shouldStartNewRanking =
-                    window.confirm(
-                        "途中のランキングが保存されています。\n破棄して新しくランキングを始めますか？"
-                    );
+      updateResumeRankingButton();
+    }
 
-                // キャンセルなら何もしない
-                if (!shouldStartNewRanking) {
-                    return;
-                }
+    resetRankingState();
 
-                // OKなら途中データを破棄
-                localStorage.removeItem(
-                    "rankingProgress"
-                );
+    showSettingsScreen();
+  });
 
-                updateResumeRankingButton();
+  // 楽曲一覧を開く
+  songListButton.addEventListener("click", function () {
+    resetSongListFilters();
 
-            }
+    createAlbumFilterOptions();
 
-            resetRankingState();
+    createSongList();
 
-            showSettingsScreen();
+    songListFilters.hidden = true;
 
-        }
+    filterToggleButton.setAttribute("aria-expanded", "false");
+
+    filterToggleIcon.textContent = "▼";
+
+    showSongListScreen();
+  });
+
+  // ----------
+  // ランキング条件画面
+  // ----------
+
+  // ランキング条件フィルターの変更を反映
+  rankingFilters.addEventListener("change", function () {
+    updateRankingSongCount();
+  });
+
+  // ランキング条件をリセット
+  rankingFilterResetButton.addEventListener("click", function () {
+    const rankingFilterInputs = rankingFilters.querySelectorAll(
+      'input[type="checkbox"]',
     );
 
-    // 楽曲一覧を開く
-    songListButton.addEventListener(
-        "click",
-        function () {
+    rankingFilterInputs.forEach(function (input) {
+      input.checked = false;
+    });
 
-            resetSongListFilters();
+    updateRankingSongCount();
+  });
 
-            createAlbumFilterOptions();
+  // 条件を決めてランキング開始
+  rankingStartButton.addEventListener("click", function () {
+    const didStart = beginNewRanking();
 
-            createSongList();
+    if (!didStart) {
+      return;
+    }
 
-            songListFilters.hidden = true;
+    showCompareScreen();
 
-            filterToggleButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
+    startRanking();
+  });
 
-            filterToggleIcon.textContent = "▼";
+  // ホーム画面へ戻る
+  settingsHomeButton.addEventListener("click", function () {
+    resetRankingState();
 
-            showSongListScreen();
+    showHomeScreen();
+  });
 
-        }
+  // ----------
+  // 比較画面
+  // ----------
+
+  // 左側の楽曲を選択
+  leftCard.addEventListener("click", function () {
+    selectLeftSong();
+  });
+
+  // 右側の楽曲を選択
+  rightCard.addEventListener("click", function () {
+    selectRightSong();
+  });
+
+  // 左側の曲をYouTubeで確認
+  leftPreviewButton.addEventListener("click", function (event) {
+    event.stopPropagation();
+
+    openSongPreview(currentLeftSong);
+  });
+
+  // 右側の曲をYouTubeで確認
+  rightPreviewButton.addEventListener("click", function (event) {
+    event.stopPropagation();
+
+    openSongPreview(currentRightSong);
+  });
+
+  // 一つ前の選択に戻る
+  undoButton.addEventListener("click", function () {
+    undoLastSelection();
+  });
+
+  // ----------
+  // 結果画面
+  // ----------
+
+  // ランキング条件の開閉
+  resultConditionsToggleButton.addEventListener("click", function () {
+    const isExpanded =
+      resultConditionsToggleButton.getAttribute("aria-expanded") === "true";
+
+    resultConditionsToggleButton.setAttribute(
+      "aria-expanded",
+      String(!isExpanded),
     );
 
+    resultConditionsContent.hidden = isExpanded;
 
-    // ----------
-    // ランキング条件画面
-    // ----------
+    resultConditionsToggleIcon.textContent = isExpanded ? "▼" : "▲";
 
-    // ランキング条件フィルターの変更を反映
-    rankingFilters.addEventListener(
-        "change",
-        function () {
+    resultConditionsToggleText.textContent = isExpanded
+      ? "条件を見る"
+      : "条件を閉じる";
+  });
 
-            updateRankingSongCount();
+  // ホーム画面へ戻る
+  restartButton.addEventListener("click", function () {
+    resetRankingState();
 
-        }
-    );
+    showHomeScreen();
+  });
 
-    // ランキング条件をリセット
-    rankingFilterResetButton.addEventListener(
-        "click",
-        function () {
+  // ==============================
+  // ランキング履歴画面
+  // ==============================
 
-            const rankingFilterInputs =
-                rankingFilters.querySelectorAll(
-                    'input[type="checkbox"]'
-                );
+  function displayRankingHistory(rankingHistory) {
+    rankingHistoryList.innerHTML = "";
 
-            rankingFilterInputs.forEach(
-                function (input) {
-
-                    input.checked = false;
-
-                }
-            );
-
-            updateRankingSongCount();
-
-        }
-    );
-
-    // 条件を決めてランキング開始
-    rankingStartButton.addEventListener(
-        "click",
-        function () {
-
-            const didStart =
-                beginNewRanking();
-
-            if (!didStart) {
-                return;
-            }
-
-            showCompareScreen();
-
-            startRanking();
-
-        }
-    );
-    
-    // ホーム画面へ戻る
-    settingsHomeButton.addEventListener(
-        "click",
-        function () {
-
-            resetRankingState();
-
-            showHomeScreen();
-
-        }
-    );
-
-
-
-
-    // ----------
-    // 比較画面
-    // ----------
-
-    // 左側の楽曲を選択
-    leftCard.addEventListener(
-        "click",
-        function () {
-
-            selectLeftSong();
-
-        }
-    );
-
-    // 右側の楽曲を選択
-    rightCard.addEventListener(
-        "click",
-        function () {
-
-            selectRightSong();
-
-        }
-    );
-
-    // 左側の曲をYouTubeで確認
-    leftPreviewButton.addEventListener(
-        "click",
-        function (event) {
-
-            event.stopPropagation();
-
-            openSongPreview(currentLeftSong);
-
-        }
-    );
-
-    // 右側の曲をYouTubeで確認
-    rightPreviewButton.addEventListener(
-        "click",
-        function (event) {
-
-            event.stopPropagation();
-
-            openSongPreview(currentRightSong);
-
-        }
-    );
-
-    // 一つ前の選択に戻る
-    undoButton.addEventListener(
-        "click",
-        function () {
-
-            undoLastSelection();
-
-        }
-    );
-
-
-    // ----------
-    // 結果画面
-    // ----------
-
-
-    // ランキング条件の開閉
-    resultConditionsToggleButton.addEventListener(
-        "click",
-        function () {
-
-            const isExpanded =
-                resultConditionsToggleButton.getAttribute(
-                    "aria-expanded"
-                ) === "true";
-
-            resultConditionsToggleButton.setAttribute(
-                "aria-expanded",
-                String(!isExpanded)
-            );
-
-            resultConditionsContent.hidden =
-                isExpanded;
-
-            resultConditionsToggleIcon.textContent =
-                isExpanded ? "▼" : "▲";
-
-            resultConditionsToggleText.textContent =
-                isExpanded
-                    ? "条件を見る"
-                    : "条件を閉じる";
-
-        }
-    );
-
-
-    // ホーム画面へ戻る
-    restartButton.addEventListener(
-        "click",
-        function () {
-
-            resetRankingState();
-
-            showHomeScreen();
-
-        }
-    );
-
-    // ==============================
-    // ランキング履歴画面
-    // ==============================
-
-    function displayRankingHistory(rankingHistory) {
-
-        rankingHistoryList.innerHTML = "";
-
-        if (rankingHistory.length === 0) {
-
-            rankingHistoryList.innerHTML = `
+    if (rankingHistory.length === 0) {
+      rankingHistoryList.innerHTML = `
                 <p>
                     保存されたランキングはありません。
                 </p>
             `;
 
-            return;
+      return;
+    }
 
-        }
+    rankingHistory.forEach(function (history) {
+      const historyItem = document.createElement("div");
 
-        rankingHistory.forEach(
-            function (history) {
+      historyItem.classList.add("ranking-history-item");
 
-                const historyItem =
-                    document.createElement("div");
-
-                historyItem.classList.add(
-                    "ranking-history-item"
-                );
-
-                historyItem.innerHTML = `
+      historyItem.innerHTML = `
                     <div class="ranking-history-info">
 
                         <div>
-                            ${new Date(history.date)
-                                .toLocaleString("ja-JP")}
+                            ${new Date(history.date).toLocaleString("ja-JP")}
                         </div>
 
                         <div>
@@ -940,135 +492,82 @@ function setupEventListeners() {
                     </div>
                 `;
 
-                const viewButton =
-                    historyItem.querySelector(
-                        ".ranking-history-view-button"
-                    );
+      const viewButton = historyItem.querySelector(
+        ".ranking-history-view-button",
+      );
 
-                const deleteButton = historyItem.querySelector(
-                        ".ranking-history-delete-button"
-                    );
+      const deleteButton = historyItem.querySelector(
+        ".ranking-history-delete-button",
+      );
 
-                viewButton.addEventListener(
-                    "click",
-                    function () {
+      viewButton.addEventListener("click", function () {
+        const rankingId = Number(viewButton.dataset.rankingId);
 
-                        const rankingId =
-                            Number(
-                                viewButton.dataset.rankingId
-                            );
+        showRankingHistoryDetail(rankingHistory, rankingId);
+      });
 
-                        showRankingHistoryDetail(
-                            rankingHistory,
-                            rankingId
-                        );
+      deleteButton.addEventListener("click", function () {
+        const rankingId = Number(deleteButton.dataset.rankingId);
 
-                    }
-                );
+        const shouldDelete =
+          window.confirm("このランキング履歴を削除しますか？");
 
-                deleteButton.addEventListener(
-                    "click",
-                    function () {
+        if (!shouldDelete) {
+          return;
+        }
 
-                        const rankingId =
-                            Number(
-                                deleteButton.dataset.rankingId
-                            );
+        console.log("削除するランキングID:", rankingId);
 
-                        const shouldDelete =
-                            window.confirm(
-                                "このランキング履歴を削除しますか？"
-                            );
+        const updatedRankingHistory = rankingHistory.filter(function (history) {
+          return history.id !== rankingId;
+        });
 
-                        if (!shouldDelete) {
-                            return;
-                        }
-
-                        console.log(
-                            "削除するランキングID:",
-                            rankingId
-                        );
-
-                        const updatedRankingHistory =
-                            rankingHistory.filter(
-                                function (history) {
-
-                                    return history.id !== rankingId;
-
-                                }
-                            );
-
-                        localStorage.setItem(
-                            "rankingHistory",
-                            JSON.stringify(updatedRankingHistory)
-                        );
-
-                        displayRankingHistory(
-                            updatedRankingHistory
-                        );
-
-                    }
-                );
-
-                rankingHistoryList.appendChild(
-                    historyItem
-                );
-
-            }
+        localStorage.setItem(
+          "rankingHistory",
+          JSON.stringify(updatedRankingHistory),
         );
 
-    }
+        displayRankingHistory(updatedRankingHistory);
+      });
 
-    let isShowingAllHistoryRanking = false;
+      rankingHistoryList.appendChild(historyItem);
+    });
+  }
 
-    // ==============================
-    // 保存ランキングの詳細を表示
-    // ==============================
+  let isShowingAllHistoryRanking = false;
 
-    function showRankingHistoryDetail(
-        rankingHistory,
-        rankingId,
-        shouldPushHistory = true
-    ) {
+  // ==============================
+  // 保存ランキングの詳細を表示
+  // ==============================
 
-        const selectedHistory =
-            rankingHistory.find(
-                function (history) {
+  function showRankingHistoryDetail(
+    rankingHistory,
+    rankingId,
+    shouldPushHistory = true,
+  ) {
+    const selectedHistory = rankingHistory.find(function (history) {
+      return history.id === rankingId;
+    });
 
-                    return history.id === rankingId;
+    const rankingHistoryDetailTitle = document.getElementById(
+      "ranking-history-detail-title",
+    );
 
-                }
-            );
+    const savedDate = new Date(selectedHistory.date);
 
-        const rankingHistoryDetailTitle =
-            document.getElementById(
-                "ranking-history-detail-title"
-            );
+    const formattedDate = savedDate.toLocaleDateString("ja-JP");
 
-        const savedDate =
-            new Date(
-                selectedHistory.date
-            );
+    rankingHistoryDetailTitle.textContent = `My Yoru Rank - ${formattedDate}`;
 
-        const formattedDate =
-            savedDate.toLocaleDateString(
-                "ja-JP"
-            );
+    // ----------
+    // 履歴ランキング表示を初期化
+    // ----------
 
-        rankingHistoryDetailTitle.textContent =
-            `My Yoru Rank - ${formattedDate}`;
+    isShowingAllHistoryRanking = false;
 
-        // ----------
-        // 履歴ランキング表示を初期化
-        // ----------
+    rankingHistoryDetailScreen.classList.remove("show-all-ranking");
 
-        isShowingAllHistoryRanking = false;
-
-        rankingHistoryDetailScreen.classList.remove(
-            "show-all-ranking"
-        );
-
-        rankingHistoryDetailSettings.innerHTML = `
+    rankingHistoryDetailSettings.innerHTML = `
 
             <button
                 id="ranking-history-conditions-toggle"
@@ -1096,36 +595,36 @@ function setupEventListeners() {
                 <p>
                     Type：
                     ${
-                        selectedHistory.conditions.musicTypes.length > 0
-                            ? selectedHistory.conditions.musicTypes.join(" / ")
-                            : "すべて"
+                      selectedHistory.conditions.musicTypes.length > 0
+                        ? selectedHistory.conditions.musicTypes.join(" / ")
+                        : "すべて"
                     }
                 </p>
 
                 <p>
                     MV：
                     ${
-                        selectedHistory.conditions.mvStatus.length > 0
-                            ? selectedHistory.conditions.mvStatus.join(" / ")
-                            : "すべて"
+                      selectedHistory.conditions.mvStatus.length > 0
+                        ? selectedHistory.conditions.mvStatus.join(" / ")
+                        : "すべて"
                     }
                 </p>
 
                 <p>
                     Category：
                     ${
-                        selectedHistory.conditions.categories.length > 0
-                            ? selectedHistory.conditions.categories.join(" / ")
-                            : "すべて"
+                      selectedHistory.conditions.categories.length > 0
+                        ? selectedHistory.conditions.categories.join(" / ")
+                        : "すべて"
                     }
                 </p>
 
                 <p>
                     Album：
                     ${
-                        selectedHistory.conditions.albums.length > 0
-                            ? selectedHistory.conditions.albums.join(" / ")
-                            : "すべて"
+                      selectedHistory.conditions.albums.length > 0
+                        ? selectedHistory.conditions.albums.join(" / ")
+                        : "すべて"
                     }
                 </p>
 
@@ -1133,103 +632,68 @@ function setupEventListeners() {
 
         `;
 
-        const rankingToggleButton =
-            document.getElementById(
-                "ranking-history-toggle-button"
-            );
+    const rankingToggleButton = document.getElementById(
+      "ranking-history-toggle-button",
+    );
 
-        rankingToggleButton.addEventListener(
-            "click",
-            function () {
+    rankingToggleButton.addEventListener("click", function () {
+      isShowingAllHistoryRanking = !isShowingAllHistoryRanking;
 
-                isShowingAllHistoryRanking =
-                    !isShowingAllHistoryRanking;
+      rankingHistoryDetailScreen.classList.toggle(
+        "show-all-ranking",
+        isShowingAllHistoryRanking,
+      );
 
-                rankingHistoryDetailScreen.classList.toggle(
-                    "show-all-ranking",
-                    isShowingAllHistoryRanking
-                );
+      rankingToggleButton.textContent = isShowingAllHistoryRanking
+        ? "トップ10だけ表示"
+        : "全曲ランキングを表示";
+    });
 
-                rankingToggleButton.textContent =
-                    isShowingAllHistoryRanking
-                        ? "トップ10だけ表示"
-                        : "全曲ランキングを表示";
+    const conditionsToggleButton = document.getElementById(
+      "ranking-history-conditions-toggle",
+    );
 
-            }
-        );
+    const conditionsToggleText = document.getElementById(
+      "ranking-history-conditions-toggle-text",
+    );
 
-        const conditionsToggleButton =
-            document.getElementById(
-                "ranking-history-conditions-toggle"
-            );
+    const conditionsToggleIcon = document.getElementById(
+      "ranking-history-conditions-toggle-icon",
+    );
 
-        const conditionsToggleText =
-            document.getElementById(
-                "ranking-history-conditions-toggle-text"
-            );
+    const conditionsContent = document.getElementById(
+      "ranking-history-conditions",
+    );
 
-        const conditionsToggleIcon =
-            document.getElementById(
-                "ranking-history-conditions-toggle-icon"
-            );
+    conditionsToggleButton.addEventListener("click", function () {
+      const isExpanded =
+        conditionsToggleButton.getAttribute("aria-expanded") === "true";
 
-        const conditionsContent =
-            document.getElementById(
-                "ranking-history-conditions"
-            );
+      conditionsToggleButton.setAttribute("aria-expanded", String(!isExpanded));
 
-        conditionsToggleButton.addEventListener(
-            "click",
-            function () {
+      conditionsContent.hidden = isExpanded;
 
-                const isExpanded =
-                    conditionsToggleButton.getAttribute(
-                        "aria-expanded"
-                    ) === "true";
+      conditionsToggleIcon.textContent = isExpanded ? "▼" : "▲";
 
-                conditionsToggleButton.setAttribute(
-                    "aria-expanded",
-                    String(!isExpanded)
-                );
+      conditionsToggleText.textContent = isExpanded
+        ? "条件を見る"
+        : "条件を閉じる";
+    });
 
-                conditionsContent.hidden =
-                    isExpanded;
+    rankingHistoryDetailList.innerHTML = "";
 
-                conditionsToggleIcon.textContent =
-                    isExpanded ? "▼" : "▲";
+    selectedHistory.ranking.forEach(function (song, index) {
+      const rankingItem = document.createElement("div");
 
-                conditionsToggleText.textContent =
-                    isExpanded
-                        ? "条件を見る"
-                        : "条件を閉じる";
+      rankingItem.classList.add("ranking-item");
 
-            }
-        );
+      if (index >= 10) {
+        rankingItem.classList.add("ranking-hidden-item");
+      }
 
-        rankingHistoryDetailList.innerHTML = "";
+      const rankingPosition = getRankingPosition(index);
 
-        selectedHistory.ranking.forEach(
-            function (song, index) {
-
-                const rankingItem =
-                    document.createElement("div");
-
-                rankingItem.classList.add(
-                    "ranking-item"
-                );
-
-                if (index >= 10) {
-
-                    rankingItem.classList.add(
-                        "ranking-hidden-item"
-                    );
-
-                }
-
-                const rankingPosition =
-                    getRankingPosition(index);
-
-                rankingItem.innerHTML = `
+      rankingItem.innerHTML = `
                     <span class="ranking-number">
                         ${rankingPosition}
                     </span>
@@ -1245,221 +709,129 @@ function setupEventListeners() {
                     </span>
                 `;
 
-                const rankingImage =
-                    rankingItem.querySelector(
-                        ".ranking-image"
-                    );
+      const rankingImage = rankingItem.querySelector(".ranking-image");
 
-                if (
-                    rankingImage &&
-                    song.imageType
-                ) {
+      if (rankingImage && song.imageType) {
+        rankingImage.classList.add(`${song.imageType}-image`);
+      }
 
-                    rankingImage.classList.add(
-                        `${song.imageType}-image`
-                    );
+      rankingHistoryDetailList.appendChild(rankingItem);
+    });
 
-                }
+    hideAllScreens();
 
-                rankingHistoryDetailList.appendChild(
-                    rankingItem
-                );
-            }
+    rankingHistoryDetailScreen.style.display = "block";
 
-        );
+    // 画像保存・共有用に保存ランキングデータを渡す
+    setRankingImageTarget(selectedHistory.ranking, selectedHistory.conditions);
 
-        hideAllScreens();
-
-        rankingHistoryDetailScreen.style.display ="block";
-
-        // 画像保存・共有用に保存ランキングデータを渡す
-        setRankingImageTarget(
-            selectedHistory.ranking,
-            selectedHistory.conditions
-        );
-
-        if (shouldPushHistory) {
-
-            pushScreenHistory(
-                "ranking-history-detail",
-                {rankingId: rankingId}
-            );
-
-        }
+    if (shouldPushHistory) {
+      pushScreenHistory("ranking-history-detail", { rankingId: rankingId });
     }
+  }
 
-    window.showRankingHistoryDetail =
-        showRankingHistoryDetail;
+  window.showRankingHistoryDetail = showRankingHistoryDetail;
 
-    // ホーム → ランキング履歴
-    rankingHistoryButton.addEventListener(
-        "click",
-        function () {
+  // ホーム → ランキング履歴
+  rankingHistoryButton.addEventListener("click", function () {
+    hideAllScreens();
 
-            hideAllScreens();
+    rankingHistoryScreen.style.display = "block";
 
-            rankingHistoryScreen.style.display =
-                "block";
+    const rankingHistory =
+      JSON.parse(localStorage.getItem("rankingHistory")) || [];
 
-            const rankingHistory =
-                JSON.parse(
-                    localStorage.getItem("rankingHistory")
-                ) || [];
+    displayRankingHistory(rankingHistory);
 
-            displayRankingHistory(rankingHistory);
+    pushScreenHistory("ranking-history");
+  });
 
-            pushScreenHistory("ranking-history");
+  // ホーム → ランキングを再開
+  resumeRankingButton.addEventListener("click", function () {
+    resumeRanking();
+  });
 
-        }
-    );
+  // ランキングを中断
+  pauseRankingButton.addEventListener("click", function () {
+    saveRankingProgress();
 
-    // ホーム → ランキングを再開
-    resumeRankingButton.addEventListener(
-        "click",
-        function () {
+    rankingRunId++;
 
-            resumeRanking();
+    comparisonResolve = null;
 
-        }
-    );
+    hideAllScreens();
 
-    // ランキングを中断
-    pauseRankingButton.addEventListener(
-        "click",
-        function () {
+    homeScreen.style.display = "block";
 
-            saveRankingProgress();
+    updateResumeRankingButton();
+  });
 
-            rankingRunId++;
+  // ランキング履歴 → ホーム
+  rankingHistoryHomeButton.addEventListener("click", function () {
+    hideAllScreens();
 
-            comparisonResolve = null;
+    homeScreen.style.display = "block";
+  });
 
-            hideAllScreens();
+  // ランキング履歴詳細 → ランキング履歴
+  rankingHistoryDetailBackButton.addEventListener("click", function () {
+    hideAllScreens();
 
-            homeScreen.style.display =
-                "block";
+    rankingHistoryScreen.style.display = "block";
+  });
 
-            updateResumeRankingButton();
+  // ----------
+  // 楽曲一覧画面
+  // ----------
 
-        }
-    );
+  // 楽曲一覧からホームへ戻る
+  songListBackButton.addEventListener("click", showHomeScreen);
 
+  songListHomeButton.addEventListener("click", showHomeScreen);
 
-    // ランキング履歴 → ホーム
-    rankingHistoryHomeButton.addEventListener(
-        "click",
-        function () {
+  // 楽曲一覧フィルターのイベント登録
+  if (typeof setupSongListFilterEvents === "function") {
+    setupSongListFilterEvents();
+  }
 
-            hideAllScreens();
+  // フィルターパネルの開閉
+  filterToggleButton.addEventListener("click", function () {
+    const isExpanded =
+      filterToggleButton.getAttribute("aria-expanded") === "true";
 
-            homeScreen.style.display =
-                "block";
+    filterToggleButton.setAttribute("aria-expanded", String(!isExpanded));
 
-        }
-    );
+    songListFilters.hidden = isExpanded;
 
-    // ランキング履歴詳細 → ランキング履歴
-    rankingHistoryDetailBackButton.addEventListener(
-        "click",
-        function () {
-
-            hideAllScreens();
-
-            rankingHistoryScreen.style.display =
-                "block";
-
-        }
-    );
-
-
-    // ----------
-    // 楽曲一覧画面
-    // ----------
-
-    // 楽曲一覧からホームへ戻る
-    songListBackButton.addEventListener(
-        "click",
-        showHomeScreen
-    );
-
-    songListHomeButton.addEventListener(
-        "click",
-        showHomeScreen
-    );
-
-    // 楽曲一覧フィルターのイベント登録
-    if (
-        typeof setupSongListFilterEvents ===
-        "function"
-    ) {
-
-        setupSongListFilterEvents();
-
-    }
-
-    // フィルターパネルの開閉
-    filterToggleButton.addEventListener(
-        "click",
-        function () {
-
-            const isExpanded =
-                filterToggleButton.getAttribute(
-                    "aria-expanded"
-                ) === "true";
-
-            filterToggleButton.setAttribute(
-                "aria-expanded",
-                String(!isExpanded)
-            );
-
-            songListFilters.hidden =
-                isExpanded;
-
-            filterToggleIcon.textContent =
-                isExpanded ? "▼" : "▲";
-
-        }
-    );
-
+    filterToggleIcon.textContent = isExpanded ? "▼" : "▲";
+  });
 }
-
 
 // ==============================
 // 8. 初期化
 // ==============================
 
 function initializeApp() {
+  // ranking.jsの関数を使用して
+  // ランキング全体の進捗数を計算する
+  totalMergeSteps = calculateTotalMergeSteps(songs.length);
 
-    // ranking.jsの関数を使用して
-    // ランキング全体の進捗数を計算する
-    totalMergeSteps =
-        calculateTotalMergeSteps(songs.length);
+  // 画像エラー件数は
+  // デバッグモードでのみ表示する
+  if (imageErrorSummary) {
+    imageErrorSummary.style.display = isDebugMode ? "block" : "none";
+  }
 
-    // 画像エラー件数は
-    // デバッグモードでのみ表示する
-    if (imageErrorSummary) {
+  setupEventListeners();
 
-        imageErrorSummary.style.display =
-            isDebugMode ? "block" : "none";
+  resetRankingState();
 
-    }
-
-
-    setupEventListeners();
-
-    resetRankingState();
-
-    showHomeScreen();
-
+  showHomeScreen();
 }
-
 
 // ==============================
 // 9. アプリ起動
 // ==============================
 
 // すべてのJavaScriptファイルが読み込まれてから起動する
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeApp
-);
+document.addEventListener("DOMContentLoaded", initializeApp);
