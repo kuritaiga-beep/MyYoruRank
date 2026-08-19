@@ -3,7 +3,6 @@
 // ランキング処理・進捗表示・結果表示
 // ==============================
 
-
 // ==============================
 // 0-1. 新マージ方式の状態
 // ==============================
@@ -24,124 +23,72 @@ let pendingMergeTaskId = null;
 // 0-2. マージタスクを作成
 // ==============================
 
-function createMergeTasks(
-    songList
-) {
+function createMergeTasks(songList) {
+  mergeTasks = [];
 
-    mergeTasks = [];
+  let taskCounter = 0;
 
-    let taskCounter = 0;
+  // ------------------------------
+  // 再帰的にタスク木を作る
+  // ------------------------------
 
-
-    // ------------------------------
-    // 再帰的にタスク木を作る
-    // ------------------------------
-
-    function buildTaskTree(
-        list
-    ) {
-
-        // 1曲だけなら、その曲をそのまま返す
-        if (list.length === 1) {
-
-            return {
-                type: "song",
-                song: list[0]
-            };
-
-        }
-
-
-        const middleIndex =
-            Math.floor(
-                list.length / 2
-            );
-
-        const leftList =
-            list.slice(
-                0,
-                middleIndex
-            );
-
-        const rightList =
-            list.slice(
-                middleIndex
-            );
-
-
-        const leftSource =
-            buildTaskTree(
-                leftList
-            );
-
-        const rightSource =
-            buildTaskTree(
-                rightList
-            );
-
-
-        const taskId =
-            `merge-${taskCounter}`;
-
-        taskCounter++;
-
-
-        const task = {
-
-            id: taskId,
-
-            leftSource:
-                leftSource,
-
-            rightSource:
-                rightSource,
-
-            leftList: null,
-            rightList: null,
-
-            leftIndex: 0,
-            rightIndex: 0,
-
-            mergedList: [],
-
-            status: "waiting"
-
-        };
-
-
-        mergeTasks.push(
-            task
-        );
-
-
-        return {
-            type: "task",
-            id: taskId
-        };
-
+  function buildTaskTree(list) {
+    // 1曲だけなら、その曲をそのまま返す
+    if (list.length === 1) {
+      return {
+        type: "song",
+        song: list[0],
+      };
     }
 
+    const middleIndex = Math.floor(list.length / 2);
 
-    // タスク木のルートを作成
-    const rootSource =
-        buildTaskTree(
-            songList
-        );
+    const leftList = list.slice(0, middleIndex);
 
+    const rightList = list.slice(middleIndex);
 
-    console.log(
-        "作成したマージタスク:",
-        mergeTasks
-    );
+    const leftSource = buildTaskTree(leftList);
 
-    console.log(
-        "ルート:",
-        rootSource
-    );
+    const rightSource = buildTaskTree(rightList);
 
+    const taskId = `merge-${taskCounter}`;
 
-    return rootSource;
+    taskCounter++;
 
+    const task = {
+      id: taskId,
+
+      leftSource: leftSource,
+
+      rightSource: rightSource,
+
+      leftList: null,
+      rightList: null,
+
+      leftIndex: 0,
+      rightIndex: 0,
+
+      mergedList: [],
+
+      status: "waiting",
+    };
+
+    mergeTasks.push(task);
+
+    return {
+      type: "task",
+      id: taskId,
+    };
+  }
+
+  // タスク木のルートを作成
+  const rootSource = buildTaskTree(songList);
+
+  console.log("作成したマージタスク:", mergeTasks);
+
+  console.log("ルート:", rootSource);
+
+  return rootSource;
 }
 
 // ==============================
@@ -149,76 +96,43 @@ function createMergeTasks(
 // ==============================
 
 function getAvailableMergeTasks() {
+  return mergeTasks.filter(function (task) {
+    // すでに完了しているタスクは除外
+    if (task.status === "completed") {
+      return false;
+    }
 
-    return mergeTasks.filter(
-        function (task) {
+    // 左側の材料が準備できているか
+    const isLeftReady = isMergeSourceReady(task.leftSource);
 
-            // すでに完了しているタスクは除外
-            if (task.status === "completed") {
-                return false;
-            }
+    // 右側の材料が準備できているか
+    const isRightReady = isMergeSourceReady(task.rightSource);
 
-            // 左側の材料が準備できているか
-            const isLeftReady =
-                isMergeSourceReady(
-                    task.leftSource
-                );
-
-
-            // 右側の材料が準備できているか
-            const isRightReady =
-                isMergeSourceReady(
-                    task.rightSource
-                );
-
-
-            return (
-                isLeftReady &&
-                isRightReady
-            );
-
-        }
-    );
-
+    return isLeftReady && isRightReady;
+  });
 }
-
 
 // ==============================
 // 0-4. マージ元が使用可能か確認
 // ==============================
 
-function isMergeSourceReady(
-    source
-) {
+function isMergeSourceReady(source) {
+  // 1曲そのものなら最初から使用可能
+  if (source.type === "song") {
+    return true;
+  }
 
-    // 1曲そのものなら最初から使用可能
-    if (source.type === "song") {
-        return true;
-    }
+  // 別のマージタスクなら、
+  // そのタスクが完了している必要がある
+  if (source.type === "task") {
+    const sourceTask = mergeTasks.find(function (task) {
+      return task.id === source.id;
+    });
 
+    return sourceTask !== undefined && sourceTask.status === "completed";
+  }
 
-    // 別のマージタスクなら、
-    // そのタスクが完了している必要がある
-    if (source.type === "task") {
-
-        const sourceTask =
-            mergeTasks.find(
-                function (task) {
-                    return task.id === source.id;
-                }
-            );
-
-
-        return (
-            sourceTask !== undefined &&
-            sourceTask.status === "completed"
-        );
-
-    }
-
-
-    return false;
-
+  return false;
 }
 
 // ==============================
@@ -227,30 +141,18 @@ function isMergeSourceReady(
 // ==============================
 
 function selectRandomMergeTask() {
+  const availableTasks = getAvailableMergeTasks();
 
-    const availableTasks =
-        getAvailableMergeTasks();
+  // 実行可能なタスクがない
+  if (availableTasks.length === 0) {
+    return null;
+  }
 
+  const randomIndex = Math.floor(Math.random() * availableTasks.length);
 
-    // 実行可能なタスクがない
-    if (availableTasks.length === 0) {
-        return null;
-    }
+  const selectedTask = availableTasks[randomIndex];
 
-
-    const randomIndex =
-        Math.floor(
-            Math.random() *
-            availableTasks.length
-        );
-
-
-    const selectedTask =
-        availableTasks[randomIndex];
-
-
-    return selectedTask;
-
+  return selectedTask;
 }
 
 // ==============================
@@ -258,1055 +160,574 @@ function selectRandomMergeTask() {
 // ==============================
 
 function selectNextMergeTask() {
+  const availableTasks = getAvailableMergeTasks();
 
-    const availableTasks =
-        getAvailableMergeTasks();
+  // 実行可能なタスクがない
+  if (availableTasks.length === 0) {
+    return null;
+  }
 
+  // ------------------------------
+  // リプレイ中
+  // ------------------------------
 
-    // 実行可能なタスクがない
-    if (availableTasks.length === 0) {
-        return null;
+  if (isReplaying && mergeTaskReplayIndex < mergeTaskSelectionHistory.length) {
+    const savedTaskId = mergeTaskSelectionHistory[mergeTaskReplayIndex];
+
+    const savedTask = availableTasks.find(function (task) {
+      return task.id === savedTaskId;
+    });
+
+    if (savedTask) {
+      return savedTask;
     }
 
+    console.error("保存されたマージタスクを再現できません。", {
+      mergeTaskReplayIndex,
+      savedTaskId,
+      availableTaskIds: availableTasks.map(function (task) {
+        return task.id;
+      }),
+    });
 
-    // ------------------------------
-    // リプレイ中
-    // ------------------------------
+    return null;
+  }
 
-    if (
-        isReplaying &&
-        mergeTaskReplayIndex <
-            mergeTaskSelectionHistory.length
-    ) {
+  // ------------------------------
+  // 途中再開時は、中断時に表示されていた
+  // 未回答タスクを最優先で再表示
+  // ------------------------------
 
-        const savedTaskId =
-            mergeTaskSelectionHistory[
-                mergeTaskReplayIndex
-            ];
+  if (pendingMergeTaskId !== null && !isReplaying) {
+    const pendingTask = availableTasks.find(function (task) {
+      return task.id === pendingMergeTaskId;
+    });
 
+    if (pendingTask) {
+      pendingMergeTaskId = null;
 
-        const savedTask =
-            availableTasks.find(
-                function (task) {
-
-                    return (
-                        task.id ===
-                        savedTaskId
-                    );
-
-                }
-            );
-
-
-        if (savedTask) {
-
-            return savedTask;
-
-        }
-
-
-        console.error(
-            "保存されたマージタスクを再現できません。",
-            {
-                mergeTaskReplayIndex,
-                savedTaskId,
-                availableTaskIds:
-                    availableTasks.map(
-                        function (task) {
-                            return task.id;
-                        }
-                    )
-            }
-        );
-
-
-        return null;
-
+      return pendingTask;
     }
 
-    // ------------------------------
-    // 途中再開時は、中断時に表示されていた
-    // 未回答タスクを最優先で再表示
-    // ------------------------------
+    console.error("中断時のマージタスクを再現できません。", {
+      pendingMergeTaskId,
+      availableTaskIds: availableTasks.map(function (task) {
+        return task.id;
+      }),
+    });
 
-    if (
-        pendingMergeTaskId !== null &&
-        !isReplaying
-    ) {
+    pendingMergeTaskId = null;
+  }
 
-        const pendingTask =
-            availableTasks.find(
-                function (task) {
+  // ------------------------------
+  // Undo直後は、取り消した比較の
+  // マージタスクを最優先で再表示
+  // ------------------------------
 
-                    return (
-                        task.id ===
-                        pendingMergeTaskId
-                    );
+  if (forcedNextMergeTaskId !== null && !isReplaying) {
+    const forcedTask = availableTasks.find(function (task) {
+      return task.id === forcedNextMergeTaskId;
+    });
 
-                }
-            );
+    if (forcedTask) {
+      forcedNextMergeTaskId = null;
 
-
-        if (pendingTask) {
-
-            pendingMergeTaskId =
-                null;
-
-            return pendingTask;
-
-        }
-
-
-        console.error(
-            "中断時のマージタスクを再現できません。",
-            {
-                pendingMergeTaskId,
-                availableTaskIds:
-                    availableTasks.map(
-                        function (task) {
-                            return task.id;
-                        }
-                    )
-            }
-        );
-
-
-        pendingMergeTaskId =
-            null;
-
+      return forcedTask;
     }
 
-    // ------------------------------
-    // Undo直後は、取り消した比較の
-    // マージタスクを最優先で再表示
-    // ------------------------------
+    console.error("Undo対象のマージタスクを再現できません。", {
+      forcedNextMergeTaskId,
+      availableTaskIds: availableTasks.map(function (task) {
+        return task.id;
+      }),
+    });
 
-    if (
-        forcedNextMergeTaskId !== null &&
-        !isReplaying
-    ) {
+    forcedNextMergeTaskId = null;
+  }
 
-        const forcedTask =
-            availableTasks.find(
-                function (task) {
+  // ------------------------------
+  // 通常時はランダム
+  // ------------------------------
 
-                    return (
-                        task.id ===
-                        forcedNextMergeTaskId
-                    );
-
-                }
-            );
-
-
-        if (forcedTask) {
-
-            forcedNextMergeTaskId =
-                null;
-
-            return forcedTask;
-
-        }
-
-
-        console.error(
-            "Undo対象のマージタスクを再現できません。",
-            {
-                forcedNextMergeTaskId,
-                availableTaskIds:
-                    availableTasks.map(
-                        function (task) {
-                            return task.id;
-                        }
-                    )
-            }
-        );
-
-
-        forcedNextMergeTaskId =
-            null;
-
-    }
-
-
-    // ------------------------------
-    // 通常時はランダム
-    // ------------------------------
-
-    return selectRandomMergeTask();
-
+  return selectRandomMergeTask();
 }
-
 
 // ==============================
 // 0-6. マージ元から並びを取得
 // ==============================
 
-function getMergeSourceList(
-    source
-) {
+function getMergeSourceList(source) {
+  // 1曲そのもの
+  if (source.type === "song") {
+    return [source.song];
+  }
 
-    // 1曲そのもの
-    if (source.type === "song") {
+  // 完了済みのマージタスク
+  if (source.type === "task") {
+    const sourceTask = mergeTasks.find(function (task) {
+      return task.id === source.id;
+    });
 
-        return [
-            source.song
-        ];
-
+    if (sourceTask && sourceTask.status === "completed") {
+      return [...sourceTask.mergedList];
     }
+  }
 
-
-    // 完了済みのマージタスク
-    if (source.type === "task") {
-
-        const sourceTask =
-            mergeTasks.find(
-                function (task) {
-                    return task.id === source.id;
-                }
-            );
-
-
-        if (
-            sourceTask &&
-            sourceTask.status === "completed"
-        ) {
-
-            return [
-                ...sourceTask.mergedList
-            ];
-
-        }
-
-    }
-
-
-    return null;
-
+  return null;
 }
-
 
 // ==============================
 // 0-7. マージタスクを1比較だけ進める
 // ==============================
 
-async function advanceMergeTask(
-    task
-) {
+async function advanceMergeTask(task) {
+  // この呼び出しで何曲分マージが進んだか確認するため、
+  // 開始時点の確定曲数を記録
+  const mergedCountBefore = task.mergedList.length;
 
-    // この呼び出しで何曲分マージが進んだか確認するため、
-    // 開始時点の確定曲数を記録
-    const mergedCountBefore =
-        task.mergedList.length;
+  // ------------------------------
+  // 初回だけ左右の並びを準備
+  // ------------------------------
 
-    // ------------------------------
-    // 初回だけ左右の並びを準備
-    // ------------------------------
+  if (task.status === "waiting") {
+    task.leftList = getMergeSourceList(task.leftSource);
 
-    if (task.status === "waiting") {
+    task.rightList = getMergeSourceList(task.rightSource);
 
-        task.leftList =
-            getMergeSourceList(
-                task.leftSource
-            );
-
-        task.rightList =
-            getMergeSourceList(
-                task.rightSource
-            );
-
-
-        // まだ材料が揃っていない
-        if (
-            task.leftList === null ||
-            task.rightList === null
-        ) {
-
-            return false;
-
-        }
-
-
-        task.status = "running";
-
+    // まだ材料が揃っていない
+    if (task.leftList === null || task.rightList === null) {
+      return false;
     }
 
+    task.status = "running";
+  }
 
-    // ------------------------------
-    // 左右どちらかを使い切っていたら
-    // 残りを追加して完了
-    // ------------------------------
+  // ------------------------------
+  // 左右どちらかを使い切っていたら
+  // 残りを追加して完了
+  // ------------------------------
 
-    if (
-        task.leftIndex >= task.leftList.length
-    ) {
+  if (task.leftIndex >= task.leftList.length) {
+    while (task.rightIndex < task.rightList.length) {
+      task.mergedList.push(task.rightList[task.rightIndex]);
 
-        while (
-            task.rightIndex <
-            task.rightList.length
-        ) {
-
-            task.mergedList.push(
-                task.rightList[
-                    task.rightIndex
-                ]
-            );
-
-            task.rightIndex++;
-
-        }
-
-
-        task.status = "completed";
-
-        return (
-            task.mergedList.length -
-            mergedCountBefore
-        );
-
+      task.rightIndex++;
     }
 
+    task.status = "completed";
 
-    if (
-        task.rightIndex >= task.rightList.length
-    ) {
+    return task.mergedList.length - mergedCountBefore;
+  }
 
-        while (
-            task.leftIndex <
-            task.leftList.length
-        ) {
+  if (task.rightIndex >= task.rightList.length) {
+    while (task.leftIndex < task.leftList.length) {
+      task.mergedList.push(task.leftList[task.leftIndex]);
 
-            task.mergedList.push(
-                task.leftList[
-                    task.leftIndex
-                ]
-            );
-
-            task.leftIndex++;
-
-        }
-
-
-        task.status = "completed";
-
-        return (
-            task.mergedList.length -
-            mergedCountBefore
-        );
-
+      task.leftIndex++;
     }
 
+    task.status = "completed";
 
-    // ------------------------------
-    // 今回比較する2曲
-    // ------------------------------
+    return task.mergedList.length - mergedCountBefore;
+  }
 
-    const leftSong =
-        task.leftList[
-            task.leftIndex
-        ];
+  // ------------------------------
+  // 今回比較する2曲
+  // ------------------------------
 
-    const rightSong =
-        task.rightList[
-            task.rightIndex
-        ];
+  const leftSong = task.leftList[task.leftIndex];
 
-    // 今回の比較がどのマージタスクか記録
-    currentMergeTaskId =
-        task.id;
+  const rightSong = task.rightList[task.rightIndex];
 
+  // 今回の比較がどのマージタスクか記録
+  currentMergeTaskId = task.id;
 
-    // この比較が保存済み履歴のリプレイか確認
-    const willReplay =
-        isReplaying &&
-        replayIndex <
-            comparisonResults.length;
+  // この比較が保存済み履歴のリプレイか確認
+  const willReplay = isReplaying && replayIndex < comparisonResults.length;
 
+  // 実際にユーザーの回答を待つ比較だけ、
+  // 未回答タスクとして保存する
+  if (!willReplay) {
+    pendingMergeTaskId = task.id;
 
-    // 実際にユーザーの回答を待つ比較だけ、
-    // 未回答タスクとして保存する
-    if (!willReplay) {
+    saveRankingProgress();
+  }
 
-        pendingMergeTaskId =
-            task.id;
+  const winner = await compareSongs(leftSong, rightSong);
 
-        saveRankingProgress();
+  // ------------------------------
+  // 選ばれた曲を確定
+  // ------------------------------
 
+  if (winner === leftSong) {
+    task.mergedList.push(leftSong);
+
+    task.leftIndex++;
+  } else {
+    task.mergedList.push(rightSong);
+
+    task.rightIndex++;
+  }
+
+  // ------------------------------
+  // 比較後に片側を使い切った場合
+  // 残りを追加して完了
+  // ------------------------------
+
+  if (task.leftIndex >= task.leftList.length) {
+    while (task.rightIndex < task.rightList.length) {
+      task.mergedList.push(task.rightList[task.rightIndex]);
+
+      task.rightIndex++;
     }
 
+    task.status = "completed";
+  } else if (task.rightIndex >= task.rightList.length) {
+    while (task.leftIndex < task.leftList.length) {
+      task.mergedList.push(task.leftList[task.leftIndex]);
 
-    const winner =
-        await compareSongs(
-            leftSong,
-            rightSong
-        );
-
-
-    // ------------------------------
-    // 選ばれた曲を確定
-    // ------------------------------
-
-    if (winner === leftSong) {
-
-        task.mergedList.push(
-            leftSong
-        );
-
-        task.leftIndex++;
-
-    } else {
-
-        task.mergedList.push(
-            rightSong
-        );
-
-        task.rightIndex++;
-
+      task.leftIndex++;
     }
 
+    task.status = "completed";
+  }
 
-    // ------------------------------
-    // 比較後に片側を使い切った場合
-    // 残りを追加して完了
-    // ------------------------------
-
-    if (
-        task.leftIndex >= task.leftList.length
-    ) {
-
-        while (
-            task.rightIndex <
-            task.rightList.length
-        ) {
-
-            task.mergedList.push(
-                task.rightList[
-                    task.rightIndex
-                ]
-            );
-
-            task.rightIndex++;
-
-        }
-
-        task.status = "completed";
-
-    } else if (
-        task.rightIndex >= task.rightList.length
-    ) {
-
-        while (
-            task.leftIndex <
-            task.leftList.length
-        ) {
-
-            task.mergedList.push(
-                task.leftList[
-                    task.leftIndex
-                ]
-            );
-
-            task.leftIndex++;
-
-        }
-
-        task.status = "completed";
-
-    }
-
-
-    return (
-        task.mergedList.length -
-        mergedCountBefore
-    );
-
+  return task.mergedList.length - mergedCountBefore;
 }
-
 
 // ==============================
 // 0-8. ランダム化マージソートを実行
 // ==============================
 
-async function runRandomizedMergeSort(
-    songList,
-    currentRunId
-) {
+async function runRandomizedMergeSort(songList, currentRunId) {
+  // ------------------------------
+  // タスク木を作成
+  // ------------------------------
 
-    // ------------------------------
-    // タスク木を作成
-    // ------------------------------
+  const rootSource = createMergeTasks(songList);
 
-    const rootSource =
-        createMergeTasks(
-            songList
-        );
+  // 1曲だけの場合
+  if (rootSource.type === "song") {
+    return [rootSource.song];
+  }
 
+  const rootTaskId = rootSource.id;
 
-    // 1曲だけの場合
-    if (
-        rootSource.type === "song"
-    ) {
+  // ------------------------------
+  // ルートタスクが完成するまで繰り返す
+  // ------------------------------
 
-        return [
-            rootSource.song
-        ];
-
+  while (true) {
+    // 古いランキング処理なら終了
+    if (currentRunId !== rankingRunId) {
+      return [];
     }
 
+    const rootTask = mergeTasks.find(function (task) {
+      return task.id === rootTaskId;
+    });
 
-    const rootTaskId =
-        rootSource.id;
-
-
-    // ------------------------------
-    // ルートタスクが完成するまで繰り返す
-    // ------------------------------
-
-    while (true) {
-
-        // 古いランキング処理なら終了
-        if (
-            currentRunId !==
-            rankingRunId
-        ) {
-
-            return [];
-
-        }
-
-
-        const rootTask =
-            mergeTasks.find(
-                function (task) {
-
-                    return (
-                        task.id ===
-                        rootTaskId
-                    );
-
-                }
-            );
-
-
-        // ルート完成 = ランキング完成
-        if (
-            rootTask &&
-            rootTask.status ===
-                "completed"
-        ) {
-
-            return [
-                ...rootTask.mergedList
-            ];
-
-        }
-
-
-        // ------------------------------
-        // 次に進めるタスクを選択
-        // ------------------------------
-
-        const selectedTask =
-            selectNextMergeTask();
-
-
-        if (!selectedTask) {
-
-            console.error(
-                "実行可能なマージタスクがありません。",
-                {
-                    mergeTasks,
-                    mergeTaskSelectionHistory,
-                    mergeTaskReplayIndex
-                }
-            );
-
-            return [];
-
-        }
-
-
-        // ------------------------------
-        // タスクを1比較進める
-        // ------------------------------
-
-        const wasReplaying =
-            isReplaying;
-
-        const replayIndexBefore =
-            replayIndex;
-
-        const advancedSteps =
-            await advanceMergeTask(
-                selectedTask
-            );
-
-        // 比較待ち中に別ランキングになった場合
-        if (
-            currentRunId !==
-            rankingRunId
-        ) {
-
-            return [];
-
-        }
-
-
-        if (advancedSteps <= 0) {
-
-            console.error(
-                "マージタスクを進められませんでした。",
-                selectedTask
-            );
-
-            return [];
-
-        }
-
-        // ------------------------------
-        // リプレイ時に実際に比較を再現した場合だけ
-        // タスク履歴の位置も進める
-        // ------------------------------
-
-        if (
-            wasReplaying &&
-            replayIndex >
-                replayIndexBefore
-        ) {
-
-            mergeTaskReplayIndex++;
-
-        }
-
-
-        // ------------------------------
-        // 進捗
-        // ------------------------------
-
-        completedMergeSteps +=
-            advancedSteps;
-
-        updateProgress();
-
+    // ルート完成 = ランキング完成
+    if (rootTask && rootTask.status === "completed") {
+      return [...rootTask.mergedList];
     }
 
+    // ------------------------------
+    // 次に進めるタスクを選択
+    // ------------------------------
+
+    const selectedTask = selectNextMergeTask();
+
+    if (!selectedTask) {
+      console.error("実行可能なマージタスクがありません。", {
+        mergeTasks,
+        mergeTaskSelectionHistory,
+        mergeTaskReplayIndex,
+      });
+
+      return [];
+    }
+
+    // ------------------------------
+    // タスクを1比較進める
+    // ------------------------------
+
+    const wasReplaying = isReplaying;
+
+    const replayIndexBefore = replayIndex;
+
+    const advancedSteps = await advanceMergeTask(selectedTask);
+
+    // 比較待ち中に別ランキングになった場合
+    if (currentRunId !== rankingRunId) {
+      return [];
+    }
+
+    if (advancedSteps <= 0) {
+      console.error("マージタスクを進められませんでした。", selectedTask);
+
+      return [];
+    }
+
+    // ------------------------------
+    // リプレイ時に実際に比較を再現した場合だけ
+    // タスク履歴の位置も進める
+    // ------------------------------
+
+    if (wasReplaying && replayIndex > replayIndexBefore) {
+      mergeTaskReplayIndex++;
+    }
+
+    // ------------------------------
+    // 進捗
+    // ------------------------------
+
+    completedMergeSteps += advancedSteps;
+
+    updateProgress();
+  }
 }
-
 
 // ==============================
 // 0. 結果画面の要素・状態
 // ==============================
 
-const toggleRankingButton =
-    document.getElementById(
-        "toggle-ranking-button"
-    );
+const toggleRankingButton = document.getElementById("toggle-ranking-button");
 
-const resultRankingSettingsContent =
-    document.getElementById(
-        "result-ranking-settings-content"
-    );
+const resultRankingSettingsContent = document.getElementById(
+  "result-ranking-settings-content",
+);
 
 let isShowingAllRanking = false;
-
 
 // ==============================
 // 1. 比較処理の総ステップ数を計算
 // ==============================
 
 function calculateTotalMergeSteps(length) {
+  if (length <= 1) {
+    return 0;
+  }
 
-    if (length <= 1) {
-        return 0;
-    }
+  const leftLength = Math.floor(length / 2);
 
-    const leftLength =
-        Math.floor(length / 2);
+  const rightLength = length - leftLength;
 
-    const rightLength =
-        length - leftLength;
-
-    return (
-        length +
-        calculateTotalMergeSteps(leftLength) +
-        calculateTotalMergeSteps(rightLength)
-    );
-
+  return (
+    length +
+    calculateTotalMergeSteps(leftLength) +
+    calculateTotalMergeSteps(rightLength)
+  );
 }
-
 
 // ==============================
 // 2. 進捗表示を更新
 // ==============================
 
 function updateProgress() {
+  if (totalMergeSteps === 0) {
+    progressPercent = 100;
+  } else {
+    progressPercent = Math.round((completedMergeSteps / totalMergeSteps) * 100);
+  }
 
-    if (totalMergeSteps === 0) {
+  // 計算誤差などで100%を超えないようにする
+  progressPercent = Math.min(progressPercent, 100);
 
-        progressPercent = 100;
+  progressText.textContent = `進捗 ${progressPercent}%`;
 
-    } else {
-
-        progressPercent = Math.round(
-            (
-                completedMergeSteps /
-                totalMergeSteps
-            ) * 100
-        );
-
-    }
-
-    // 計算誤差などで100%を超えないようにする
-    progressPercent =
-        Math.min(progressPercent, 100);
-
-    progressText.textContent =
-        `進捗 ${progressPercent}%`;
-
-    progressFill.style.width =
-        `${progressPercent}%`;
-
+  progressFill.style.width = `${progressPercent}%`;
 }
-
-
 
 // ==============================
 // 5. ランキング対象を更新
 // ==============================
 
 function updateRankingTargetSongs() {
+  const checkedAlbums = Array.from(
+    document.querySelectorAll('input[name="ranking-album-filter"]:checked'),
+  ).map(function (input) {
+    return input.value;
+  });
 
-    const checkedAlbums =
-        Array.from(
-            document.querySelectorAll(
-                'input[name="ranking-album-filter"]:checked'
-            )
-        ).map(function (input) {
+  const checkedMusicTypes = Array.from(
+    document.querySelectorAll('input[name="ranking-music-type"]:checked'),
+  ).map(function (input) {
+    return input.value;
+  });
 
-            return input.value;
+  const checkedCategories = Array.from(
+    document.querySelectorAll('input[name="ranking-song-category"]:checked'),
+  ).map(function (input) {
+    return input.value;
+  });
 
-        });
+  const checkedMvStatus = Array.from(
+    document.querySelectorAll('input[name="ranking-mv-status"]:checked'),
+  ).map(function (input) {
+    return input.value;
+  });
 
-    const checkedMusicTypes =
-        Array.from(
-            document.querySelectorAll(
-                'input[name="ranking-music-type"]:checked'
-            )
-        ).map(function (input) {
+  rankingTargetSongs = songs.filter(function (song) {
+    // Album
+    const albumName =
+      song.album && song.album.trim() !== "" ? song.album : "シングル";
 
-            return input.value;
+    if (checkedAlbums.length > 0 && !checkedAlbums.includes(albumName)) {
+      return false;
+    }
 
-        });
+    // Type
+    if (
+      checkedMusicTypes.length > 0 &&
+      !checkedMusicTypes.includes(song.musicType)
+    ) {
+      return false;
+    }
 
-    const checkedCategories =
-        Array.from(
-            document.querySelectorAll(
-                'input[name="ranking-song-category"]:checked'
-            )
-        ).map(function (input) {
+    // Category
+    if (checkedCategories.length > 0) {
+      const isSingle = !song.album || song.album.trim() === "";
 
-            return input.value;
+      const isTribute = song.album === "トリビュート";
 
-        });
+      const isAlbum = !isSingle && !isTribute;
 
-    const checkedMvStatus =
-        Array.from(
-            document.querySelectorAll(
-                'input[name="ranking-mv-status"]:checked'
-            )
-        ).map(function (input) {
+      const matchesCategory =
+        (checkedCategories.includes("album") && isAlbum) ||
+        (checkedCategories.includes("single") && isSingle) ||
+        (checkedCategories.includes("tribute") && isTribute);
 
-            return input.value;
+      if (!matchesCategory) {
+        return false;
+      }
+    }
 
-        });
+    // MV
+    if (checkedMvStatus.length > 0) {
+      const hasMv = song.hasMV;
 
-    rankingTargetSongs =
-        songs.filter(function (song) {
+      const matchesMv =
+        (checkedMvStatus.includes("true") && hasMv) ||
+        (checkedMvStatus.includes("false") && !hasMv);
 
-            // Album
-            const albumName =
+      if (!matchesMv) {
+        return false;
+      }
+    }
 
-                song.album && song.album.trim() !== ""
+    return true;
+  });
 
-                    ? song.album
+  currentRankingConditions = {
+    songCount: rankingTargetSongs.length,
 
-                    : "シングル";
+    albums: [...checkedAlbums],
 
-            if (
+    musicTypes: [...checkedMusicTypes],
 
-                checkedAlbums.length > 0 &&
+    categories: [...checkedCategories],
 
-                !checkedAlbums.includes(albumName)
-
-            ) {
-
-                return false;
-
-            }
-
-            // Type
-            if (
-                checkedMusicTypes.length > 0 &&
-                !checkedMusicTypes.includes(song.musicType)
-            ) {
-
-                return false;
-
-            }
-
-            // Category
-            if (checkedCategories.length > 0) {
-
-                const isSingle =
-                    !song.album ||
-                    song.album.trim() === "";
-
-                const isTribute =
-                    song.album === "トリビュート";
-
-                const isAlbum =
-                    !isSingle &&
-                    !isTribute;
-
-                const matchesCategory =
-                    (
-                        checkedCategories.includes("album") &&
-                        isAlbum
-                    ) ||
-                    (
-                        checkedCategories.includes("single") &&
-                        isSingle
-                    ) ||
-                    (
-                        checkedCategories.includes("tribute") &&
-                        isTribute
-                    );
-
-                if (!matchesCategory) {
-
-                    return false;
-
-                }
-
-            }
-
-            // MV
-            if (checkedMvStatus.length > 0) {
-
-                const hasMv =
-                    song.hasMV;
-
-                const matchesMv =
-                    (
-                        checkedMvStatus.includes("true") &&
-                        hasMv
-                    ) ||
-                    (
-                        checkedMvStatus.includes("false") &&
-                        !hasMv
-                    );
-
-                if (!matchesMv) {
-
-                    return false;
-
-                }
-
-            }
-
-            return true;
-
-        });
-    
-    currentRankingConditions = {
-
-        songCount:
-            rankingTargetSongs.length,
-
-        albums:
-            [...checkedAlbums],
-
-        musicTypes:
-            [...checkedMusicTypes],
-
-        categories:
-            [...checkedCategories],
-
-        mvStatus:
-            [...checkedMvStatus]
-
-    };
-
+    mvStatus: [...checkedMvStatus],
+  };
 }
-
 
 // ランキング条件のアルバムフィルターを生成する
 function createRankingAlbumFilterOptions() {
+  rankingAlbumFilterOptions.innerHTML = "";
 
-    rankingAlbumFilterOptions.innerHTML = "";
+  const groupedSongs = groupSongsByAlbum(songs);
 
-    const groupedSongs =
-        groupSongsByAlbum(songs);
+  const albumNames = getOrderedAlbumNames(groupedSongs);
 
-    const albumNames =
-        getOrderedAlbumNames(groupedSongs);
+  albumNames.forEach(function (albumName) {
+    const label = document.createElement("label");
 
+    label.className = "filter-checkbox";
 
-    albumNames.forEach(function (albumName) {
+    const input = document.createElement("input");
 
-            const label =
-                document.createElement("label");
+    input.type = "checkbox";
 
-            label.className =
-                "filter-checkbox";
+    input.name = "ranking-album-filter";
 
+    input.value = albumName;
 
-            const input =
-                document.createElement("input");
+    const span = document.createElement("span");
 
-            input.type =
-                "checkbox";
+    if (albumName === "負け犬にアンコールはいらない") {
+      span.innerHTML = "負け犬にアンコールは<br>いらない";
+    } else {
+      span.textContent = albumName;
+    }
 
-            input.name =
-                "ranking-album-filter";
+    label.appendChild(input);
+    label.appendChild(span);
 
-            input.value =
-                albumName;
-
-
-            const span =
-                document.createElement("span");
-
-            if (
-                albumName ===
-                "負け犬にアンコールはいらない"
-            ) {
-
-                span.innerHTML =
-                    "負け犬にアンコールは<br>いらない";
-
-            } else {
-
-                span.textContent =
-                    albumName;
-
-            }
-
-
-            label.appendChild(input);
-            label.appendChild(span);
-
-            rankingAlbumFilterOptions.appendChild(
-                label
-            );
-
-        }
-    );
-
+    rankingAlbumFilterOptions.appendChild(label);
+  });
 }
-
 
 // ==============================
 // ランキング条件を推奨設定にする
 // ==============================
 
 function applyRecommendedRankingFilters() {
+  // すべてのチェックを一度外す
+  const rankingCheckboxes = rankingFilters.querySelectorAll(
+    'input[type="checkbox"]',
+  );
 
-    // すべてのチェックを一度外す
-    const rankingCheckboxes =
-        rankingFilters.querySelectorAll(
-            'input[type="checkbox"]'
-        );
+  rankingCheckboxes.forEach(function (checkbox) {
+    checkbox.checked = false;
+  });
 
-    rankingCheckboxes.forEach(
-        function (checkbox) {
+  // Vocalを選択
+  const vocalCheckbox = rankingFilters.querySelector(
+    'input[name="ranking-music-type"][value="vocal"]',
+  );
 
-            checkbox.checked = false;
+  if (vocalCheckbox) {
+    vocalCheckbox.checked = true;
+  }
 
-        }
-    );
+  // トリビュート以外のAlbumをすべて選択
+  const albumCheckboxes = rankingFilters.querySelectorAll(
+    'input[name="ranking-album-filter"]',
+  );
 
-
-    // Vocalを選択
-    const vocalCheckbox =
-        rankingFilters.querySelector(
-            'input[name="ranking-music-type"][value="vocal"]'
-        );
-
-    if (vocalCheckbox) {
-
-        vocalCheckbox.checked = true;
-
-    }
-
-
-    // トリビュート以外のAlbumをすべて選択
-    const albumCheckboxes =
-        rankingFilters.querySelectorAll(
-            'input[name="ranking-album-filter"]'
-        );
-
-    albumCheckboxes.forEach(
-        function (checkbox) {
-
-            checkbox.checked =
-                checkbox.value !== "トリビュート";
-
-        }
-    );
-
+  albumCheckboxes.forEach(function (checkbox) {
+    checkbox.checked = checkbox.value !== "トリビュート";
+  });
 }
-
 
 // ==============================
 // 6. 選択中の楽曲数を更新
 // ==============================
 
 function updateRankingSongCount() {
+  updateRankingTargetSongs();
 
-    updateRankingTargetSongs();
-
-    rankingSongCount.textContent =
-        `選択中：${rankingTargetSongs.length}曲 / 全${songs.length}曲`;
-
+  rankingSongCount.textContent = `選択中：${rankingTargetSongs.length}曲 / 全${songs.length}曲`;
 }
-
 
 // ==============================
 // 6. 楽曲の順番をシャッフル
 // ==============================
 
-function shuffleSongs(
-    songListToShuffle
-) {
+function shuffleSongs(songListToShuffle) {
+  const shuffledSongs = [...songListToShuffle];
 
-    const shuffledSongs = [
-        ...songListToShuffle
+  for (let i = shuffledSongs.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+
+    [shuffledSongs[i], shuffledSongs[randomIndex]] = [
+      shuffledSongs[randomIndex],
+      shuffledSongs[i],
     ];
+  }
 
-    for (
-        let i = shuffledSongs.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const randomIndex =
-            Math.floor(
-                Math.random() * (i + 1)
-            );
-
-        [
-            shuffledSongs[i],
-            shuffledSongs[randomIndex]
-        ] = [
-            shuffledSongs[randomIndex],
-            shuffledSongs[i]
-        ];
-
-    }
-
-    return shuffledSongs;
-
+  return shuffledSongs;
 }
 
 // ==============================
@@ -1314,44 +735,31 @@ function shuffleSongs(
 // ==============================
 
 function beginNewRanking() {
+  const savedProgress = localStorage.getItem("rankingProgress");
 
-    const savedProgress =
-        localStorage.getItem(
-            "rankingProgress"
-        );
+  // 途中ランキングがある場合は確認
+  if (savedProgress) {
+    const shouldStartNewRanking = window.confirm(
+      "途中のランキングがあります。\n\n" +
+        "新しくランキングを開始すると、現在の途中データは削除されます。\n\n" +
+        "途中のランキングを再開したい場合は、ホームに戻り「ランキングを再開」ボタンを押してください。\n\n" +
+        "新しくランキングを開始しますか？",
+    );
 
-
-    // 途中ランキングがある場合は確認
-    if (savedProgress) {
-
-        const shouldStartNewRanking =
-            window.confirm(
-                "途中のランキングがあります。\n\n" +
-                "新しくランキングを開始すると、現在の途中データは削除されます。\n\n" +
-                "途中のランキングを再開したい場合は、ホームに戻り「ランキングを再開」ボタンを押してください。\n\n" +
-                "新しくランキングを開始しますか？"
-            );
-
-
-        // キャンセルなら何もしない
-        if (!shouldStartNewRanking) {
-            return false;
-        }
-
-        // 途中データを削除
-        localStorage.removeItem(
-            "rankingProgress"
-        );
-
-        updateResumeRankingButton();
-
+    // キャンセルなら何もしない
+    if (!shouldStartNewRanking) {
+      return false;
     }
 
+    // 途中データを削除
+    localStorage.removeItem("rankingProgress");
 
-    updateRankingTargetSongs();
+    updateResumeRankingButton();
+  }
 
-    return true;
+  updateRankingTargetSongs();
 
+  return true;
 }
 
 // ==============================
@@ -1359,225 +767,167 @@ function beginNewRanking() {
 // ==============================
 
 async function startRanking(isReplay = false) {
+  // ----------
+  // ランキング処理を開始
+  // ----------
 
-    // ----------
-    // ランキング処理を開始
-    // ----------
+  // 新しいランキング処理の番号を発行
+  rankingRunId++;
 
-    // 新しいランキング処理の番号を発行
-    rankingRunId++;
+  const currentRunId = rankingRunId;
 
-    const currentRunId =
-        rankingRunId;
+  // ----------
+  // 新マージ方式の状態を初期化
+  // ----------
 
+  currentMergeTaskId = null;
 
-    // ----------
-    // 新マージ方式の状態を初期化
-    // ----------
+  mergeTaskReplayIndex = 0;
 
-    currentMergeTaskId =
-        null;
+  // 新規ランキングのときだけ
+  // 過去のタスク選択履歴を消す
+  if (!isReplay) {
+    mergeTaskSelectionHistory.length = 0;
+  }
 
-    mergeTaskReplayIndex =
-        0;
+  // ----------
+  // 進捗を初期化
+  // ----------
 
+  completedMergeSteps = 0;
+  progressPercent = 0;
 
-    // 新規ランキングのときだけ
-    // 過去のタスク選択履歴を消す
-    if (!isReplay) {
+  totalMergeSteps = calculateTotalMergeSteps(rankingTargetSongs.length);
 
-        mergeTaskSelectionHistory.length =
-            0;
+  progressText.textContent = "進捗 0%";
 
-    }
+  progressFill.style.width = "0%";
 
+  // ----------
+  // ランキング対象が0曲の場合
+  // ----------
 
-    // ----------
-    // 進捗を初期化
-    // ----------
-
-    completedMergeSteps = 0;
-    progressPercent = 0;
-
-    totalMergeSteps =
-        calculateTotalMergeSteps(
-            rankingTargetSongs.length
-        );
-
-    progressText.textContent =
-        "進捗 0%";
-
-    progressFill.style.width =
-        "0%";
-
-
-    // ----------
-    // ランキング対象が0曲の場合
-    // ----------
-
-    if (rankingTargetSongs.length === 0) {
-
-        rankingList.innerHTML = `
+  if (rankingTargetSongs.length === 0) {
+    rankingList.innerHTML = `
             <p>
                 ランキング対象の楽曲がありません。
             </p>
         `;
 
-        showResultScreen();
+    showResultScreen();
 
-        return;
+    return;
+  }
 
-    }
+  // ----------
+  // ランキング対象が1曲の場合
+  // ----------
 
-
-    // ----------
-    // ランキング対象が1曲の場合
-    // ----------
-
-    if (rankingTargetSongs.length === 1) {
-
-        const ranking =
-            [...rankingTargetSongs];
-
-        displayRanking(ranking);
-
-        saveRankingResult(ranking);
-
-        // 完了したので途中保存データを削除
-        localStorage.removeItem("rankingProgress");
-
-        displayRankingConditions();
-
-        progressPercent = 100;
-
-        progressText.textContent =
-            "進捗 100%";
-
-        progressFill.style.width =
-            "100%";
-
-        showResultScreen();
-
-        return;
-
-    }
-
-
-    // ----------
-    // ランキングを実行
-    // ----------
-
-    // 新しくランキングを開始するときだけシャッフル
-    if (!isReplay) {
-
-        currentRankingSongOrder =
-            shuffleSongs(
-                rankingTargetSongs
-            );
-
-    }
-
-        const ranking =
-            await runRandomizedMergeSort(
-                [...currentRankingSongOrder],
-                currentRunId
-            );
-
-    // このランキング処理が古くなっていたら終了
-    if (currentRunId !== rankingRunId) {
-        return;
-    }
-
-
-    // ----------
-    // ランキング結果を表示
-    // ----------
-
-    progressPercent = 100;
-
-    progressText.textContent =
-        "進捗 100%";
-
-    progressFill.style.width =
-        "100%";
+  if (rankingTargetSongs.length === 1) {
+    const ranking = [...rankingTargetSongs];
 
     displayRanking(ranking);
 
-    // 画像保存・共有用にランキングデータを渡す
-    setRankingImageTarget(
-        ranking,
-        currentRankingConditions
-    );
-
-    const resultId =
-        saveRankingResult(ranking);
-
-    console.log(
-        "saveRankingResultから返ったID:",
-        resultId
-    );
+    saveRankingResult(ranking);
 
     // 完了したので途中保存データを削除
     localStorage.removeItem("rankingProgress");
 
-    // 再開ボタンの表示を更新
-    updateResumeRankingButton();
-
     displayRankingConditions();
 
-    showResultScreen(resultId);
+    progressPercent = 100;
 
+    progressText.textContent = "進捗 100%";
+
+    progressFill.style.width = "100%";
+
+    showResultScreen();
+
+    return;
+  }
+
+  // ----------
+  // ランキングを実行
+  // ----------
+
+  // 新しくランキングを開始するときだけシャッフル
+  if (!isReplay) {
+    currentRankingSongOrder = shuffleSongs(rankingTargetSongs);
+  }
+
+  const ranking = await runRandomizedMergeSort(
+    [...currentRankingSongOrder],
+    currentRunId,
+  );
+
+  // このランキング処理が古くなっていたら終了
+  if (currentRunId !== rankingRunId) {
+    return;
+  }
+
+  // ----------
+  // ランキング結果を表示
+  // ----------
+
+  progressPercent = 100;
+
+  progressText.textContent = "進捗 100%";
+
+  progressFill.style.width = "100%";
+
+  displayRanking(ranking);
+
+  // 画像保存・共有用にランキングデータを渡す
+  setRankingImageTarget(ranking, currentRankingConditions);
+
+  const resultId = saveRankingResult(ranking);
+
+  console.log("saveRankingResultから返ったID:", resultId);
+
+  // 完了したので途中保存データを削除
+  localStorage.removeItem("rankingProgress");
+
+  // 再開ボタンの表示を更新
+  updateResumeRankingButton();
+
+  displayRankingConditions();
+
+  showResultScreen(resultId);
 }
-
 
 // ==============================
 // 9. ランキング結果を表示
 // ==============================
 
 function displayRanking(ranking) {
+  // ----------
+  // 結果画面を初期化
+  // ----------
 
-    // ----------
-    // 結果画面を初期化
-    // ----------
+  isShowingAllRanking = false;
 
-    isShowingAllRanking = false;
+  toggleRankingButton.textContent = "全曲ランキングを表示";
 
-    toggleRankingButton.textContent =
-        "全曲ランキングを表示";
+  resultScreen.classList.remove("show-all-ranking");
 
-    resultScreen.classList.remove(
-        "show-all-ranking"
-    );
+  rankingList.innerHTML = "";
 
-    rankingList.innerHTML = "";
+  // ----------
+  // ランキングを表示
+  // ----------
 
-    // ----------
-    // ランキングを表示
-    // ----------
+  ranking.forEach(function (song, index) {
+    const rankingItem = document.createElement("div");
 
-    ranking.forEach(
-        function (song, index) {
+    rankingItem.classList.add("ranking-item");
 
-            const rankingItem =
-                document.createElement("div");
+    if (index >= 10) {
+      rankingItem.classList.add("ranking-hidden-item");
+    }
 
-            rankingItem.classList.add(
-                "ranking-item"
-            );
+    const rankingPosition = getRankingPosition(index);
 
-            if (index >= 10) {
-
-                rankingItem.classList.add(
-                    "ranking-hidden-item"
-                );
-
-            }
-
-
-            const rankingPosition =
-                getRankingPosition(index);
-
-            rankingItem.innerHTML = `
+    rankingItem.innerHTML = `
                 <span class="ranking-number">
                     ${rankingPosition}
                 </span>
@@ -1593,30 +943,15 @@ function displayRanking(ranking) {
                 </span>
             `;
 
-            const rankingImage =
-                rankingItem.querySelector(
-                    ".ranking-image"
-                );
+    const rankingImage = rankingItem.querySelector(".ranking-image");
 
-            //画像タイプに応じたCSSを適用
-            if (
-                rankingImage &&
-                song.imageType
-            ) {
+    //画像タイプに応じたCSSを適用
+    if (rankingImage && song.imageType) {
+      rankingImage.classList.add(`${song.imageType}-image`);
+    }
 
-                rankingImage.classList.add(
-                    `${song.imageType}-image`
-                );
-
-            }
-
-            rankingList.appendChild(
-                rankingItem
-            );
-
-        }
-    );
-
+    rankingList.appendChild(rankingItem);
+  });
 }
 
 // ==============================
@@ -1624,63 +959,40 @@ function displayRanking(ranking) {
 // ==============================
 
 function saveRankingResult(ranking) {
+  const rankingHistory =
+    JSON.parse(localStorage.getItem("rankingHistory")) || [];
 
-    const rankingHistory =
-        JSON.parse(
-            localStorage.getItem("rankingHistory")
-        ) || [];
+  const rankingResult = {
+    id: Date.now(),
 
-    const rankingResult = {
+    date: new Date().toISOString(),
 
-        id: Date.now(),
+    conditions: {
+      songCount: currentRankingConditions.songCount,
 
-        date: new Date().toISOString(),
+      albums: [...currentRankingConditions.albums],
 
-        conditions: {
-            songCount:
-                currentRankingConditions.songCount,
+      musicTypes: [...currentRankingConditions.musicTypes],
 
-            albums: [
-                ...currentRankingConditions.albums
-            ],
+      categories: [...currentRankingConditions.categories],
 
-            musicTypes: [
-                ...currentRankingConditions.musicTypes
-            ],
+      mvStatus: [...currentRankingConditions.mvStatus],
+    },
 
-            categories: [
-                ...currentRankingConditions.categories
-            ],
+    ranking: ranking.map(function (song) {
+      return {
+        title: song.title,
+        image: song.image,
+        imageType: song.imageType,
+      };
+    }),
+  };
 
-            mvStatus: [
-                ...currentRankingConditions.mvStatus
-            ]
-        },
+  rankingHistory.unshift(rankingResult);
 
-        ranking:
-            ranking.map(function (song) {
+  localStorage.setItem("rankingHistory", JSON.stringify(rankingHistory));
 
-                return {
-                    title: song.title,
-                    image: song.image,
-                    imageType: song.imageType
-                };
-
-            })
-
-    };
-
-    rankingHistory.unshift(
-        rankingResult
-    );
-
-    localStorage.setItem(
-        "rankingHistory",
-        JSON.stringify(rankingHistory)
-    );
-    
-    return rankingResult.id;
-
+  return rankingResult.id;
 }
 
 // ==============================
@@ -1688,155 +1000,88 @@ function saveRankingResult(ranking) {
 // ==============================
 
 function saveRankingProgress() {
+  const progressData = {
+    savedAt: new Date().toISOString(),
 
-    const progressData = {
+    songOrder: currentRankingSongOrder.map(function (song) {
+      return song.title;
+    }),
 
-        savedAt:
-            new Date().toISOString(),
+    comparisonResults: [...comparisonResults],
 
-        songOrder:
-            currentRankingSongOrder.map(
-                function (song) {
+    mergeTaskSelectionHistory: [...mergeTaskSelectionHistory],
 
-                    return song.title;
+    pendingMergeTaskId: pendingMergeTaskId,
 
-                }
-            ),
+    conditions: currentRankingConditions,
+  };
 
-        comparisonResults:
-            [...comparisonResults],
-
-        mergeTaskSelectionHistory:
-            [...mergeTaskSelectionHistory],
-
-        pendingMergeTaskId:
-            pendingMergeTaskId,
-
-        conditions:
-            currentRankingConditions
-
-    };
-
-    localStorage.setItem(
-        "rankingProgress",
-        JSON.stringify(progressData)
-    );
-
+  localStorage.setItem("rankingProgress", JSON.stringify(progressData));
 }
-
 
 // ==============================
 // ランキング途中状態を読み込む
 // ==============================
 
 function loadRankingProgress() {
+  const savedProgress = localStorage.getItem("rankingProgress");
 
-    const savedProgress =
-        localStorage.getItem(
-            "rankingProgress"
-        );
+  if (!savedProgress) {
+    return null;
+  }
 
-    if (!savedProgress) {
-        return null;
-    }
+  try {
+    return JSON.parse(savedProgress);
+  } catch (error) {
+    console.error("ランキング途中データの読み込みに失敗しました。", error);
 
-    try {
+    localStorage.removeItem("rankingProgress");
 
-        return JSON.parse(
-            savedProgress
-        );
-
-    } catch (error) {
-
-        console.error(
-            "ランキング途中データの読み込みに失敗しました。",
-            error
-        );
-
-        localStorage.removeItem(
-            "rankingProgress"
-        );
-
-        return null;
-
-    }
-
+    return null;
+  }
 }
 
 // ==============================
 // ランキング途中状態を復元
 // ==============================
 
-function restoreRankingProgress(
-    savedProgress
-) {
+function restoreRankingProgress(savedProgress) {
+  // 保存時の曲順を復元
+  currentRankingSongOrder = savedProgress.songOrder
+    .map(function (songTitle) {
+      return songs.find(function (song) {
+        return song.title === songTitle;
+      });
+    })
+    .filter(function (song) {
+      return song !== undefined;
+    });
 
-    // 保存時の曲順を復元
-    currentRankingSongOrder =
-        savedProgress.songOrder
-            .map(
-                function (songTitle) {
+  // ランキング対象曲も復元
+  rankingTargetSongs = [...currentRankingSongOrder];
 
-                    return songs.find(
-                        function (song) {
+  // 比較履歴を復元
+  comparisonResults.length = 0;
 
-                            return (
-                                song.title ===
-                                songTitle
-                            );
+  comparisonResults.push(...savedProgress.comparisonResults);
 
-                        }
-                    );
+  // マージタスク選択履歴を復元
+  mergeTaskSelectionHistory.length = 0;
 
-                }
-            )
-            .filter(
-                function (song) {
+  mergeTaskSelectionHistory.push(
+    ...(savedProgress.mergeTaskSelectionHistory || []),
+  );
 
-                    return song !== undefined;
+  // 中断時に表示されていた未回答タスクを復元
+  pendingMergeTaskId = savedProgress.pendingMergeTaskId || null;
 
-                }
-            );
+  // ランキング条件を復元
+  currentRankingConditions = savedProgress.conditions;
 
-
-    // ランキング対象曲も復元
-    rankingTargetSongs =
-        [...currentRankingSongOrder];
-
-
-    // 比較履歴を復元
-    comparisonResults.length = 0;
-
-    comparisonResults.push(
-        ...savedProgress.comparisonResults
-    );
-
-    // マージタスク選択履歴を復元
-    mergeTaskSelectionHistory.length = 0;
-
-    mergeTaskSelectionHistory.push(
-        ...(
-            savedProgress.mergeTaskSelectionHistory ||
-            []
-        )
-    );
-
-    // 中断時に表示されていた未回答タスクを復元
-    pendingMergeTaskId =
-        savedProgress.pendingMergeTaskId ||
-        null;
-
-
-    // ランキング条件を復元
-    currentRankingConditions =
-        savedProgress.conditions;
-
-
-    // 保存済みの比較結果を最初から再現
-    mergeTaskReplayIndex = 0;
-    replayIndex = 0;
-    isReplaying = true;
-
+  // 保存済みの比較結果を最初から再現
+  mergeTaskReplayIndex = 0;
+  replayIndex = 0;
+  isReplaying = true;
 }
 
 // ==============================
@@ -1844,147 +1089,91 @@ function restoreRankingProgress(
 // ==============================
 
 function resumeRanking() {
+  const savedProgress = loadRankingProgress();
 
-    const savedProgress =
-        loadRankingProgress();
+  if (!savedProgress) {
+    return;
+  }
 
-    if (!savedProgress) {
-        return;
-    }
+  restoreRankingProgress(savedProgress);
 
-    restoreRankingProgress(
-        savedProgress
-    );
+  hideAllScreens();
 
-    hideAllScreens();
+  compareScreen.style.display = "block";
 
-    compareScreen.style.display =
-        "block";
-
-    startRanking(true);
-
+  startRanking(true);
 }
 
 // ==============================
 // 10. 今回のランキング条件を表示
 // ==============================
 
-function displayRankingConditions(
-    conditions = currentRankingConditions
-) {
+function displayRankingConditions(conditions = currentRankingConditions) {
+  if (!conditions) {
+    return;
+  }
 
-    if (!conditions) {
-        return;
-    }
+  const { songCount, albums, musicTypes, categories, mvStatus } = conditions;
 
-    const {
-        songCount,
-        albums,
-        musicTypes,
-        categories,
-        mvStatus
-    } = conditions;
+  const musicTypeText =
+    musicTypes.length > 0 ? musicTypes.join(" / ") : "すべて";
 
+  const categoryText =
+    categories.length > 0 ? categories.join(" / ") : "すべて";
 
-    const musicTypeText =
-        musicTypes.length > 0
-            ? musicTypes.join(" / ")
-            : "すべて";
+  let mvText = "すべて";
 
+  if (mvStatus.length === 1 && mvStatus[0] === "true") {
+    mvText = "MVあり";
+  } else if (mvStatus.length === 1 && mvStatus[0] === "false") {
+    mvText = "MVなし";
+  }
 
-    const categoryText =
-        categories.length > 0
-            ? categories.join(" / ")
-            : "すべて";
+  const albumText = albums.length > 0 ? albums.join(" / ") : "すべて";
 
-
-    let mvText = "すべて";
-
-    if (
-        mvStatus.length === 1 &&
-        mvStatus[0] === "true"
-    ) {
-
-        mvText = "MVあり";
-
-    } else if (
-        mvStatus.length === 1 &&
-        mvStatus[0] === "false"
-    ) {
-
-        mvText = "MVなし";
-
-    }
-
-
-    const albumText =
-        albums.length > 0
-            ? albums.join(" / ")
-            : "すべて";
-
-
-    resultRankingSettingsContent.innerHTML = `
+  resultRankingSettingsContent.innerHTML = `
         <p>対象曲数：${songCount}曲</p>
         <p>Type：${musicTypeText}</p>
         <p>MV：${mvText}</p>
         <p>Category：${categoryText}</p>
         <p>Album：${albumText}</p>
     `;
-
 }
-
 
 // ==============================
 // 11. 順位の表示文字を作成
 // ==============================
 
 function getRankingPosition(index) {
+  if (index === 0) {
+    return "🥇";
+  }
 
-    if (index === 0) {
-        return "🥇";
-    }
+  if (index === 1) {
+    return "🥈";
+  }
 
-    if (index === 1) {
-        return "🥈";
-    }
+  if (index === 2) {
+    return "🥉";
+  }
 
-    if (index === 2) {
-        return "🥉";
-    }
-
-    return `${index + 1}位`;
-
+  return `${index + 1}位`;
 }
-
 
 // ==============================
 // 12. ランキング表示切り替え
 // ==============================
 
 function toggleRankingDisplay() {
+  const resultScreen = document.getElementById("result-screen");
 
-    const resultScreen =
-        document.getElementById(
-            "result-screen"
-        );
+  isShowingAllRanking = !isShowingAllRanking;
 
-    isShowingAllRanking =
-        !isShowingAllRanking;
+  resultScreen.classList.toggle("show-all-ranking", isShowingAllRanking);
 
-    resultScreen.classList.toggle(
-        "show-all-ranking",
-        isShowingAllRanking
-    );
-
-    toggleRankingButton.textContent =
-        isShowingAllRanking
-            ? "トップ10だけ表示"
-            : "全曲ランキングを表示";
-
+  toggleRankingButton.textContent = isShowingAllRanking
+    ? "トップ10だけ表示"
+    : "全曲ランキングを表示";
 }
 
-toggleRankingButton.addEventListener(
-    "click",
-    toggleRankingDisplay
-);
-
+toggleRankingButton.addEventListener("click", toggleRankingDisplay);
