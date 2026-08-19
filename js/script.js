@@ -1,10 +1,15 @@
 // ==============================
+// script.js
+// アプリ共通状態・初期化・全体イベント管理
+// ==============================
+
+// ==============================
 // 1. HTML要素の取得
 // ==============================
 
-// ----------
-// 画面
-// ----------
+// ------------------------------
+// 1-1. 画面
+// ------------------------------
 
 const homeScreen = document.getElementById("home-screen");
 
@@ -16,9 +21,15 @@ const resultScreen = document.getElementById("result-screen");
 
 const songListScreen = document.getElementById("song-list-screen");
 
-// ----------
-// ホーム画面
-// ----------
+const rankingHistoryScreen = document.getElementById("ranking-history-screen");
+
+const rankingHistoryDetailScreen = document.getElementById(
+  "ranking-history-detail-screen",
+);
+
+// ------------------------------
+// 1-2. ホーム画面
+// ------------------------------
 
 const startButton = document.getElementById("start-button");
 
@@ -26,9 +37,9 @@ const songListButton = document.getElementById("song-list-button");
 
 const resumeRankingButton = document.getElementById("resume-ranking-button");
 
-// ----------
-// ランキング条件画面
-// ----------
+// ------------------------------
+// 1-3. ランキング条件画面
+// ------------------------------
 
 const rankingStartButton = document.getElementById("ranking-start-button");
 
@@ -46,9 +57,9 @@ const rankingFilterResetButton = document.getElementById(
 
 const settingsHomeButton = document.getElementById("settings-home-button");
 
-// ----------
-// 比較画面
-// ----------
+// ------------------------------
+// 1-4. 比較画面
+// ------------------------------
 
 const progressText = document.getElementById("progress-text");
 
@@ -74,9 +85,9 @@ const undoButton = document.getElementById("undo-button");
 
 const pauseRankingButton = document.getElementById("pause-ranking-button");
 
-// ----------
-// 結果画面
-// ----------
+// ------------------------------
+// 1-5. 結果画面
+// ------------------------------
 
 const rankingList = document.getElementById("ranking-list");
 
@@ -98,19 +109,9 @@ const resultConditionsContent = document.getElementById(
   "result-ranking-settings-content",
 );
 
-// ----------
-// ランキング履歴画面
-// ----------
-
-const rankingHistoryScreen = document.getElementById("ranking-history-screen");
-
-const rankingHistoryDetailScreen = document.getElementById(
-  "ranking-history-detail-screen",
-);
-
-// ----------
-// 楽曲一覧画面
-// ----------
+// ------------------------------
+// 1-6. 楽曲一覧画面
+// ------------------------------
 
 const songList = document.getElementById("song-list");
 
@@ -148,19 +149,16 @@ const filterToggleButton = document.getElementById("filter-toggle-button");
 
 const filterToggleIcon = document.getElementById("filter-toggle-icon");
 
-// ----------
-// デバッグ表示
-// ----------
+// ------------------------------
+// 1-7. デバッグ表示
+// ------------------------------
 
 const imageErrorSummary = document.getElementById("image-error-summary");
 
 const imageErrorCount = document.getElementById("image-error-count");
-// ==========================
-// 2. ランキング条件画面
-// ==========================
 
 // ==============================
-// 3. 共通設定
+// 2. 共通設定
 // ==============================
 
 // URLの末尾に「?debug=true」を付けると
@@ -169,7 +167,7 @@ const isDebugMode =
   new URLSearchParams(window.location.search).get("debug") === "true";
 
 // ==============================
-// 4. ランキングの共通状態
+// 3. ランキング共通状態
 // ==============================
 
 // 現在比較中の楽曲
@@ -182,7 +180,7 @@ let comparisonResolve = null;
 // 過去の選択履歴
 let comparisonResults = [];
 
-// 「一つ前に戻る」処理で使用
+// Undo / Replay
 let replayIndex = 0;
 let isReplaying = false;
 
@@ -203,13 +201,12 @@ let currentRankingSongOrder = [];
 // 今回のランキング条件
 let currentRankingConditions = null;
 
-// ランキング条件を初期化済みか
+// ランキング条件の初期化状態
 let hasInitializedRankingFilters = false;
-
 let hasInitializedRankingSettings = false;
 
 // ==============================
-// ランキング再開ボタンの表示を更新
+// 4. ランキング再開ボタン
 // ==============================
 
 function updateResumeRankingButton() {
@@ -225,8 +222,12 @@ function updateResumeRankingButton() {
 updateResumeRankingButton();
 
 // ==============================
-// 6. 共通リセット処理
+// 5. 共通リセット処理
 // ==============================
+
+// ------------------------------
+// 5-1. ランキング状態をリセット
+// ------------------------------
 
 function resetRankingState() {
   // 実行中の古いランキング処理を無効にする
@@ -248,6 +249,11 @@ function resetRankingState() {
   progressText.textContent = "進捗 0%";
   progressFill.style.width = "0%";
 }
+
+// ------------------------------
+// 5-2. 楽曲一覧フィルターをリセット
+// ------------------------------
+
 function resetSongListFilters() {
   if (typeof resetSongListFilterState === "function") {
     resetSongListFilterState();
@@ -255,12 +261,12 @@ function resetSongListFilters() {
 }
 
 // ==============================
-// 7. イベント登録
+// 6. イベント登録
 // ==============================
 
-// ==============================
-// 7-1. ホーム画面
-// ==============================
+// ------------------------------
+// 6-1. ホーム画面
+// ------------------------------
 
 function setupHomeEvents() {
   // ランキング条件画面を開く
@@ -308,187 +314,28 @@ function setupHomeEvents() {
   });
 }
 
-// ==============================
-// 7-2. ランキング条件画面
-// ==============================
-
-function setupRankingSettingsEvents() {
-  // ランキング条件フィルターの変更を反映
-  rankingFilters.addEventListener("change", function () {
-    updateRankingSongCount();
-  });
-
-  // ランキング条件をリセット
-  rankingFilterResetButton.addEventListener("click", function () {
-    const rankingFilterInputs = rankingFilters.querySelectorAll(
-      'input[type="checkbox"]',
-    );
-
-    rankingFilterInputs.forEach(function (input) {
-      input.checked = false;
-    });
-
-    updateRankingSongCount();
-  });
-
-  // 条件を決めてランキング開始
-  rankingStartButton.addEventListener("click", function () {
-    const didStart = beginNewRanking();
-
-    if (!didStart) {
-      return;
-    }
-
-    showCompareScreen();
-
-    startRanking();
-  });
-
-  // ホーム画面へ戻る
-  settingsHomeButton.addEventListener("click", function () {
-    resetRankingState();
-
-    showHomeScreen();
-  });
-}
-
-// ==============================
-// 7-3. 比較画面
-// ==============================
-
-function setupCompareEvents() {
-  // 左側の楽曲を選択
-  leftCard.addEventListener("click", function () {
-    selectLeftSong();
-  });
-
-  // 右側の楽曲を選択
-  rightCard.addEventListener("click", function () {
-    selectRightSong();
-  });
-
-  // 左側の曲をYouTubeで確認
-  leftPreviewButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-
-    openSongPreview(currentLeftSong);
-  });
-
-  // 右側の曲をYouTubeで確認
-  rightPreviewButton.addEventListener("click", function (event) {
-    event.stopPropagation();
-
-    openSongPreview(currentRightSong);
-  });
-
-  // 一つ前の選択に戻る
-  undoButton.addEventListener("click", function () {
-    undoLastSelection();
-  });
-}
-
-// ==============================
-// 7-4. 結果画面
-// ==============================
-
-function setupResultEvents() {
-  // ランキング条件の開閉
-  resultConditionsToggleButton.addEventListener("click", function () {
-    const isExpanded =
-      resultConditionsToggleButton.getAttribute("aria-expanded") === "true";
-
-    resultConditionsToggleButton.setAttribute(
-      "aria-expanded",
-      String(!isExpanded),
-    );
-
-    resultConditionsContent.hidden = isExpanded;
-
-    resultConditionsToggleIcon.textContent = isExpanded ? "▼" : "▲";
-
-    resultConditionsToggleText.textContent = isExpanded
-      ? "条件を見る"
-      : "条件を閉じる";
-  });
-
-  // ホーム画面へ戻る
-  restartButton.addEventListener("click", function () {
-    resetRankingState();
-
-    showHomeScreen();
-  });
-}
-
-// ==============================
-// 7-5. ランキング途中保存・再開
-// ==============================
-
-function setupRankingProgressEvents() {
-  // ホーム → ランキングを再開
-  resumeRankingButton.addEventListener("click", function () {
-    resumeRanking();
-  });
-
-  // ランキングを中断
-  pauseRankingButton.addEventListener("click", function () {
-    saveRankingProgress();
-
-    rankingRunId++;
-
-    comparisonResolve = null;
-
-    hideAllScreens();
-
-    homeScreen.style.display = "block";
-
-    updateResumeRankingButton();
-  });
-}
-
-// ==============================
-// 7-6. 楽曲一覧画面
-// ==============================
-
-function setupSongListEvents() {
-  // 楽曲一覧からホームへ戻る
-  songListBackButton.addEventListener("click", showHomeScreen);
-
-  songListHomeButton.addEventListener("click", showHomeScreen);
-
-  // 楽曲一覧フィルターのイベント登録
-  if (typeof setupSongListFilterEvents === "function") {
-    setupSongListFilterEvents();
-  }
-
-  // フィルターパネルの開閉
-  filterToggleButton.addEventListener("click", function () {
-    const isExpanded =
-      filterToggleButton.getAttribute("aria-expanded") === "true";
-
-    filterToggleButton.setAttribute("aria-expanded", String(!isExpanded));
-
-    songListFilters.hidden = isExpanded;
-
-    filterToggleIcon.textContent = isExpanded ? "▼" : "▲";
-  });
-}
-
-// ==============================
-// 7-7. 全イベントを登録
-// ==============================
+// ------------------------------
+// 6-2. 全イベントを登録
+// ------------------------------
 
 function setupEventListeners() {
   setupHomeEvents();
+
   setupRankingSettingsEvents();
+
   setupCompareEvents();
+
   setupResultEvents();
+
   setupRankingHistoryEvents();
+
   setupRankingProgressEvents();
+
   setupSongListEvents();
 }
 
 // ==============================
-// 8. 初期化
+// 7. 初期化
 // ==============================
 
 function initializeApp() {
@@ -510,7 +357,7 @@ function initializeApp() {
 }
 
 // ==============================
-// 9. アプリ起動
+// 8. アプリ起動
 // ==============================
 
 // すべてのJavaScriptファイルが読み込まれてから起動する
