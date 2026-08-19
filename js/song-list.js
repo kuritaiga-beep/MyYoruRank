@@ -4,8 +4,6 @@
 // アルバムごとのグループ表示とフィルター処理
 // ==============================
 
-
-
 // ==============================
 // 2. 楽曲一覧を生成
 // ==============================
@@ -27,7 +25,6 @@ function createSongList() {
 
   applySongListFilters();
 }
-
 
 // ========================================
 // 3.1 フィルター機能
@@ -365,7 +362,6 @@ function updateSongListSummary(
   }
 }
 
-
 // ==============================
 // 6. アルバムセクションを作成
 // ==============================
@@ -554,4 +550,32 @@ function createSongCard(song) {
   card.appendChild(info);
 
   return card;
+}
+
+// ==============================
+// 7-6. 楽曲一覧画面
+// ==============================
+
+function setupSongListEvents() {
+  // 楽曲一覧からホームへ戻る
+  songListBackButton.addEventListener("click", showHomeScreen);
+
+  songListHomeButton.addEventListener("click", showHomeScreen);
+
+  // 楽曲一覧フィルターのイベント登録
+  if (typeof setupSongListFilterEvents === "function") {
+    setupSongListFilterEvents();
+  }
+
+  // フィルターパネルの開閉
+  filterToggleButton.addEventListener("click", function () {
+    const isExpanded =
+      filterToggleButton.getAttribute("aria-expanded") === "true";
+
+    filterToggleButton.setAttribute("aria-expanded", String(!isExpanded));
+
+    songListFilters.hidden = isExpanded;
+
+    filterToggleIcon.textContent = isExpanded ? "▼" : "▲";
+  });
 }

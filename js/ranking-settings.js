@@ -206,3 +206,47 @@ function beginNewRanking() {
 
   return true;
 }
+
+// ==============================
+// 7-2. ランキング条件画面
+// ==============================
+
+function setupRankingSettingsEvents() {
+  // ランキング条件フィルターの変更を反映
+  rankingFilters.addEventListener("change", function () {
+    updateRankingSongCount();
+  });
+
+  // ランキング条件をリセット
+  rankingFilterResetButton.addEventListener("click", function () {
+    const rankingFilterInputs = rankingFilters.querySelectorAll(
+      'input[type="checkbox"]',
+    );
+
+    rankingFilterInputs.forEach(function (input) {
+      input.checked = false;
+    });
+
+    updateRankingSongCount();
+  });
+
+  // 条件を決めてランキング開始
+  rankingStartButton.addEventListener("click", function () {
+    const didStart = beginNewRanking();
+
+    if (!didStart) {
+      return;
+    }
+
+    showCompareScreen();
+
+    startRanking();
+  });
+
+  // ホーム画面へ戻る
+  settingsHomeButton.addEventListener("click", function () {
+    resetRankingState();
+
+    showHomeScreen();
+  });
+}

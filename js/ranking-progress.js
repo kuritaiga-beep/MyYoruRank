@@ -111,3 +111,29 @@ function resumeRanking() {
 
   startRanking(true);
 }
+
+// ==============================
+// 7-5. ランキング途中保存・再開
+// ==============================
+
+function setupRankingProgressEvents() {
+  // ホーム → ランキングを再開
+  resumeRankingButton.addEventListener("click", function () {
+    resumeRanking();
+  });
+
+  // ランキングを中断
+  pauseRankingButton.addEventListener("click", function () {
+    saveRankingProgress();
+
+    rankingRunId++;
+
+    comparisonResolve = null;
+
+    hideAllScreens();
+
+    homeScreen.style.display = "block";
+
+    updateResumeRankingButton();
+  });
+}

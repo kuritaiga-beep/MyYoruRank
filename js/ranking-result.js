@@ -147,3 +147,35 @@ function toggleRankingDisplay() {
 }
 
 toggleRankingButton.addEventListener("click", toggleRankingDisplay);
+
+// ==============================
+// 7-4. 結果画面
+// ==============================
+
+function setupResultEvents() {
+  // ランキング条件の開閉
+  resultConditionsToggleButton.addEventListener("click", function () {
+    const isExpanded =
+      resultConditionsToggleButton.getAttribute("aria-expanded") === "true";
+
+    resultConditionsToggleButton.setAttribute(
+      "aria-expanded",
+      String(!isExpanded),
+    );
+
+    resultConditionsContent.hidden = isExpanded;
+
+    resultConditionsToggleIcon.textContent = isExpanded ? "▼" : "▲";
+
+    resultConditionsToggleText.textContent = isExpanded
+      ? "条件を見る"
+      : "条件を閉じる";
+  });
+
+  // ホーム画面へ戻る
+  restartButton.addEventListener("click", function () {
+    resetRankingState();
+
+    showHomeScreen();
+  });
+}
