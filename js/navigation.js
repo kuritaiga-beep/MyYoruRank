@@ -36,10 +36,19 @@ function hideAllScreens() {
 // 3. 各画面を表示
 // ==============================
 
+// ------------------------------
+// 3-1. ホーム画面
+// ------------------------------
+
 function showHomeScreen() {
   hideAllScreens();
+
   homeScreen.style.display = "block";
 }
+
+// ------------------------------
+// 3-2. ランキング条件画面
+// ------------------------------
 
 function showSettingsScreen() {
   hideAllScreens();
@@ -48,6 +57,7 @@ function showSettingsScreen() {
 
   if (!hasInitializedRankingSettings) {
     applyRecommendedRankingFilters();
+
     hasInitializedRankingSettings = true;
   }
 
@@ -58,6 +68,10 @@ function showSettingsScreen() {
   pushScreenHistory("settings");
 }
 
+// ------------------------------
+// 3-3. 比較画面
+// ------------------------------
+
 function showCompareScreen() {
   hideAllScreens();
 
@@ -66,9 +80,11 @@ function showCompareScreen() {
   pushScreenHistory("compare");
 }
 
-function showResultScreen(resultId = null) {
-  console.log("showResultScreen に渡された resultId:", resultId);
+// ------------------------------
+// 3-4. 結果画面
+// ------------------------------
 
+function showResultScreen(resultId = null) {
   hideAllScreens();
 
   resultScreen.style.display = "block";
@@ -82,6 +98,10 @@ function showResultScreen(resultId = null) {
     "#result",
   );
 }
+
+// ------------------------------
+// 3-5. 楽曲一覧画面
+// ------------------------------
 
 function showSongListScreen() {
   hideAllScreens();
@@ -126,65 +146,71 @@ window.addEventListener("popstate", function (event) {
     updateResumeRankingButton();
   }
 
-  if (screenName === "home") {
-    hideAllScreens();
-    homeScreen.style.display = "block";
-  }
-
-  if (screenName === "settings") {
-    hideAllScreens();
-    settingsScreen.style.display = "block";
-  }
-
-  if (screenName === "compare") {
-    resumeRanking();
-  }
-
-  if (screenName === "song-list") {
-    hideAllScreens();
-    songListScreen.style.display = "block";
-  }
-
-  if (screenName === "ranking-history") {
-    hideAllScreens();
-    rankingHistoryScreen.style.display = "block";
-  }
-
-  if (screenName === "ranking-history-detail") {
-    const rankingHistory =
-      JSON.parse(localStorage.getItem("rankingHistory")) || [];
-
-    const rankingId = event.state.rankingId;
-
-    showRankingHistoryDetail(rankingHistory, rankingId, false);
-  }
-
-  if (screenName === "result") {
-    const resultId = event.state.resultId;
-
-    console.log("復元する結果ID:", resultId);
-
-    const rankingHistory =
-      JSON.parse(localStorage.getItem("rankingHistory")) || [];
-
-    const savedRanking = rankingHistory.find(function (item) {
-      return item.id === resultId;
-    });
-
-    console.log("見つかったランキング:", savedRanking);
-
-    if (savedRanking) {
-      displayRanking(savedRanking.ranking);
-
-      displayRankingConditions(savedRanking.conditions);
-
+  switch (screenName) {
+    case "home":
       hideAllScreens();
 
-      resultScreen.style.display = "block";
-    } else {
-      console.warn("復元するランキングが見つかりませんでした:", resultId);
+      homeScreen.style.display = "block";
+      break;
 
-      showHomeScreen();
+    case "settings":
+      hideAllScreens();
+
+      settingsScreen.style.display = "block";
+      break;
+
+    case "compare":
+      resumeRanking();
+      break;
+
+    case "song-list":
+      hideAllScreens();
+
+      songListScreen.style.display = "block";
+      break;
+
+    case "ranking-history":
+      hideAllScreens();
+
+      rankingHistoryScreen.style.display = "block";
+      break;
+
+    case "ranking-history-detail": {
+      const rankingHistory =
+        JSON.parse(localStorage.getItem("rankingHistory")) || [];
+
+      const rankingId = event.state.rankingId;
+
+      showRankingHistoryDetail(rankingHistory, rankingId, false);
+
+      break;
+    }
+
+    case "result": {
+      const resultId = event.state.resultId;
+
+      const rankingHistory =
+        JSON.parse(localStorage.getItem("rankingHistory")) || [];
+
+      const savedRanking = rankingHistory.find(function (item) {
+        return item.id === resultId;
+      });
+
+      if (savedRanking) {
+        displayRanking(savedRanking.ranking);
+
+        displayRankingConditions(savedRanking.conditions);
+
+        hideAllScreens();
+
+        resultScreen.style.display = "block";
+      } else {
+        console.warn("復元するランキングが見つかりませんでした:", resultId);
+
+        showHomeScreen();
+      }
+
+      break;
     }
   }
 });

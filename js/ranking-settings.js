@@ -4,7 +4,77 @@
 // ==============================
 
 // ==============================
-// 5. ランキング対象を更新
+// 1. アルバムフィルターを生成
+// ==============================
+
+function createRankingAlbumFilterOptions() {
+  rankingAlbumFilterOptions.innerHTML = "";
+
+  const groupedSongs = groupSongsByAlbum(songs);
+
+  const albumNames = getOrderedAlbumNames(groupedSongs);
+
+  albumNames.forEach(function (albumName) {
+    const label = document.createElement("label");
+
+    label.className = "filter-checkbox";
+
+    const input = document.createElement("input");
+
+    input.type = "checkbox";
+    input.name = "ranking-album-filter";
+    input.value = albumName;
+
+    const span = document.createElement("span");
+
+    if (albumName === "負け犬にアンコールはいらない") {
+      span.innerHTML = "負け犬にアンコールは<br>いらない";
+    } else {
+      span.textContent = albumName;
+    }
+
+    label.appendChild(input);
+    label.appendChild(span);
+
+    rankingAlbumFilterOptions.appendChild(label);
+  });
+}
+
+// ==============================
+// 2. ランキング条件を推奨設定にする
+// ==============================
+
+function applyRecommendedRankingFilters() {
+  // すべてのチェックを一度外す
+  const rankingCheckboxes = rankingFilters.querySelectorAll(
+    'input[type="checkbox"]',
+  );
+
+  rankingCheckboxes.forEach(function (checkbox) {
+    checkbox.checked = false;
+  });
+
+  // Vocalを選択
+  const vocalCheckbox = rankingFilters.querySelector(
+    'input[name="ranking-music-type"][value="vocal"]',
+  );
+
+  if (vocalCheckbox) {
+    vocalCheckbox.checked = true;
+  }
+
+  // トリビュート以外のAlbumをすべて選択
+  const albumCheckboxes = rankingFilters.querySelectorAll(
+    'input[name="ranking-album-filter"]',
+  );
+
+  albumCheckboxes.forEach(function (checkbox) {
+    checkbox.checked = checkbox.value !== "トリビュート";
+  });
+}
+
+// ==============================
+// 3. ランキング対象を更新
 // ==============================
 
 function updateRankingTargetSongs() {
@@ -96,77 +166,8 @@ function updateRankingTargetSongs() {
   };
 }
 
-// ランキング条件のアルバムフィルターを生成する
-function createRankingAlbumFilterOptions() {
-  rankingAlbumFilterOptions.innerHTML = "";
-
-  const groupedSongs = groupSongsByAlbum(songs);
-
-  const albumNames = getOrderedAlbumNames(groupedSongs);
-
-  albumNames.forEach(function (albumName) {
-    const label = document.createElement("label");
-
-    label.className = "filter-checkbox";
-
-    const input = document.createElement("input");
-
-    input.type = "checkbox";
-
-    input.name = "ranking-album-filter";
-
-    input.value = albumName;
-
-    const span = document.createElement("span");
-
-    if (albumName === "負け犬にアンコールはいらない") {
-      span.innerHTML = "負け犬にアンコールは<br>いらない";
-    } else {
-      span.textContent = albumName;
-    }
-
-    label.appendChild(input);
-    label.appendChild(span);
-
-    rankingAlbumFilterOptions.appendChild(label);
-  });
-}
-
 // ==============================
-// ランキング条件を推奨設定にする
-// ==============================
-
-function applyRecommendedRankingFilters() {
-  // すべてのチェックを一度外す
-  const rankingCheckboxes = rankingFilters.querySelectorAll(
-    'input[type="checkbox"]',
-  );
-
-  rankingCheckboxes.forEach(function (checkbox) {
-    checkbox.checked = false;
-  });
-
-  // Vocalを選択
-  const vocalCheckbox = rankingFilters.querySelector(
-    'input[name="ranking-music-type"][value="vocal"]',
-  );
-
-  if (vocalCheckbox) {
-    vocalCheckbox.checked = true;
-  }
-
-  // トリビュート以外のAlbumをすべて選択
-  const albumCheckboxes = rankingFilters.querySelectorAll(
-    'input[name="ranking-album-filter"]',
-  );
-
-  albumCheckboxes.forEach(function (checkbox) {
-    checkbox.checked = checkbox.value !== "トリビュート";
-  });
-}
-
-// ==============================
-// 6. 選択中の楽曲数を更新
+// 4. 選択中の楽曲数を更新
 // ==============================
 
 function updateRankingSongCount() {
@@ -176,7 +177,7 @@ function updateRankingSongCount() {
 }
 
 // ==============================
-// 7. 新しいランキングを開始
+// 5. 新しいランキングを開始
 // ==============================
 
 function beginNewRanking() {
@@ -208,7 +209,7 @@ function beginNewRanking() {
 }
 
 // ==============================
-// 7-2. ランキング条件画面
+// 6. ランキング条件画面イベント
 // ==============================
 
 function setupRankingSettingsEvents() {

@@ -1,13 +1,16 @@
 // ==============================
 // ranking-history.js
-// ランキング履歴
+// ランキング履歴の保存・一覧・詳細表示
 // ==============================
 
 // ==============================
 // 1. DOM要素の取得
 // ==============================
 
-// 履歴一覧
+// ------------------------------
+// 1-1. 履歴一覧
+// ------------------------------
+
 const rankingHistoryButton = document.getElementById("ranking-history-button");
 
 const rankingHistoryHomeButton = document.getElementById(
@@ -16,7 +19,10 @@ const rankingHistoryHomeButton = document.getElementById(
 
 const rankingHistoryList = document.getElementById("ranking-history-list");
 
-// 履歴詳細
+// ------------------------------
+// 1-2. 履歴詳細
+// ------------------------------
+
 const rankingHistoryDetailSettings = document.getElementById(
   "ranking-history-detail-settings",
 );
@@ -30,7 +36,7 @@ const rankingHistoryDetailBackButton = document.getElementById(
 );
 
 // ==============================
-// 10. ランキング結果を保存
+// 2. ランキング結果を履歴に保存
 // ==============================
 
 function saveRankingResult(ranking) {
@@ -44,13 +50,9 @@ function saveRankingResult(ranking) {
 
     conditions: {
       songCount: currentRankingConditions.songCount,
-
       albums: [...currentRankingConditions.albums],
-
       musicTypes: [...currentRankingConditions.musicTypes],
-
       categories: [...currentRankingConditions.categories],
-
       mvStatus: [...currentRankingConditions.mvStatus],
     },
 
@@ -71,7 +73,7 @@ function saveRankingResult(ranking) {
 }
 
 // ==============================
-// ランキング履歴画面
+// 3. ランキング履歴一覧を表示
 // ==============================
 
 function displayRankingHistory(rankingHistory) {
@@ -79,10 +81,10 @@ function displayRankingHistory(rankingHistory) {
 
   if (rankingHistory.length === 0) {
     rankingHistoryList.innerHTML = `
-                <p>
-                    保存されたランキングはありません。
-                </p>
-            `;
+      <p>
+        保存されたランキングはありません。
+      </p>
+    `;
 
     return;
   }
@@ -93,42 +95,42 @@ function displayRankingHistory(rankingHistory) {
     historyItem.classList.add("ranking-history-item");
 
     historyItem.innerHTML = `
-                    <div class="ranking-history-info">
+      <div class="ranking-history-info">
 
-                        <div>
-                            ${new Date(history.date).toLocaleString("ja-JP")}
-                        </div>
+        <div>
+          ${new Date(history.date).toLocaleString("ja-JP")}
+        </div>
 
-                        <div>
-                            対象曲数：${history.conditions.songCount}曲
-                        </div>
+        <div>
+          対象曲数：${history.conditions.songCount}曲
+        </div>
 
-                        <div class="ranking-history-first">
-                            1位：${history.ranking[0].title}
-                        </div>
+        <div class="ranking-history-first">
+          1位：${history.ranking[0].title}
+        </div>
 
-                    </div>
+      </div>
 
-                    <div class="ranking-history-actions">
+      <div class="ranking-history-actions">
 
-                        <button
-                            type="button"
-                            class="ranking-history-view-button"
-                            data-ranking-id="${history.id}"
-                        >
-                            ランキングを見る
-                        </button>
+        <button
+          type="button"
+          class="ranking-history-view-button"
+          data-ranking-id="${history.id}"
+        >
+          ランキングを見る
+        </button>
 
-                        <button
-                            type="button"
-                            class="ranking-history-delete-button"
-                            data-ranking-id="${history.id}"
-                        >
-                            削除
-                        </button>
+        <button
+          type="button"
+          class="ranking-history-delete-button"
+          data-ranking-id="${history.id}"
+        >
+          削除
+        </button>
 
-                    </div>
-                `;
+      </div>
+    `;
 
     const viewButton = historyItem.querySelector(
       ".ranking-history-view-button",
@@ -153,8 +155,6 @@ function displayRankingHistory(rankingHistory) {
         return;
       }
 
-      console.log("削除するランキングID:", rankingId);
-
       const updatedRankingHistory = rankingHistory.filter(function (history) {
         return history.id !== rankingId;
       });
@@ -171,11 +171,11 @@ function displayRankingHistory(rankingHistory) {
   });
 }
 
-let isShowingAllHistoryRanking = false;
+// ==============================
+// 4. ランキング履歴詳細を表示
+// ==============================
 
-// ==============================
-// 保存ランキングの詳細を表示
-// ==============================
+let isShowingAllHistoryRanking = false;
 
 function showRankingHistoryDetail(
   rankingHistory,
@@ -196,84 +196,85 @@ function showRankingHistoryDetail(
 
   rankingHistoryDetailTitle.textContent = `My Yoru Rank - ${formattedDate}`;
 
-  // ----------
+  // ------------------------------
   // 履歴ランキング表示を初期化
-  // ----------
+  // ------------------------------
 
   isShowingAllHistoryRanking = false;
 
   rankingHistoryDetailScreen.classList.remove("show-all-ranking");
 
   rankingHistoryDetailSettings.innerHTML = `
+    <button
+      id="ranking-history-conditions-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="ranking-history-conditions"
+    >
+      <span id="ranking-history-conditions-toggle-text">
+        条件を見る
+      </span>
 
-            <button
-                id="ranking-history-conditions-toggle"
-                type="button"
-                aria-expanded="false"
-                aria-controls="ranking-history-conditions"
-            >
-                <span id="ranking-history-conditions-toggle-text">
-                    条件を見る
-                </span>
+      <span id="ranking-history-conditions-toggle-icon">
+        ▼
+      </span>
+    </button>
 
-                <span id="ranking-history-conditions-toggle-icon">
-                    ▼
-                </span>
-            </button>
+    <div
+      id="ranking-history-conditions"
+      hidden
+    >
+      <p>
+        対象曲数：${selectedHistory.conditions.songCount}曲
+      </p>
 
-            <div
-                id="ranking-history-conditions"
-                hidden
-            >
-                <p>
-                    対象曲数：${selectedHistory.conditions.songCount}曲
-                </p>
+      <p>
+        Type：
+        ${
+          selectedHistory.conditions.musicTypes.length > 0
+            ? selectedHistory.conditions.musicTypes.join(" / ")
+            : "すべて"
+        }
+      </p>
 
-                <p>
-                    Type：
-                    ${
-                      selectedHistory.conditions.musicTypes.length > 0
-                        ? selectedHistory.conditions.musicTypes.join(" / ")
-                        : "すべて"
-                    }
-                </p>
+      <p>
+        MV：
+        ${
+          selectedHistory.conditions.mvStatus.length > 0
+            ? selectedHistory.conditions.mvStatus.join(" / ")
+            : "すべて"
+        }
+      </p>
 
-                <p>
-                    MV：
-                    ${
-                      selectedHistory.conditions.mvStatus.length > 0
-                        ? selectedHistory.conditions.mvStatus.join(" / ")
-                        : "すべて"
-                    }
-                </p>
+      <p>
+        Category：
+        ${
+          selectedHistory.conditions.categories.length > 0
+            ? selectedHistory.conditions.categories.join(" / ")
+            : "すべて"
+        }
+      </p>
 
-                <p>
-                    Category：
-                    ${
-                      selectedHistory.conditions.categories.length > 0
-                        ? selectedHistory.conditions.categories.join(" / ")
-                        : "すべて"
-                    }
-                </p>
+      <p>
+        Album：
+        ${
+          selectedHistory.conditions.albums.length > 0
+            ? selectedHistory.conditions.albums.join(" / ")
+            : "すべて"
+        }
+      </p>
+    </div>
+  `;
 
-                <p>
-                    Album：
-                    ${
-                      selectedHistory.conditions.albums.length > 0
-                        ? selectedHistory.conditions.albums.join(" / ")
-                        : "すべて"
-                    }
-                </p>
-
-            </div>
-
-        `;
+  // ------------------------------
+  // TOP10 / 全曲表示
+  // ------------------------------
 
   const rankingToggleButton = document.getElementById(
     "ranking-history-toggle-button",
   );
 
-  rankingToggleButton.addEventListener("click", function () {
+  rankingToggleButton.onclick = function () {
     isShowingAllHistoryRanking = !isShowingAllHistoryRanking;
 
     rankingHistoryDetailScreen.classList.toggle(
@@ -284,7 +285,11 @@ function showRankingHistoryDetail(
     rankingToggleButton.textContent = isShowingAllHistoryRanking
       ? "トップ10だけ表示"
       : "全曲ランキングを表示";
-  });
+  };
+
+  // ------------------------------
+  // 条件表示の開閉
+  // ------------------------------
 
   const conditionsToggleButton = document.getElementById(
     "ranking-history-conditions-toggle",
@@ -317,6 +322,10 @@ function showRankingHistoryDetail(
       : "条件を閉じる";
   });
 
+  // ------------------------------
+  // ランキングを表示
+  // ------------------------------
+
   rankingHistoryDetailList.innerHTML = "";
 
   selectedHistory.ranking.forEach(function (song, index) {
@@ -331,20 +340,20 @@ function showRankingHistoryDetail(
     const rankingPosition = getRankingPosition(index);
 
     rankingItem.innerHTML = `
-                    <span class="ranking-number">
-                        ${rankingPosition}
-                    </span>
+        <span class="ranking-number">
+          ${rankingPosition}
+        </span>
 
-                    <img
-                        src="${song.image}"
-                        alt="${song.title}"
-                        class="ranking-image"
-                    >
+        <img
+          src="${song.image}"
+          alt="${song.title}"
+          class="ranking-image"
+        >
 
-                    <span class="ranking-title">
-                        ${song.title}
-                    </span>
-                `;
+        <span class="ranking-title">
+          ${song.title}
+        </span>
+      `;
 
     const rankingImage = rankingItem.querySelector(".ranking-image");
 
@@ -363,14 +372,17 @@ function showRankingHistoryDetail(
   setRankingImageTarget(selectedHistory.ranking, selectedHistory.conditions);
 
   if (shouldPushHistory) {
-    pushScreenHistory("ranking-history-detail", { rankingId: rankingId });
+    pushScreenHistory("ranking-history-detail", {
+      rankingId: rankingId,
+    });
   }
 }
 
+// navigation.jsから履歴詳細を復元できるよう公開
 window.showRankingHistoryDetail = showRankingHistoryDetail;
 
 // ==============================
-// 4. ランキング履歴イベント
+// 5. ランキング履歴イベント
 // ==============================
 
 function setupRankingHistoryEvents() {
