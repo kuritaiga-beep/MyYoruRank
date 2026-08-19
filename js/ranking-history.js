@@ -30,6 +30,47 @@ const rankingHistoryDetailBackButton = document.getElementById(
 );
 
 // ==============================
+// 10. ランキング結果を保存
+// ==============================
+
+function saveRankingResult(ranking) {
+  const rankingHistory =
+    JSON.parse(localStorage.getItem("rankingHistory")) || [];
+
+  const rankingResult = {
+    id: Date.now(),
+
+    date: new Date().toISOString(),
+
+    conditions: {
+      songCount: currentRankingConditions.songCount,
+
+      albums: [...currentRankingConditions.albums],
+
+      musicTypes: [...currentRankingConditions.musicTypes],
+
+      categories: [...currentRankingConditions.categories],
+
+      mvStatus: [...currentRankingConditions.mvStatus],
+    },
+
+    ranking: ranking.map(function (song) {
+      return {
+        title: song.title,
+        image: song.image,
+        imageType: song.imageType,
+      };
+    }),
+  };
+
+  rankingHistory.unshift(rankingResult);
+
+  localStorage.setItem("rankingHistory", JSON.stringify(rankingHistory));
+
+  return rankingResult.id;
+}
+
+// ==============================
 // ランキング履歴画面
 // ==============================
 
@@ -333,31 +374,31 @@ window.showRankingHistoryDetail = showRankingHistoryDetail;
 // ==============================
 
 function setupRankingHistoryEvents() {
-    // ホーム → ランキング履歴
-    rankingHistoryButton.addEventListener("click", function () {
-        hideAllScreens();
+  // ホーム → ランキング履歴
+  rankingHistoryButton.addEventListener("click", function () {
+    hideAllScreens();
 
-        rankingHistoryScreen.style.display = "block";
+    rankingHistoryScreen.style.display = "block";
 
-        const rankingHistory =
-            JSON.parse(localStorage.getItem("rankingHistory")) || [];
+    const rankingHistory =
+      JSON.parse(localStorage.getItem("rankingHistory")) || [];
 
-        displayRankingHistory(rankingHistory);
+    displayRankingHistory(rankingHistory);
 
-        pushScreenHistory("ranking-history");
-    });
+    pushScreenHistory("ranking-history");
+  });
 
-    // ランキング履歴 → ホーム
-    rankingHistoryHomeButton.addEventListener("click", function () {
-        hideAllScreens();
+  // ランキング履歴 → ホーム
+  rankingHistoryHomeButton.addEventListener("click", function () {
+    hideAllScreens();
 
-        homeScreen.style.display = "block";
-    });
+    homeScreen.style.display = "block";
+  });
 
-    // ランキング履歴詳細 → ランキング履歴
-    rankingHistoryDetailBackButton.addEventListener("click", function () {
-        hideAllScreens();
+  // ランキング履歴詳細 → ランキング履歴
+  rankingHistoryDetailBackButton.addEventListener("click", function () {
+    hideAllScreens();
 
-        rankingHistoryScreen.style.display = "block";
-    });
+    rankingHistoryScreen.style.display = "block";
+  });
 }
