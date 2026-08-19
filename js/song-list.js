@@ -5,7 +5,7 @@
 // ==============================
 
 // ==============================
-// 2. 楽曲一覧を生成
+// 1. 楽曲一覧を生成
 // ==============================
 
 function createSongList() {
@@ -26,13 +26,9 @@ function createSongList() {
   applySongListFilters();
 }
 
-// ========================================
-// 3.1 フィルター機能
-// ========================================
-
-// ----------------------------------------
-// 3.1.1 フィルター状態の管理
-// ----------------------------------------
+// ==============================
+// 2. フィルター状態の管理
+// ==============================
 
 // 楽曲一覧のフィルター状態
 const currentSongListFilters = {
@@ -65,15 +61,12 @@ function updateSongListFilterState() {
   currentSongListFilters.categories = getCheckedFilterValues("song-category");
 
   currentSongListFilters.albums = getCheckedFilterValues("album-filter");
-
-  console.log("現在のフィルター:", currentSongListFilters);
 }
 
-// ----------------------------------------
-// 3.1.2 アルバムフィルターの自動生成
-// ----------------------------------------
+// ==============================
+// 3. アルバムフィルターを生成
+// ==============================
 
-// アルバムフィルターを生成する
 function createAlbumFilterOptions() {
   albumFilterOptions.innerHTML = "";
 
@@ -107,53 +100,63 @@ function createAlbumFilterOptions() {
   });
 }
 
-// ----------------------------------------
-// 3.1.3 フィルターイベントの登録
-// ----------------------------------------
+// ==============================
+// 4. フィルターイベントを登録
+// ==============================
 
-// フィルター操作時のイベントを登録する
 function setupSongListFilterEvents() {
+  // 曲名検索
   songSearchInput.addEventListener("input", function () {
     updateSongListFilterState();
+
     applySongListFilters();
   });
 
+  // Type
   musicTypeCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener("change", function () {
       updateSongListFilterState();
+
       applySongListFilters();
     });
   });
 
+  // MV
   mvStatusCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener("change", function () {
       updateSongListFilterState();
+
       applySongListFilters();
     });
   });
 
+  // Category
   songCategoryCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener("change", function () {
       updateSongListFilterState();
+
       applySongListFilters();
     });
   });
 
+  // Album
   albumFilterOptions.addEventListener("change", function (event) {
     if (event.target.matches('input[name="album-filter"]')) {
       updateSongListFilterState();
+
       applySongListFilters();
     }
   });
 
+  // フィルターをリセット
   filterResetButton.addEventListener("click", function () {
     resetSongListFilterState();
   });
 }
 
-// ----------------------------------------
-// 3.1.4 楽曲の絞り込み処理
-// ----------------------------------------
+// ==============================
+// 5. 楽曲の絞り込み
+// ==============================
 
 // 楽曲の収録区分を判定する
 function getSongCategory(song) {
@@ -223,7 +226,10 @@ function matchesSongFilters(song) {
   return true;
 }
 
-// 現在のフィルター条件を楽曲一覧へ反映する
+// ==============================
+// 6. フィルター結果を画面へ反映
+// ==============================
+
 function applySongListFilters() {
   const songCards = document.querySelectorAll(".song-item");
 
@@ -270,6 +276,10 @@ function applySongListFilters() {
   );
 }
 
+// ==============================
+// 7. フィルター結果の表示状態を更新
+// ==============================
+
 // 該当する楽曲がない場合のメッセージを表示する
 function updateNoResultsMessage(visibleSongCount) {
   let noResultsMessage = document.getElementById("song-list-no-results");
@@ -280,8 +290,6 @@ function updateNoResultsMessage(visibleSongCount) {
     noResultsMessage.id = "song-list-no-results";
 
     noResultsMessage.textContent = "該当する楽曲が見つかりませんでした。";
-
-    const songList = document.getElementById("song-list");
 
     songList.appendChild(noResultsMessage);
   }
@@ -304,11 +312,10 @@ function updateAlbumSectionVisibility() {
   });
 }
 
-// ----------------------------------------
-// 3.1.5 リセット処理
-// ----------------------------------------
+// ==============================
+// 8. フィルターをリセット
+// ==============================
 
-// 楽曲一覧のフィルターを初期状態へ戻す
 function resetSongListFilterState() {
   songSearchInput.value = "";
 
@@ -329,11 +336,10 @@ function resetSongListFilterState() {
   applySongListFilters();
 }
 
-// ----------------------------------------
-// 3.1.6 楽曲数サマリーの更新
-// ----------------------------------------
+// ==============================
+// 9. 楽曲数サマリーを更新
+// ==============================
 
-// 現在表示中の楽曲数をサマリーへ反映する
 function updateSongListSummary(
   visibleSongCount,
   visibleMvCount,
@@ -363,7 +369,7 @@ function updateSongListSummary(
 }
 
 // ==============================
-// 6. アルバムセクションを作成
+// 10. アルバムセクションを作成
 // ==============================
 
 function createAlbumSection(albumName, albumSongs) {
@@ -414,7 +420,7 @@ function createAlbumSection(albumName, albumSongs) {
 }
 
 // ==============================
-// 7. 楽曲カードを作成
+// 11. 楽曲カードを作成
 // ==============================
 
 function createSongCard(song) {
@@ -432,9 +438,9 @@ function createSongCard(song) {
 
   card.dataset.title = song.title || "";
 
-  // ==============================
+  // ------------------------------
   // 楽曲画像
-  // ==============================
+  // ------------------------------
 
   const image = document.createElement("img");
 
@@ -448,22 +454,20 @@ function createSongCard(song) {
     image.classList.add(`${song.imageType}-image`);
   }
 
-  // ==============================
+  // ------------------------------
   // 楽曲情報
-  // ==============================
+  // ------------------------------
 
   const info = document.createElement("div");
 
   info.className = "song-info";
 
   // 曲名
-
   const title = document.createElement("h3");
 
   title.textContent = song.title;
 
   // Album
-
   const albumLabel = document.createElement("p");
 
   albumLabel.className = "song-label";
@@ -477,7 +481,6 @@ function createSongCard(song) {
   albumValue.textContent = getDisplayAlbumName(song);
 
   // Type
-
   const typeLabel = document.createElement("p");
 
   typeLabel.className = "song-label";
@@ -492,7 +495,6 @@ function createSongCard(song) {
     song.musicType === "instrumental" ? "Instrumental" : "Vocal";
 
   // MV
-
   const mvLabel = document.createElement("p");
 
   mvLabel.className = "song-label";
@@ -507,9 +509,9 @@ function createSongCard(song) {
 
   mvValue.classList.add(song.hasMV ? "mv-yes" : "mv-no");
 
-  // ==============================
+  // ------------------------------
   // YouTubeリンク
-  // ==============================
+  // ------------------------------
 
   let youtubeLink = null;
 
@@ -527,9 +529,9 @@ function createSongCard(song) {
     youtubeLink.textContent = "▶ YouTube";
   }
 
-  // ==============================
+  // ------------------------------
   // カードへ追加
-  // ==============================
+  // ------------------------------
 
   info.appendChild(title);
 
@@ -553,7 +555,7 @@ function createSongCard(song) {
 }
 
 // ==============================
-// 7-6. 楽曲一覧画面
+// 12. 楽曲一覧画面イベント
 // ==============================
 
 function setupSongListEvents() {
