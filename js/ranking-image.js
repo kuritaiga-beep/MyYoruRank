@@ -269,6 +269,61 @@ rankingImageModalCloseButton.addEventListener(
 // 4. タイトル設定
 // ========================================
 
+// ========================================
+// 4-0. ランキング条件の表示用テキストを取得
+// ========================================
+
+function getRankingImageConditionTexts() {
+
+    const conditions =
+        rankingImageTarget.conditions;
+
+    const musicTypeText =
+        conditions.musicTypes.length > 0
+            ? conditions.musicTypes.join(" / ")
+            : "すべて";
+
+    const categoryText =
+        conditions.categories.length > 0
+            ? conditions.categories.join(" / ")
+            : "すべて";
+
+    let mvText =
+        "すべて";
+
+    if (
+        conditions.mvStatus.length === 1 &&
+        conditions.mvStatus[0] === "true"
+    ) {
+
+        mvText =
+            "MVあり";
+
+    } else if (
+        conditions.mvStatus.length === 1 &&
+        conditions.mvStatus[0] === "false"
+    ) {
+
+        mvText =
+            "MVなし";
+
+    }
+
+    const albumText =
+        conditions.albums.length > 0
+            ? conditions.albums.join(" / ")
+            : "すべて";
+
+    return {
+        conditions,
+        musicTypeText,
+        categoryText,
+        mvText,
+        albumText
+    };
+
+}
+
 
 // ========================================
 // 4-1. 保存画像のタイトルを取得
@@ -365,6 +420,47 @@ rankingImageNameInput.addEventListener(
 // ========================================
 // 5. 共通描画関数
 // ========================================
+
+// ========================================
+// 5-0. Canvasを初期化
+// ========================================
+
+function initializeRankingImageCanvas() {
+
+    const context =
+        rankingImageCanvas.getContext("2d");
+
+    rankingImageCanvas.width =
+        1080;
+
+    rankingImageCanvas.height =
+        1920;
+
+    context.clearRect(
+        0,
+        0,
+        rankingImageCanvas.width,
+        rankingImageCanvas.height
+    );
+
+    const siteBackgroundColor =
+        getComputedStyle(
+            document.body
+        ).backgroundColor;
+
+    context.fillStyle =
+        siteBackgroundColor;
+
+    context.fillRect(
+        0,
+        0,
+        rankingImageCanvas.width,
+        rankingImageCanvas.height
+    );
+
+    return context;
+
+}
 
 
 // ========================================
@@ -524,7 +620,7 @@ function drawAllRankingImagePage() {
 
 
     const context =
-        rankingImageCanvas.getContext("2d");
+        initializeRankingImageCanvas();
 
     const currentPageSongs =
         allRankingImagePages[
@@ -537,40 +633,6 @@ function drawAllRankingImagePage() {
     const pageStartRank =
         allRankingImageCurrentPage *
         songsPerPage;
-
-
-    // ---------- Canvasを初期化 ----------
-
-    rankingImageCanvas.width =
-        1080;
-
-    rankingImageCanvas.height =
-        1920;
-
-    context.clearRect(
-        0,
-        0,
-        rankingImageCanvas.width,
-        rankingImageCanvas.height
-    );
-
-
-    // ---------- 背景 ----------
-
-    const siteBackgroundColor =
-        getComputedStyle(
-            document.body
-        ).backgroundColor;
-
-    context.fillStyle =
-        siteBackgroundColor;
-
-    context.fillRect(
-        0,
-        0,
-        rankingImageCanvas.width,
-        rankingImageCanvas.height
-    );
 
 
     // ---------- タイトル ----------
@@ -717,44 +779,14 @@ function drawAllRankingImagePage() {
 
     // ---------- ランキング条件 ----------
 
-    const conditions =
-        rankingImageTarget.conditions;
-
-    const musicTypeText =
-        conditions.musicTypes.length > 0
-            ? conditions.musicTypes.join(" / ")
-            : "すべて";
-
-    const categoryText =
-        conditions.categories.length > 0
-            ? conditions.categories.join(" / ")
-            : "すべて";
-
-    let mvText =
-        "すべて";
-
-    if (
-        conditions.mvStatus.length === 1 &&
-        conditions.mvStatus[0] === "true"
-    ) {
-
-        mvText =
-            "MVあり";
-
-    } else if (
-        conditions.mvStatus.length === 1 &&
-        conditions.mvStatus[0] === "false"
-    ) {
-
-        mvText =
-            "MVなし";
-
-    }
-
-    const albumText =
-        conditions.albums.length > 0
-            ? conditions.albums.join(" / ")
-            : "すべて";
+    const {
+        conditions,
+        musicTypeText,
+        categoryText,
+        mvText,
+        albumText
+    } =
+        getRankingImageConditionTexts();
 
 
     // ---------- 条件見出し ----------
@@ -976,42 +1008,7 @@ document.addEventListener(
 function drawTop10RankingImage() {
 
     const context =
-        rankingImageCanvas.getContext("2d");
-
-
-    // ---------- Canvasを初期化 ----------
-
-    rankingImageCanvas.width =
-        1080;
-
-    rankingImageCanvas.height =
-        1920;
-
-    context.clearRect(
-        0,
-        0,
-        rankingImageCanvas.width,
-        rankingImageCanvas.height
-    );
-
-
-    // ---------- 背景 ----------
-
-    const siteBackgroundColor =
-        getComputedStyle(
-            document.body
-        ).backgroundColor;
-
-    context.fillStyle =
-        siteBackgroundColor;
-
-    context.fillRect(
-        0,
-        0,
-        rankingImageCanvas.width,
-        rankingImageCanvas.height
-    );
-
+    initializeRankingImageCanvas();
 
     // ---------- タイトル ----------
 
@@ -1398,46 +1395,14 @@ function drawTop10RankingImage() {
     // 7-4. ランキング条件
     // ========================================
 
-    const conditions =
-        rankingImageTarget.conditions;
-
-    const musicTypeText =
-        conditions.musicTypes.length > 0
-            ? conditions.musicTypes.join(" / ")
-            : "すべて";
-
-    const categoryText =
-        conditions.categories.length > 0
-            ? conditions.categories.join(" / ")
-            : "すべて";
-
-    let mvText =
-        "すべて";
-
-
-    if (
-        conditions.mvStatus.length === 1 &&
-        conditions.mvStatus[0] === "true"
-    ) {
-
-        mvText =
-            "MVあり";
-
-    } else if (
-        conditions.mvStatus.length === 1 &&
-        conditions.mvStatus[0] === "false"
-    ) {
-
-        mvText =
-            "MVなし";
-
-    }
-
-
-    const albumText =
-        conditions.albums.length > 0
-            ? conditions.albums.join(" / ")
-            : "すべて";
+    const {
+        conditions,
+        musicTypeText,
+        categoryText,
+        mvText,
+        albumText
+    } =
+        getRankingImageConditionTexts();
 
 
     // ---------- 条件見出し ----------
@@ -1673,6 +1638,36 @@ rankingImageNameInput.addEventListener(
 // ========================================
 // 9. 画像保存
 // ========================================
+
+// ========================================
+// 9-0. モバイル端末かどうか判定
+// ========================================
+
+function isMobileDevice() {
+
+    return (
+        /Android|iPhone|iPad|iPod/i.test(
+            navigator.userAgent
+        )
+    );
+
+}
+
+// ========================================
+// 9-0-2. ファイル共有が可能か判定
+// ========================================
+
+function canShareImageFiles(files) {
+
+    return (
+        navigator.share &&
+        navigator.canShare &&
+        navigator.canShare({
+            files: files
+        })
+    );
+
+}
 
 // ========================================
 // 9-1-1. CanvasをPNG Blobに変換
@@ -1941,23 +1936,17 @@ async function saveAllRankingImages() {
         // モバイル端末かどうか判定
         // ========================================
 
-        const isMobileDevice =
-            /Android|iPhone|iPad|iPod/i.test(
-                navigator.userAgent
-            );
+        const mobileDevice =
+            isMobileDevice();
 
-
+            
         // ========================================
         // スマホ：複数画像をまとめて共有
         // ========================================
 
         if (
-            isMobileDevice &&
-            navigator.share &&
-            navigator.canShare &&
-            navigator.canShare({
-                files: imageFiles
-            })
+            mobileDevice &&
+            canShareImageFiles(imageFiles)
         ) {
 
             try {
@@ -2077,30 +2066,14 @@ async function saveRankingImageOnMobile(
             );
 
 
-        // Web Share APIが使えない場合
+        // 画像ファイルを共有できない場合
         if (
-            !navigator.share ||
-            !navigator.canShare
+            !canShareImageFiles([file])
         ) {
 
             return false;
 
         }
-
-
-        // 画像ファイルを共有できるか確認
-        const canShareFiles =
-            navigator.canShare({
-                files: [file]
-            });
-
-
-        if (!canShareFiles) {
-
-            return false;
-
-        }
-
 
         // OSの共有シートを開く
         await navigator.share({
@@ -2151,10 +2124,8 @@ async function saveRankingImage(
     // モバイル端末かどうか判定
     // ========================================
 
-    const isMobileDevice =
-        /Android|iPhone|iPad|iPod/i.test(
-            navigator.userAgent
-        );
+    const mobileDevice =
+        isMobileDevice();
 
 
     // Blobから共有判定用のFileを作成
@@ -2173,12 +2144,8 @@ async function saveRankingImage(
     // ========================================
 
     if (
-        isMobileDevice &&
-        navigator.share &&
-        navigator.canShare &&
-        navigator.canShare({
-            files: [file]
-        })
+        mobileDevice &&
+        canShareImageFiles([file])
     ) {
 
         const shared =
@@ -2288,24 +2255,9 @@ async function shareTop10RankingImage() {
             await createTop10ShareFile();
 
 
-        // Web Share APIに非対応
-        if (
-            !navigator.share ||
-            !navigator.canShare
-        ) {
-
-            await fallbackTop10Share();
-
-            return;
-
-        }
-
-
         // ファイル共有に非対応
         if (
-            !navigator.canShare({
-                files: [file]
-            })
+            !canShareImageFiles([file])
         ) {
 
             await fallbackTop10Share();
@@ -2313,7 +2265,6 @@ async function shareTop10RankingImage() {
             return;
 
         }
-
 
         // OSの共有画面を開く
         await navigator.share({
