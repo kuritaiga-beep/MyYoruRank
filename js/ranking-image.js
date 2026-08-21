@@ -1765,6 +1765,47 @@ function getRankingImageFileName(
 }
 
 // ========================================
+// 9-1-3. 画像ファイルを通常ダウンロード
+// ========================================
+
+function downloadRankingImage(
+    blob,
+    fileName
+) {
+
+    const imageUrl =
+        URL.createObjectURL(
+            blob
+        );
+
+    const downloadLink =
+        document.createElement(
+            "a"
+        );
+
+    downloadLink.href =
+        imageUrl;
+
+    downloadLink.download =
+        fileName;
+
+
+    document.body.appendChild(
+        downloadLink
+    );
+
+    downloadLink.click();
+
+    downloadLink.remove();
+
+
+    URL.revokeObjectURL(
+        imageUrl
+    );
+
+}
+
+// ========================================
 // 9-2. TOP10画像をPNGとして保存
 // ========================================
 
@@ -1996,38 +2037,12 @@ async function saveAllRankingImages() {
             const file of imageFiles
         ) {
 
-            const imageUrl =
-                URL.createObjectURL(
-                    file
-                );
-
-            const downloadLink =
-                document.createElement(
-                    "a"
-                );
-
-            downloadLink.href =
-                imageUrl;
-
-            downloadLink.download =
-                file.name;
-
-
-            document.body.appendChild(
-                downloadLink
-            );
-
-            downloadLink.click();
-
-            downloadLink.remove();
-
-
-            URL.revokeObjectURL(
-                imageUrl
+            downloadRankingImage(
+                file,
+                file.name
             );
 
         }
-
 
         console.log(
             "全曲版の画像保存が完了しました"
@@ -2167,36 +2182,10 @@ async function saveRankingImage(
     // PCまたは共有非対応なら通常ダウンロード
     // ========================================
 
-    const imageUrl =
-        URL.createObjectURL(
-            blob
-        );
-
-    const downloadLink =
-        document.createElement(
-            "a"
-        );
-
-    downloadLink.href =
-        imageUrl;
-
-    downloadLink.download =
-        fileName;
-
-
-    document.body.appendChild(
-        downloadLink
+    downloadRankingImage(
+        blob,
+        fileName
     );
-
-    downloadLink.click();
-
-    downloadLink.remove();
-
-
-    URL.revokeObjectURL(
-        imageUrl
-    );
-
 }
 
 
