@@ -20,18 +20,6 @@ let isShowingAllRanking = false;
 // ==============================
 
 function getRankingPosition(index) {
-  if (index === 0) {
-    return "🥇";
-  }
-
-  if (index === 1) {
-    return "🥈";
-  }
-
-  if (index === 2) {
-    return "🥉";
-  }
-
   return `${index + 1}位`;
 }
 
