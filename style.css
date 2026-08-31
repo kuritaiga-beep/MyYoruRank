@@ -3,143 +3,134 @@
 ======================================== */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* サイト全体で使用する色 */
 :root {
+  /* ページ背景 */
+  --color-background: #3f8790;
 
-    /* ページ背景 */
-    --color-background: #3f8790;
+  /* 白い面 */
+  --color-surface: #f5f7f7;
 
-    /* 白い面 */
-    --color-surface: #f5f7f7;
+  /* 白い面のホバー */
+  --color-surface-hover: #e8eeee;
 
-    /* 白い面のホバー */
-    --color-surface-hover: #e8eeee;
+  /* 白カード内の文字 */
+  --color-surface-text: #223033;
 
-    /* 白カード内の文字 */
-    --color-surface-text: #223033;
+  /* 白カード内の補助文字 */
+  --color-surface-text-muted: #66777a;
 
-    /* 白カード内の補助文字 */
-    --color-surface-text-muted: #66777a;
+  /* 花緑青アクセント */
+  --color-accent: #5ab9c1;
 
-    /* 花緑青アクセント */
-    --color-accent: #5ab9c1;
+  /* 濃いアクセント */
+  --color-accent-dark: #346f77;
 
-    /* 濃いアクセント */
-    --color-accent-dark: #346f77;
+  /* 背景上の文字 */
+  --color-text: #f5f7f7;
 
-    /* 背景上の文字 */
-    --color-text: #f5f7f7;
+  /* 背景上の補助文字 */
+  --color-text-muted: #c8d5d7;
 
-    /* 背景上の補助文字 */
-    --color-text-muted: #c8d5d7;
+  /* 境界線 */
+  --color-border: rgba(34, 48, 51, 0.14);
 
-    /* 境界線 */
-    --color-border: rgba(34, 48, 51, 0.14);
+  /* YouTube */
+  --color-youtube: #c75b56;
+  --color-youtube-hover: #b94c47;
 
-    /* YouTube */
-    --color-youtube: #c75b56;
-    --color-youtube-hover: #b94c47;
-
-    /* 影 */
-    --shadow-card: 0 6px 18px rgba(0, 0, 0, 0.16);
+  /* 影 */
+  --shadow-card: 0 6px 18px rgba(0, 0, 0, 0.16);
 }
 
 html {
-    min-height: 100%;
+  min-height: 100%;
 }
 
 body {
-    min-height: 100vh;
+  min-height: 100vh;
 
-    background: var(--color-background);
+  background: var(--color-background);
 
-    color: var(--color-text);
+  color: var(--color-text);
 
-    font-family:
-        "Yu Gothic",
-        "YuGothic",
-        "Meiryo",
-        sans-serif;
+  font-family: "Yu Gothic", "YuGothic", "Meiryo", sans-serif;
 }
-
 
 /* ========================================
    2. 共通要素
 ======================================== */
 
 button {
-    font-family: inherit;
+  font-family: inherit;
 }
 
 img {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .container {
-    width: 90%;
-    max-width: 500px;
+  width: 90%;
+  max-width: 500px;
 
-    margin: 0 auto;
-    padding: 50px 0;
+  margin: 0 auto;
+  padding: 50px 0;
 
-    text-align: center;
+  text-align: center;
 }
-
 
 /* ホーム画面と比較画面を中央に寄せる */
 
 #home-screen,
 #compare-screen {
-    min-height: 100vh;
+  min-height: 100vh;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-
 
 /* JavaScriptでdisplay:blockにされたときの調整 */
 
 #home-screen[style*="display: block"],
 #compare-screen[style*="display: block"] {
-    display: flex !important;
+  display: flex !important;
 }
-
 
 /* ========================================
    3. ホーム画面
 ======================================== */
 
 #home-screen #artist-icon {
-    width: 170px;
-    height: 170px;
+  width: 170px;
+  height: 170px;
 
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    object-fit: cover;
+  object-fit: cover;
 }
 
 #home-screen h1 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 
-    font-size: 48px;
+  font-size: 48px;
 }
 
 #home-screen .subtitle {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 
-    color: var(--color-text-muted);
+  color: var(--color-text-muted);
 
-    font-size: 20px;
-    line-height: 1.6;
+  font-size: 20px;
+  line-height: 1.6;
 }
 
 /* ---------- ボタン ---------- */
@@ -148,64 +139,58 @@ img {
 #home-screen #resume-ranking-button,
 #home-screen #ranking-history-button,
 #home-screen #song-list-button {
+  width: 220px;
 
-    width: 220px;
+  padding: 14px 20px;
 
-    padding: 14px 20px;
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
 
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
+  cursor: pointer;
 
-    cursor: pointer;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
 
-    font-family: inherit;
-    font-size: 18px;
-    font-weight: 700;
-
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 #home-screen #resume-ranking-button,
 #home-screen #ranking-history-button,
 #home-screen #song-list-button {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 #home-screen #start-button:hover,
 #home-screen #resume-ranking-button:hover,
 #home-screen #ranking-history-button:hover,
 #home-screen #song-list-button:hover {
+  background-color: var(--color-surface-hover);
 
-    background-color: var(--color-surface-hover);
+  transform: translateY(-2px);
 
-    transform: translateY(-2px);
-
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 #home-screen #start-button:active,
 #home-screen #resume-ranking-button:active,
 #home-screen #ranking-history-button:active,
 #home-screen #song-list-button:active {
-
-    transform: translateY(0);
-
+  transform: translateY(0);
 }
 
 /* ---------- バージョン ---------- */
 
 #home-screen .version {
+  margin-top: 35px;
 
-    margin-top: 35px;
-
-    color: var(--color-text-muted);
-
+  color: var(--color-text-muted);
 }
 
 /* ==============================
@@ -214,491 +199,442 @@ img {
 
 /* ランキング条件画面全体 */
 #settings-screen {
-
-    width: 90%;
-    max-width: 1100px;
-
+  width: 90%;
+  max-width: 1100px;
 }
-
 
 #settings-screen h2 {
-
-    margin-bottom: 20px;
-
+  margin-bottom: 20px;
 }
-
 
 /* ランキング条件画面のボタン共通デザイン */
 .ranking-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: fit-content;
+  min-height: 42px;
 
-    width: fit-content;
-    min-height: 42px;
+  box-sizing: border-box;
 
-    box-sizing: border-box;
+  padding: 11px 18px;
 
-    padding: 11px 18px;
+  background-color: #ffffff;
+  color: var(--color-surface-text);
 
-    background-color: #ffffff;
-    color: var(--color-surface-text);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  cursor: pointer;
 
-    cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
 
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
+  text-decoration: none;
 
-    text-decoration: none;
-
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .ranking-action-button:hover {
+  background-color: var(--color-surface-hover);
 
-    background-color: var(--color-surface-hover);
+  transform: translateY(-2px);
 
-    transform: translateY(-2px);
-
-    box-shadow: var(--shadow-card);
-
+  box-shadow: var(--shadow-card);
 }
 
 .ranking-action-button:active {
-
-    transform: translateY(0);
-
+  transform: translateY(0);
 }
 
 .ranking-selection-summary {
+  display: flex;
 
-    display: flex;
+  justify-content: center;
 
-    justify-content: center;
-
-    margin: 28px 0;
-
-}
-
-#ranking-song-count {
-
-    margin: 0;
-
+  margin: 28px 0;
 }
 
 .ranking-button-group {
+  display: flex;
 
-    display: flex;
+  justify-content: center;
 
-    justify-content: center;
-
-    margin-top: 16px;
-
+  margin-top: 16px;
 }
 
 #ranking-song-count {
+  display: inline-block;
 
-    display: inline-block;
+  min-width: 140px;
 
-    min-width: 140px;
+  margin: 0;
 
-    margin: 0;
+  padding: 10px 16px;
 
-    padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.82);
 
-    background-color: rgba(255, 255, 255, 0.82);
+  color: var(--color-surface-text);
 
-    color: var(--color-surface-text);
+  border: 1px solid rgba(255, 255, 255, 0.45);
 
-    border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 10px;
 
-    border-radius: 10px;
+  font-size: 14px;
 
-    font-size: 14px;
+  font-weight: 700;
 
-    font-weight: 700;
-
-    pointer-events: none;
-
+  pointer-events: none;
 }
 
 #settings-home-button {
+  display: flex;
 
-    display: flex;
+  width: fit-content;
 
-    width: fit-content;
-
-    margin-right: auto;
-    margin-bottom: 16px;
-
+  margin-right: auto;
+  margin-bottom: 16px;
 }
 
 /* フィルターパネル */
 #ranking-filters {
+  display: grid;
 
-    display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+  gap: 20px;
 
-    gap: 20px;
+  padding: 24px;
 
-    padding: 24px;
+  background: var(--color-surface);
 
-    background: var(--color-surface);
+  color: var(--color-surface-text);
 
-    color: var(--color-surface-text);
+  border: 1px solid var(--color-border);
 
-    border: 1px solid var(--color-border);
+  border-radius: 16px;
 
-    border-radius: 16px;
-
-    box-shadow: var(--shadow-card);
-
+  box-shadow: var(--shadow-card);
 }
 
 /* Album一覧 */
 #ranking-album-filter-options {
+  display: grid;
 
-    display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+  gap: 10px 18px;
 
-    gap: 10px 18px;
-
-    margin-top: 8px;
-
+  margin-top: 8px;
 }
 
 #ranking-filters legend,
 #ranking-filters .filter-checkbox {
-
-    color: var(--color-surface-text);
-
+  color: var(--color-surface-text);
 }
 
 #ranking-filters legend {
-
-    font-weight: 700;
-
+  font-weight: 700;
 }
 
 /* Albumだけ横いっぱい */
 #ranking-filters fieldset:last-child {
-
-    grid-column: 1 / -1;
-
+  grid-column: 1 / -1;
 }
-
 
 /* ========================================
    4. 比較画面
 ======================================== */
 
 #compare-screen {
-    width: min(1000px, 94%);
-    max-width: 1000px;
+  width: min(1000px, 94%);
+  max-width: 1000px;
 }
 
 #compare-screen .compare-message {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 
-    color: var(--color-text);
+  color: var(--color-text);
 
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
 }
 
 #compare-screen #progress-text {
-    color: var(--color-text);
+  color: var(--color-text);
 
-    font-size: 20px;
-    font-weight: 600;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 #compare-screen .compare-container {
-    width: 100%;
+  width: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    gap: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 30px;
 }
-
 
 /* ========================================
    4.1 進捗バー
 ======================================== */
 
 #compare-screen .progress-bar {
+  width: 100%;
+  height: 14px;
 
-    width: 100%;
-    height: 14px;
+  margin: 16px 0 40px;
 
-    margin: 16px 0 40px;
+  overflow: hidden;
 
-    overflow: hidden;
+  background-color: #ffffff;
 
-    background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-
-    box-shadow: var(--shadow-card);
-
+  box-shadow: var(--shadow-card);
 }
 
 #compare-screen .progress-fill {
+  width: 0%;
+  height: 100%;
 
-    width: 0%;
-    height: 100%;
+  background-color: var(--color-accent);
 
-    background-color: var(--color-accent);
+  border-radius: 9px;
 
-    border-radius: 9px;
-
-    transition: width 0.25s ease;
-
+  transition: width 0.25s ease;
 }
-
 
 /* ========================================
    4.2 比較用の曲カード
 ======================================== */
 
 #compare-screen .song-card {
-    flex: 1 1 400px;
-    max-width: 400px;
+  flex: 1 1 400px;
+  max-width: 400px;
 
-    padding: 30px;
+  padding: 30px;
 
-    background-color: var(--color-surface);
-    border-radius: 20px;
+  background-color: var(--color-surface);
+  border-radius: 20px;
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 #compare-screen .song-select-button {
-    width: 100%;
+  width: 100%;
 
-    padding: 0;
+  padding: 0;
 
-    background: none;
-    border: none;
+  background: none;
+  border: none;
 
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 #compare-screen .song-select-button:hover {
-    transform: scale(1.02);
+  transform: scale(1.02);
 }
 
 #compare-screen .song-select-button:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
 
 #compare-screen .image-container {
-    height: 280px;
+  height: 280px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    background-color: #ffffff;
-    border-radius: 15px;
+  background-color: #ffffff;
+  border-radius: 15px;
 }
 
 #compare-screen .song-card img {
-    display: block;
+  display: block;
 
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 
-    object-fit: contain;
+  object-fit: contain;
 
-    border-radius: 15px;
+  border-radius: 15px;
 }
 
 #compare-screen .song-card h3 {
-    min-height: 58px;
+  min-height: 58px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    margin: 18px 0;
+  margin: 18px 0;
 
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    font-size: 1.4rem;
-    font-weight: 700;
-    text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
 }
-
 
 /* ========================================
    4.3 YouTube確認ボタン
 ======================================== */
 
 #compare-screen .preview-button {
-    width: 100%;
+  width: 100%;
 
-    margin-top: 10px;
-    padding: 14px;
+  margin-top: 10px;
+  padding: 14px;
 
-    background-color: var(--color-youtube);
-    color: var(--color-text);
+  background-color: var(--color-youtube);
+  color: var(--color-text);
 
-    border: none;
-    border-radius: 10px;
+  border: none;
+  border-radius: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-size: 17px;
-    font-weight: 700;
+  font-size: 17px;
+  font-weight: 700;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 #compare-screen .preview-button:hover {
-    background-color: var(--color-youtube-hover);
+  background-color: var(--color-youtube-hover);
 }
 
 #compare-screen .preview-button:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
-
 
 /* ========================================
    4.4 画像タイプ
 ======================================== */
 
 #compare-screen .song-card img.mv-image {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 #compare-screen .song-card img.jacket-image {
-    transform: scale(0.92);
+  transform: scale(0.92);
 }
-
 
 /* ========================================
    4.5 比較画面の追加要素
 ======================================== */
 
 #compare-screen .undo-button {
-    display: block;
+  display: block;
 
-    margin: 30px auto 0;
-    padding: 12px 24px;
+  margin: 30px auto 0;
+  padding: 12px 24px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-size: 1rem;
-    font-weight: 600;
+  font-size: 1rem;
+  font-weight: 600;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        opacity 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 #compare-screen #pause-ranking-button {
-    display: block;
+  display: block;
 
-    min-width: 220px;
+  min-width: 220px;
 
-    margin: 12px auto 0;
-    padding: 12px 24px;
+  margin: 12px auto 0;
+  padding: 12px 24px;
 
-    background-color: #fff1f1;
-    color: #b94a4a;
+  background-color: #fff1f1;
+  color: #b94a4a;
 
-    border: 1px solid #e6b8b8;
-    border-radius: 10px;
+  border: 1px solid #e6b8b8;
+  border-radius: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 600;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 #compare-screen #pause-ranking-button:hover {
-    background-color: #ffe5e5;
+  background-color: #ffe5e5;
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 #compare-screen #pause-ranking-button:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 #compare-screen .undo-button:hover:not(:disabled) {
-    background-color: var(--color-surface-hover);
+  background-color: var(--color-surface-hover);
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 
 #compare-screen .undo-button:active:not(:disabled) {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 #compare-screen .undo-button:disabled {
-    background-color: var(--color-surface-hover);
-    color: var(--color-surface-text-muted);
+  background-color: var(--color-surface-hover);
+  color: var(--color-surface-text-muted);
 
-    cursor: not-allowed;
+  cursor: not-allowed;
 
-    opacity: 0.65;
+  opacity: 0.65;
 }
 
 #compare-screen .youtube-note {
-    margin-top: 16px;
+  margin-top: 16px;
 
-    color: var(--color-text-muted);
+  color: var(--color-text-muted);
 
-    font-size: 14px;
-    text-align: center;
+  font-size: 14px;
+  text-align: center;
 }
-
 
 /* ========================================
    5. 結果画面
@@ -706,252 +642,264 @@ img {
 
 #result-screen,
 #ranking-history-detail-screen {
-    width: min(760px, 92%);
-    max-width: 760px;
+  width: min(760px, 92%);
+  max-width: 760px;
 
-    margin: 0 auto;
-    padding: 60px 0;
+  margin: 0 auto;
+  padding: 60px 0;
 
-    text-align: center;
+  text-align: center;
 }
 
 #result-screen h2,
 #ranking-history-detail-screen h2 {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 
-    color: var(--color-text);
+  color: var(--color-text);
 
-    font-size: 40px;
-    font-weight: 700;
+  font-size: 40px;
+  font-weight: 700;
 }
 
 #result-screen #ranking-list,
 #ranking-history-detail-screen #ranking-history-detail-list {
-    width: 100%;
+  width: 100%;
 
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 #result-screen .ranking-item.ranking-hidden-item,
 #ranking-history-detail-screen .ranking-item.ranking-hidden-item {
-    display: none !important;
+  display: none !important;
 }
 
-#result-screen.show-all-ranking
-.ranking-item.ranking-hidden-item,
+#result-screen.show-all-ranking .ranking-item.ranking-hidden-item,
 #ranking-history-detail-screen.show-all-ranking
-.ranking-item.ranking-hidden-item {
-    display: flex !important;
+  .ranking-item.ranking-hidden-item {
+  display: flex !important;
 }
 
 #ranking-history-detail-settings {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 /* ---------- ランキングカード ---------- */
 
 #result-screen .ranking-item,
 #ranking-history-detail-screen .ranking-item {
-    display: flex;
-    align-items: center;
-    gap: 40px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
 
-    margin-bottom: 12px;
-    padding: 14px 40px;
+  margin-bottom: 12px;
+  padding: 14px 40px;
 
-    background-color: var(--color-surface);
+  background-color: var(--color-surface);
 
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 
-    text-align: left;
+  text-align: left;
 }
 
 #result-screen .ranking-number,
 #ranking-history-detail-screen .ranking-number {
-    width: 70px;
-    flex-shrink: 0;
+  width: 70px;
+  flex-shrink: 0;
 
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
 
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 #result-screen .ranking-image,
 #ranking-history-detail-screen .ranking-image {
-    width: 65px;
-    height: 65px;
-    flex-shrink: 0;
+  width: 65px;
+  height: 65px;
+  flex-shrink: 0;
 
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 #result-screen .ranking-image.jacket-image,
 #ranking-history-detail-screen .ranking-image.jacket-image {
-    object-fit: cover;
+  object-fit: cover;
 
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 #result-screen .ranking-image.mv-image,
 #ranking-history-detail-screen .ranking-image.mv-image {
-    width: 96px;
-    height: 65px;
+  width: 96px;
+  height: 65px;
 
-    margin-left: -15.5px;
-    margin-right: -15.5px;
+  margin-left: -15.5px;
+  margin-right: -15.5px;
 
-    object-fit: cover;
+  object-fit: cover;
 
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 #result-screen .ranking-title,
 #ranking-history-detail-screen .ranking-title {
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    font-size: 22px;
-    font-weight: 700;
+  font-size: 22px;
+  font-weight: 700;
 }
 
 #result-screen .ranking-item:nth-child(-n + 3) .ranking-number,
 #ranking-history-detail-screen .ranking-item:nth-child(-n + 3) .ranking-number {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 /* ---------- 結果画面のランキング条件 ---------- */
 
 #result-ranking-settings {
-    margin-bottom: 28px;
+  margin-bottom: 28px;
 }
 
-#result-ranking-conditions-toggle {
-    min-height: 42px;
+#result-ranking-conditions-toggle,
+#ranking-history-conditions-toggle {
+  min-height: 42px;
 
-    padding: 10px 16px;
+  padding: 10px 16px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-size: 14px;
-    font-weight: 700;
+  font-size: 14px;
+  font-weight: 700;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-#result-ranking-conditions-toggle:hover {
-    background-color: var(--color-surface-hover);
+#result-ranking-conditions-toggle:hover,
+#ranking-history-conditions-toggle:hover {
+  background-color: var(--color-surface-hover);
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
-#result-ranking-conditions-toggle:active {
-    transform: translateY(0);
+#result-ranking-conditions-toggle:active,
+#ranking-history-conditions-toggle:active {
+  transform: translateY(0);
 }
-
 
 /* 条件内容 */
 
-#result-ranking-settings-content {
-    width: fit-content;
-    max-width: 90%;
+#result-ranking-settings-content,
+#ranking-history-conditions {
+  width: fit-content;
+  max-width: 90%;
 
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    margin: 10px auto 0;
-    padding: 14px 18px;
+  margin: 10px auto 0;
+  padding: 14px 18px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 
-    text-align: left;
+  text-align: left;
 
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
 }
 
-#result-ranking-settings-content[hidden] {
-    display: none;
+#result-ranking-settings-content[hidden],
+#ranking-history-conditions[hidden] {
+  display: none;
 }
 
-#result-ranking-settings-content p {
-    margin: 4px 0;
+#result-ranking-settings-content p,
+#ranking-history-conditions p {
+  margin: 4px 0;
 
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.5;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 /* ---------- 結果画面のボタン ---------- */
 
-#result-screen .result-button-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
+#result-screen .result-button-group,
+#ranking-history-detail-screen .ranking-history-detail-button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
 #result-screen #toggle-ranking-button,
 #result-screen #save-ranking-image-button,
-#result-screen #restart-button {
-    width: min(320px, 100%);
-    min-height: 52px;
+#result-screen #restart-button,
+#ranking-history-detail-screen .ranking-history-detail-button-group button {
+  width: min(320px, 100%);
+  min-height: 52px;
 
-    padding: 14px 24px;
+  padding: 14px 24px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-size: 16px;
-    font-weight: 700;
+  font-size: 16px;
+  font-weight: 700;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 #result-screen #toggle-ranking-button:hover,
 #result-screen #save-ranking-image-button:hover,
-#result-screen #restart-button:hover {
-    background-color: var(--color-surface-hover);
+#result-screen #restart-button:hover,
+#ranking-history-detail-screen
+  .ranking-history-detail-button-group
+  button:hover {
+  background-color: var(--color-surface-hover);
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 #result-screen #toggle-ranking-button:active,
 #result-screen #save-ranking-image-button:active,
-#result-screen #restart-button:active {
-    transform: translateY(0);
+#result-screen #restart-button:active,
+#ranking-history-detail-screen
+  .ranking-history-detail-button-group
+  button:active {
+  transform: translateY(0);
 }
 
 /* ========================================
@@ -959,576 +907,434 @@ img {
 ======================================== */
 
 /* ---------- 履歴詳細画面のボタン ---------- */
-
-#ranking-history-detail-screen
-.ranking-history-detail-button-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-}
-
-#ranking-history-detail-screen
-.ranking-history-detail-button-group button {
-    width: min(320px, 100%);
-    min-height: 52px;
-
-    padding: 14px 24px;
-
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
-
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-
-    cursor: pointer;
-
-    font-size: 16px;
-    font-weight: 700;
-
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-#ranking-history-detail-screen
-.ranking-history-detail-button-group button:hover {
-    background-color: var(--color-surface-hover);
-
-    transform: translateY(-2px);
-
-    box-shadow: var(--shadow-card);
-}
-
-#ranking-history-detail-screen
-.ranking-history-detail-button-group button:active {
-    transform: translateY(0);
-}
-
-#ranking-history-detail-settings {
-    margin-bottom: 40px;
-}
-
 #ranking-history-detail-back-button,
 #ranking-history-home-button {
-    width: min(320px, 100%);
-    min-height: 52px;
+  width: min(320px, 100%);
+  min-height: 52px;
 
-    padding: 14px 24px;
+  padding: 14px 24px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-size: 16px;
-    font-weight: 700;
+  font-size: 16px;
+  font-weight: 700;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 #ranking-history-detail-back-button:hover,
 #ranking-history-home-button:hover {
-    background-color: var(--color-surface-hover);
+  background-color: var(--color-surface-hover);
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 #ranking-history-detail-back-button:active,
 #ranking-history-home-button:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .ranking-history-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
 
-    margin-bottom: 12px;
-    padding: 18px 24px;
+  margin-bottom: 12px;
+  padding: 18px 24px;
 
-    background-color: var(--color-surface);
+  background-color: var(--color-surface);
 
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 
-    text-align: left;
+  text-align: left;
 }
 
 .ranking-history-info {
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .ranking-history-view-button {
-    min-height: 42px;
+  min-height: 42px;
 
-    padding: 10px 16px;
+  padding: 10px 16px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-size: 14px;
-    font-weight: 700;
+  font-size: 14px;
+  font-weight: 700;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .ranking-history-view-button:hover {
-    background-color: var(--color-surface-hover);
+  background-color: var(--color-surface-hover);
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 .ranking-history-view-button:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .ranking-history-delete-button {
-    min-height: 36px;
+  min-height: 36px;
 
-    padding: 8px 12px;
+  padding: 8px 12px;
 
-    background-color: transparent;
-    color: var(--color-surface-text);
+  background-color: transparent;
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-size: 13px;
-    font-weight: 600;
+  font-size: 13px;
+  font-weight: 600;
 
-    opacity: 0.75;
+  opacity: 0.75;
 
-    transition:
-        background-color 0.2s ease,
-        opacity 0.2s ease,
-        transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 .ranking-history-delete-button:hover {
-    background-color: var(--color-surface-hover);
-    opacity: 1;
+  background-color: var(--color-surface-hover);
+  opacity: 1;
 
-    transform: translateY(-1px);
+  transform: translateY(-1px);
 }
 
 .ranking-history-delete-button:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 .ranking-history-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .ranking-history-first {
-    margin-top: 4px;
+  margin-top: 4px;
 
-    font-weight: 700;
+  font-weight: 700;
 }
-
-#ranking-history-conditions-toggle {
-    min-height: 42px;
-
-    padding: 10px 16px;
-
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
-
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-#ranking-history-conditions-toggle:hover {
-    background-color: var(--color-surface-hover);
-
-    transform: translateY(-2px);
-
-    box-shadow: var(--shadow-card);
-}
-
-#ranking-history-conditions-toggle:active {
-    transform: translateY(0);
-}
-
-#ranking-history-conditions {
-    width: fit-content;
-    max-width: 90%;
-
-    box-sizing: border-box;
-
-    margin: 10px auto 0;
-    padding: 14px 18px;
-
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
-
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-
-    box-shadow: var(--shadow-card);
-
-    text-align: left;
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 20px;
-
-}
-
-#ranking-history-conditions[hidden] {
-    display: none;
-}
-    
-#ranking-history-conditions p {
-    margin: 4px 0;
-
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.5;
-}
-
 
 /* ========================================
    6. 楽曲一覧
 ======================================== */
-
 
 /* ========================================
    6.1 レイアウト
 ======================================== */
 
 #song-list-screen {
-    width: min(1100px, 94%);
-    max-width: 1100px;
+  width: min(1100px, 94%);
+  max-width: 1100px;
 
-    margin: 0 auto;
-    padding: 40px 0 60px;
+  margin: 0 auto;
+  padding: 40px 0 60px;
 
-    text-align: center;
+  text-align: center;
 }
 
 #song-list-screen h1 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-
 
 /* ========================================
    6.2 フィルターパネル
 ======================================== */
 
 #song-list-filters {
-    display: grid;
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
 
-    max-width: 1100px;
+  max-width: 1100px;
 
-    margin: 0 auto 40px;
-    padding: 24px;
+  margin: 0 auto 40px;
+  padding: 24px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 /* フィルターパネルを閉じた状態 */
 
 #song-list-filters[hidden] {
-    display: none;
+  display: none;
 }
-
 
 /* ========================================
    6.3 フィルター上段レイアウト
 ======================================== */
 
 .filter-header {
-    grid-column: 1 / -1;
+  grid-column: 1 / -1;
 
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
-    margin-bottom: 4px;
+  margin-bottom: 4px;
 }
 
 .filter-group {
-    min-width: 0;
+  min-width: 0;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    margin: 0;
-    padding: 16px;
+  margin: 0;
+  padding: 16px;
 
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 }
 
 /* フィルター項目の見出し */
 
 .filter-group legend {
-    padding: 0 8px;
+  padding: 0 8px;
 
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    font-size: 15px;
-    font-weight: 700;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 /* フィルターボタン */
 
 .filter-button {
-    padding: 10px 18px;
+  padding: 10px 18px;
 
-    background-color: #ffffff;
-    color: var(--color-surface-text);
+  background-color: #ffffff;
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .filter-button:hover {
-    background-color: var(--color-surface-hover);
+  background-color: var(--color-surface-hover);
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 
-    box-shadow:
-        var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 .filter-button.active {
-    background-color: var(--color-surface-hover);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface-hover);
+  color: var(--color-surface-text);
 
-    border-color: var(--color-border);
+  border-color: var(--color-border);
 }
-
 
 /* ========================================
    6.4 アルバムフィルター
 ======================================== */
 
 .filter-album-group {
-    grid-column: 1 / -1;
+  grid-column: 1 / -1;
 }
 
 #album-filter-options {
-    display: grid;
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-    gap: 10px 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 18px;
 
-    margin-top: 8px;
+  margin-top: 8px;
 }
-
 
 /* ========================================
    6.5 検索ボックス
 ======================================== */
 
 #song-search-input {
-    width: 100%;
+  width: 100%;
 
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    padding: 10px 12px;
+  padding: 10px 12px;
 
-    background-color: #ffffff;
-    color: var(--color-surface-text);
+  background-color: #ffffff;
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
 
-    outline: none;
+  outline: none;
 
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
 
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 #song-search-input::placeholder {
-    color: var(--color-surface-text-muted);
+  color: var(--color-surface-text-muted);
 }
 
 #song-search-input:focus {
-    background-color: #ffffff;
+  background-color: #ffffff;
 
-    border-color: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
 
-    box-shadow:
-        0 0 0 3px rgba(90, 185, 193, 0.25);
+  box-shadow: 0 0 0 3px rgba(90, 185, 193, 0.25);
 }
-
 
 /* ========================================
    6.6 検索結果なしメッセージ
 ======================================== */
 
 #song-list-no-results {
-    margin: 50px 0;
+  margin: 50px 0;
 
-    color: var(--color-text);
+  color: var(--color-text);
 
-    text-align: center;
+  text-align: center;
 
-    font-size: 18px;
-    font-weight: 700;
+  font-size: 18px;
+  font-weight: 700;
 }
-
 
 /* ========================================
    6.7 チェックボックス
 ======================================== */
 
 .filter-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-    padding: 6px 8px;
+  padding: 6px 8px;
 
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    border-radius: 6px;
+  border-radius: 6px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.4;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
 
-    user-select: none;
+  user-select: none;
 
-    transition:
-        background-color 0.2s ease;
-
+  transition: background-color 0.2s ease;
 }
 
 .filter-checkbox:hover {
-    background-color: var(--color-surface-hover);
+  background-color: var(--color-surface-hover);
 }
 
 /* チェック済み */
 
-.filter-checkbox:has(
-    input[type="checkbox"]:checked
-) {
-    background-color: #e8eeee;
+.filter-checkbox:has(input[type="checkbox"]:checked) {
+  background-color: #e8eeee;
 }
 
-.filter-checkbox:has(
-    input[type="checkbox"]:checked
-):hover {
-    background-color: #dde6e6;
+.filter-checkbox:has(input[type="checkbox"]:checked):hover {
+  background-color: #dde6e6;
 }
 
 .filter-checkbox input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+  width: 18px;
+  height: 18px;
 
-    flex-shrink: 0;
+  flex-shrink: 0;
 
-    accent-color: var(--color-surface-text);
+  accent-color: var(--color-surface-text);
 
-    cursor: pointer;
+  cursor: pointer;
 }
-
-
 
 /* ========================================
    6.8 楽曲数サマリー
 ======================================== */
 
 #song-list-summary {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
 
-    margin: 20px 0 30px;
+  margin: 20px 0 30px;
 }
 
 #song-list-summary p {
-    min-width: 140px;
+  min-width: 140px;
 
-    margin: 0;
-    padding: 10px 16px;
+  margin: 0;
+  padding: 10px 16px;
 
-    background-color: rgba(255, 255, 255, 0.82);
-    color: var(--color-surface-text);
+  background-color: rgba(255, 255, 255, 0.82);
+  color: var(--color-surface-text);
 
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 10px;
 
-    font-size: 14px;
-    font-weight: 700;
+  font-size: 14px;
+  font-weight: 700;
 
-    pointer-events: none;
+  pointer-events: none;
 }
 
 /* ========================================
@@ -1536,95 +1342,90 @@ img {
 ======================================== */
 
 #song-list {
-    width: 100%;
+  width: 100%;
 
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 /* アルバムごとのまとまり */
 
 .album-section {
-    width: 100%;
+  width: 100%;
 }
 
 /* アルバム名 */
 
 .album-title {
-    margin: 0 0 22px;
-    padding-bottom: 12px;
+  margin: 0 0 22px;
+  padding-bottom: 12px;
 
-    color: var(--color-text);
+  color: var(--color-text);
 
-    border-bottom:
-        2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border);
 
-    font-size: 28px;
-    text-align: left;
+  font-size: 28px;
+  text-align: left;
 }
 
 /* アルバム内のカード配置 */
 
 .album-grid {
-    width: 100%;
+  width: 100%;
 
-    display: grid;
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
 }
-
-
 
 /* ========================================
    6.10 楽曲カード
 ======================================== */
 
 .song-item {
-    min-width: 0;
+  min-width: 0;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 
-    text-align: left;
+  text-align: left;
 
-    transition:
-        transform 0.2s,
-        box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
-
 
 /* ========================================
    6.11 楽曲画像
 ======================================== */
 
 .song-list-image {
-    display: block;
+  display: block;
 
-    width: 100%;
-    aspect-ratio: 16 / 9;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 
-    background-color: #ffffff;
+  background-color: #ffffff;
 
-    object-fit: cover;
+  object-fit: cover;
 }
 
 .song-list-image.jacket-image {
-    object-fit: contain;
+  object-fit: contain;
 
-    padding: 8px;
+  padding: 8px;
 
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 /* ========================================
@@ -1632,52 +1433,52 @@ img {
 ======================================== */
 
 .song-info {
-    padding: 18px;
+  padding: 18px;
 }
 
 .song-info h3 {
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    font-size: 19px;
-    font-weight: 700;
-    line-height: 1.4;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
 
-    word-break: break-word;
+  word-break: break-word;
 }
 
 .song-label {
-    margin: 10px 0 3px;
+  margin: 10px 0 3px;
 
-    color: var(--color-surface-text-muted);
+  color: var(--color-surface-text-muted);
 
-    font-size: 12px;
-    font-weight: 700;
+  font-size: 12px;
+  font-weight: 700;
 
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .song-value {
-    margin: 0 0 5px;
+  margin: 0 0 5px;
 
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.5;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
 
-    word-break: break-word;
+  word-break: break-word;
 }
 
 /* MV表示 */
 
 .mv-yes,
 .mv-no {
-    color: var(--color-surface-text);
+  color: var(--color-surface-text);
 
-    font-weight: 700;
+  font-weight: 700;
 }
 
 /* ========================================
@@ -1685,32 +1486,31 @@ img {
 ======================================== */
 
 .youtube-link {
-    display: inline-block;
+  display: inline-block;
 
-    margin-top: 1px;
+  margin-top: 1px;
 
-    color: var(--color-youtube);
+  color: var(--color-youtube);
 
-    font-size: 14px;
-    font-weight: 700;
+  font-size: 14px;
+  font-weight: 700;
 
-    text-decoration: none;
+  text-decoration: none;
 
-    transition:
-        color 0.2s,
-        transform 0.2s;
+  transition:
+    color 0.2s,
+    transform 0.2s;
 }
 
 .youtube-link:hover {
-    color: var(--color-youtube-hover);
+  color: var(--color-youtube-hover);
 
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .youtube-link:active {
-    transform: scale(0.97);
+  transform: scale(0.97);
 }
-
 
 /* ========================================
    6.14 楽曲一覧ボタン
@@ -1719,33 +1519,33 @@ img {
 /* 楽曲一覧上部のホームボタン */
 
 #song-list-home-button {
-    display: flex;
+  display: flex;
 
-    width: fit-content;
+  width: fit-content;
 
-    margin-right: auto;
-    margin-bottom: 16px;
+  margin-right: auto;
+  margin-bottom: 16px;
 }
 
 /* ページ上部へ戻るボタン */
 
 .back-to-top-button {
-    display: flex;
+  display: flex;
 
-    width: fit-content;
+  width: fit-content;
 
-    margin-top: 20px;
-    margin-left: auto;
+  margin-top: 20px;
+  margin-left: auto;
 }
 
 /* 楽曲一覧下部の戻るボタン */
 
 #song-list-back-button {
-    display: flex;
+  display: flex;
 
-    width: fit-content;
+  width: fit-content;
 
-    margin: 40px auto 0;
+  margin: 40px auto 0;
 }
 
 /* 楽曲一覧画面のボタン共通デザイン */
@@ -1755,34 +1555,34 @@ img {
 #filter-reset-button,
 .back-to-top-button,
 #song-list-back-button {
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 
-    min-height: 42px;
+  min-height: 42px;
 
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    padding: 11px 18px;
+  padding: 11px 18px;
 
-    background-color: #ffffff;
-    color: var(--color-surface-text);
+  background-color: #ffffff;
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
 
-    text-decoration: none;
+  text-decoration: none;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 #song-list-home-button:hover,
@@ -1790,11 +1590,11 @@ img {
 #filter-reset-button:hover,
 .back-to-top-button:hover,
 #song-list-back-button:hover {
-    background-color: var(--color-surface-hover);
+  background-color: var(--color-surface-hover);
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 #song-list-home-button:active,
@@ -1802,7 +1602,7 @@ img {
 #filter-reset-button:active,
 .back-to-top-button:active,
 #song-list-back-button:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 /* ========================================
@@ -1810,179 +1610,179 @@ img {
 ======================================== */
 
 #ranking-image-modal {
-    position: fixed;
-    inset: 0;
+  position: fixed;
+  inset: 0;
 
-    z-index: 1000;
+  z-index: 1000;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    padding: 24px;
+  padding: 24px;
 
-    background-color: rgba(0, 0, 0, 0.45);
+  background-color: rgba(0, 0, 0, 0.45);
 }
 
 #ranking-image-modal[hidden] {
-    display: none;
+  display: none;
 }
 
 #ranking-image-modal-content {
-    width: min(520px, 100%);
-    max-height: 90vh;
+  width: min(520px, 100%);
+  max-height: 90vh;
 
-    overflow-y: auto;
+  overflow-y: auto;
 
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    padding: 28px;
+  padding: 28px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 
-    text-align: left;
+  text-align: left;
 }
 
 #ranking-image-modal-content h2 {
-    margin: 0 0 24px;
+  margin: 0 0 24px;
 
-    text-align: center;
+  text-align: center;
 
-    font-size: 28px;
+  font-size: 28px;
 }
 
 .ranking-image-option-group {
-    margin-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .ranking-image-option-group > p {
-    margin: 0 0 10px;
+  margin: 0 0 10px;
 
-    font-size: 15px;
-    font-weight: 700;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .ranking-image-option-group label {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 
-    margin-right: 16px;
+  margin-right: 16px;
 
-    font-size: 14px;
-    font-weight: 600;
+  font-size: 14px;
+  font-weight: 600;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #ranking-image-name-input {
-    width: 100%;
+  width: 100%;
 
-    box-sizing: border-box;
+  box-sizing: border-box;
 
-    margin-top: 12px;
-    padding: 10px 12px;
+  margin-top: 12px;
+  padding: 10px 12px;
 
-    background-color: #ffffff;
-    color: var(--color-surface-text);
+  background-color: #ffffff;
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
 
-    font-family: inherit;
-    font-size: 14px;
+  font-family: inherit;
+  font-size: 14px;
 }
 
 #ranking-image-name-input:disabled {
-    opacity: 0.5;
+  opacity: 0.5;
 
-    cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 #ranking-image-title-preview {
-    margin: 12px 0 0;
+  margin: 12px 0 0;
 
-    font-size: 18px;
-    font-weight: 700;
-    text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
 }
 
 .ranking-image-modal-actions {
-    display: flex;
-    gap: 12px;
+  display: flex;
+  gap: 12px;
 
-    width: 100%;
-    margin-top: 28px;
+  width: 100%;
+  margin-top: 28px;
 }
 
 .ranking-image-modal-actions button {
-    flex: 1;
+  flex: 1;
 
-    min-height: 44px;
+  min-height: 44px;
 
-    padding: 10px 16px;
+  padding: 10px 16px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .ranking-image-modal-actions button:hover {
-    background-color: var(--color-surface-hover);
+  background-color: var(--color-surface-hover);
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 .ranking-image-modal-actions button:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 #ranking-image-preview-container {
-    margin: 24px 0;
-    text-align: center;
+  margin: 24px 0;
+  text-align: center;
 
-    background-color: transparent;
+  background-color: transparent;
 }
 
 #ranking-image-preview-container[hidden] {
-    display: none;
+  display: none;
 }
 
 #ranking-image-canvas {
-    display: block;
+  display: block;
 
-    width: min(240px, 100%);
-    height: auto;
+  width: min(240px, 100%);
+  height: auto;
 
-    margin: 0 auto;
+  margin: 0 auto;
 
-    background-color: transparent;
+  background-color: transparent;
 
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 /* ========================================
@@ -1990,472 +1790,455 @@ img {
 ======================================== */
 
 #ranking-image-page-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
 
-    margin: 16px 0 0;
+  margin: 16px 0 0;
 }
 
 #ranking-image-page-controls[hidden] {
-    display: none;
+  display: none;
 }
 
 #ranking-image-page-controls button {
-    min-width: 80px;
-    min-height: 40px;
+  min-width: 80px;
+  min-height: 40px;
 
-    padding: 8px 14px;
+  padding: 8px 14px;
 
-    background-color: var(--color-surface);
-    color: var(--color-surface-text);
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
 
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
 
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 700;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 #ranking-image-page-controls button:hover:not(:disabled) {
-    background-color: var(--color-surface-hover);
+  background-color: var(--color-surface-hover);
 
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 
-    box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card);
 }
 
 #ranking-image-page-controls button:active:not(:disabled) {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 #ranking-image-page-controls button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 #ranking-image-page-indicator {
-    min-width: 52px;
+  min-width: 52px;
 
-    text-align: center;
+  text-align: center;
 
-    font-size: 14px;
-    font-weight: 700;
+  font-size: 14px;
+  font-weight: 700;
 }
 
-
 /* ========================================
-   15. デバッグ表示
+   8. デバッグ表示
 ======================================== */
 
 .image-load-error {
-    outline: 4px solid var(--color-error);
-    outline-offset: -4px;
+  outline: 4px solid var(--color-error);
+  outline-offset: -4px;
 
-    opacity: 0.75;
+  opacity: 0.75;
 }
 
-
 /* ========================================
-   16. タブレット対応
+   9. タブレット対応
 ======================================== */
 
 @media (max-width: 900px) {
+  .album-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
-    .album-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
+  .compare-container {
+    gap: 18px;
+  }
 
-    .compare-container {
-        gap: 18px;
-    }
+  .song-card {
+    padding: 22px;
+  }
 
-    .song-card {
-        padding: 22px;
-    }
-
-    .image-container {
-        height: 230px;
-    }
-
+  .image-container {
+    height: 230px;
+  }
 }
 
-
 /* ========================================
-   17. スマートフォン対応
+   10. スマートフォン対応
 ======================================== */
 
 @media (max-width: 650px) {
-
-    /* ------------------------------
+  /* ------------------------------
        共通
     ------------------------------ */
 
-    .container {
-        width: 94%;
-        padding: 24px 0;
-    }
+  .container {
+    width: 94%;
+    padding: 24px 0;
+  }
 
-    h1 {
-        font-size: 36px;
-    }
+  h1 {
+    font-size: 36px;
+  }
 
-    .subtitle {
-        margin-bottom: 30px;
+  .subtitle {
+    margin-bottom: 30px;
 
-        font-size: 17px;
-    }
+    font-size: 17px;
+  }
 
-    #artist-icon {
-        width: 140px;
-        height: 140px;
+  #artist-icon {
+    width: 140px;
+    height: 140px;
 
-        margin-bottom: 24px;
-    }
+    margin-bottom: 24px;
+  }
 
-    #start-button,
-    #ranking-history-button,
-    #song-list-button {
-        width: min(100%, 280px);
-    }
+  #start-button,
+  #ranking-history-button,
+  #song-list-button {
+    width: min(100%, 280px);
+  }
 
-
-    /* ------------------------------
+  /* ------------------------------
        ランキング条件画面
     ------------------------------ */
 
-    #settings-screen {
-        width: 94%;
-        max-width: none;
-    }
+  #settings-screen {
+    width: 94%;
+    max-width: none;
+  }
 
-    #settings-screen h2 {
-        margin-bottom: 18px;
+  #settings-screen h2 {
+    margin-bottom: 18px;
 
-        font-size: 30px;
-    }
+    font-size: 30px;
+  }
 
-    #settings-home-button {
-        margin-bottom: 16px;
-    }
+  #settings-home-button {
+    margin-bottom: 16px;
+  }
 
-    #ranking-filters {
-        grid-template-columns: 1fr;
+  #ranking-filters {
+    grid-template-columns: 1fr;
 
-        gap: 14px;
+    gap: 14px;
 
-        padding: 16px;
-    }
+    padding: 16px;
+  }
 
-    #ranking-filters fieldset:last-child {
-        grid-column: auto;
-    }
+  #ranking-filters fieldset:last-child {
+    grid-column: auto;
+  }
 
-    #ranking-album-filter-options {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+  #ranking-album-filter-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
-        gap: 8px 10px;
-    }
+    gap: 8px 10px;
+  }
 
-    #ranking-filters .filter-checkbox {
-        font-size: 14px;
-    }
+  #ranking-filters .filter-checkbox {
+    font-size: 14px;
+  }
 
-    .ranking-selection-summary {
-        margin: 18px 0 12px;
-    }
+  .ranking-selection-summary {
+    margin: 18px 0 12px;
+  }
 
-    #ranking-song-count {
-        min-width: 0;
+  #ranking-song-count {
+    min-width: 0;
 
-        padding: 9px 14px;
+    padding: 9px 14px;
 
-        font-size: 14px;
-    }
+    font-size: 14px;
+  }
 
-    .ranking-button-group {
-        margin-top: 12px;
-    }
+  .ranking-button-group {
+    margin-top: 12px;
+  }
 
-
-    /* ------------------------------
+  /* ------------------------------
     比較画面
     ------------------------------ */
 
-    #compare-screen {
-        width: 96%;
-        padding-top: 18px;
-    }
+  #compare-screen {
+    width: 96%;
+    padding-top: 18px;
+  }
 
-    #compare-screen .compare-message {
-        margin-bottom: 8px;
+  #compare-screen .compare-message {
+    margin-bottom: 8px;
 
-        font-size: 1.1rem;
-    }
+    font-size: 1.1rem;
+  }
 
-    #compare-screen #progress-text {
-        margin: 0;
+  #compare-screen #progress-text {
+    margin: 0;
 
-        font-size: 16px;
-    }
+    font-size: 16px;
+  }
 
-    #compare-screen .progress-bar {
-        height: 10px;
+  #compare-screen .progress-bar {
+    height: 10px;
 
-        margin: 8px 0 14px;
-    }
+    margin: 8px 0 14px;
+  }
 
-    #compare-screen .compare-container {
-        flex-direction: row;
-        align-items: stretch;
+  #compare-screen .compare-container {
+    flex-direction: row;
+    align-items: stretch;
 
-        width: 100%;
+    width: 100%;
 
-        gap: 10px;
-    }
+    gap: 10px;
+  }
 
-    #compare-screen .song-card {
-        width: calc(50% - 5px);
-        max-width: none;
+  #compare-screen .song-card {
+    width: calc(50% - 5px);
+    max-width: none;
 
-        padding: 10px;
-    }
+    padding: 10px;
+  }
 
-    #compare-screen .image-container {
-        height: 150px;
-    }
+  #compare-screen .image-container {
+    height: 150px;
+  }
 
-    #compare-screen .song-title {
-        min-height: 48px;
+  #compare-screen .song-title {
+    min-height: 48px;
 
-        margin: 10px 0;
+    margin: 10px 0;
 
-        font-size: 16px;
+    font-size: 16px;
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    #compare-screen .preview-button {
-        min-height: 38px;
+  #compare-screen .preview-button {
+    min-height: 38px;
 
-        padding: 8px 6px;
+    padding: 8px 6px;
 
-        font-size: 13px;
-    }
+    font-size: 13px;
+  }
 
-    #undo-button {
-        min-height: 38px;
+  #undo-button {
+    min-height: 38px;
 
-        margin-top: 12px;
-        padding: 8px 12px;
+    margin-top: 12px;
+    padding: 8px 12px;
 
-        font-size: 13px;
-    }
+    font-size: 13px;
+  }
 
-    #compare-screen .preview-note {
-        margin-top: 10px;
+  #compare-screen .preview-note {
+    margin-top: 10px;
 
-        font-size: 11px;
-    }
+    font-size: 11px;
+  }
 
-    /* ------------------------------
+  /* ------------------------------
        楽曲一覧画面
     ------------------------------ */
 
-    .album-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+  .album-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
-        gap: 12px;
-    }
+    gap: 12px;
+  }
 
-    .album-title {
-        font-size: 23px;
-    }
+  .album-title {
+    font-size: 23px;
+  }
 
-    #song-list-summary {
-        gap: 10px;
-    }
+  #song-list-summary {
+    gap: 10px;
+  }
 
-    #song-list-summary p {
-        width: 100%;
-    }
+  #song-list-summary p {
+    width: 100%;
+  }
 
-
-    /* ------------------------------
+  /* ------------------------------
        結果画面
     ------------------------------ */
 
-    #result-screen {
-        width: 94%;
+  #result-screen {
+    width: 94%;
 
-        padding: 30px 0;
-    }
+    padding: 30px 0;
+  }
 
-    #result-screen h2 {
-        margin-bottom: 24px;
+  #result-screen h2 {
+    margin-bottom: 24px;
 
-        font-size: 30px;
-    }
+    font-size: 30px;
+  }
 
-    #result-screen .ranking-item {
-        display: grid;
+  #result-screen .ranking-item {
+    display: grid;
 
-        grid-template-columns:
-            48px 56px minmax(0, 1fr);
+    grid-template-columns: 48px 56px minmax(0, 1fr);
 
-        align-items: center;
-        gap: 10px;
+    align-items: center;
+    gap: 10px;
 
-        padding: 12px 14px;
-    }
+    padding: 12px 14px;
+  }
 
-    #result-screen .ranking-number {
-        width: 42px;
+  #result-screen .ranking-number {
+    width: 42px;
 
-        font-size: 18px;
-    }
+    font-size: 18px;
+  }
 
-    #result-screen .ranking-image {
-        width: 48px;
-        height: 48px;
-    }
+  #result-screen .ranking-image {
+    width: 48px;
+    height: 48px;
+  }
 
-    #result-screen .ranking-image.mv-image {
-        width: 56px;
-        height: 40px;
+  #result-screen .ranking-image.mv-image {
+    width: 56px;
+    height: 40px;
 
-        margin: 0;
-    }
+    margin: 0;
+  }
 
-    #result-screen .ranking-title {
-        font-size: 16px;
-    }
+  #result-screen .ranking-title {
+    font-size: 16px;
+  }
 
-    #result-screen .ranking-item:nth-child(-n + 3)
-    .ranking-number {
-        font-size: 22px;
-    }
+  #result-screen .ranking-item:nth-child(-n + 3) .ranking-number {
+    font-size: 22px;
+  }
 
-    #toggle-ranking-button,
-    #restart-button {
-        min-height: 42px;
+  #toggle-ranking-button,
+  #restart-button {
+    min-height: 42px;
 
-        padding: 10px 16px;
+    padding: 10px 16px;
 
-        font-size: 14px;
-    }
+    font-size: 14px;
+  }
 
-    /* ------------------------------
+  /* ------------------------------
     ランキング履歴画面
     ------------------------------ */
 
-    .ranking-history-item {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 16px;
-    }
+  .ranking-history-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
 
-    .ranking-history-actions {
-        width: 100%;
-    }
+  .ranking-history-actions {
+    width: 100%;
+  }
 
-    .ranking-history-view-button {
-        flex: 1;
-    }
+  .ranking-history-view-button {
+    flex: 1;
+  }
 
-    #ranking-history-conditions {
-        width: 100%;
-        max-width: none;
+  #ranking-history-conditions {
+    width: 100%;
+    max-width: none;
 
-        flex-direction: column;
-        gap: 0;
-    }
+    flex-direction: column;
+    gap: 0;
+  }
 
-    /* ------------------------------
+  /* ------------------------------
     ランキング履歴詳細画面
     ------------------------------ */
 
-    #ranking-history-detail-list .ranking-item {
-        display: grid;
+  #ranking-history-detail-list .ranking-item {
+    display: grid;
 
-        grid-template-columns:
-            48px 56px minmax(0, 1fr);
+    grid-template-columns: 48px 56px minmax(0, 1fr);
 
-        align-items: center;
-        gap: 10px;
+    align-items: center;
+    gap: 10px;
 
-        padding: 12px 14px;
-    }
+    padding: 12px 14px;
+  }
 
-    #ranking-history-detail-list .ranking-number {
-        width: auto;
+  #ranking-history-detail-list .ranking-number {
+    width: auto;
 
-        font-size: 17px;
-        text-align: center;
-    }
+    font-size: 17px;
+    text-align: center;
+  }
 
-    #ranking-history-detail-list .ranking-image {
-        width: 48px;
-        height: 48px;
+  #ranking-history-detail-list .ranking-image {
+    width: 48px;
+    height: 48px;
 
-        margin: 0;
-    }
+    margin: 0;
+  }
 
-    #ranking-history-detail-list .ranking-image.mv-image {
-        width: 56px;
-        height: 40px;
+  #ranking-history-detail-list .ranking-image.mv-image {
+    width: 56px;
+    height: 40px;
 
-        margin: 0;
-    }
+    margin: 0;
+  }
 
-    #ranking-history-detail-list .ranking-title {
-        min-width: 0;
+  #ranking-history-detail-list .ranking-title {
+    min-width: 0;
 
-        font-size: 15px;
-        line-height: 1.4;
+    font-size: 15px;
+    line-height: 1.4;
 
-        text-align: left;
+    text-align: left;
 
-        overflow-wrap: anywhere;
-    }
+    overflow-wrap: anywhere;
+  }
 
-
-    /* ========================================
-    18. 小さいスマートフォン対応
+  /* ========================================
+    11. 小さいスマートフォン対応
     ======================================== */
 
-    @media (max-width: 380px) {
-
-        h1 {
-            font-size: 31px;
-        }
-
-        .image-container {
-            height: 210px;
-        }
-
-        .song-card h3 {
-            font-size: 1.2rem;
-        }
-
-        .filter-button {
-            padding: 9px 12px;
-
-            font-size: 13px;
-        }
+  @media (max-width: 380px) {
+    h1 {
+      font-size: 31px;
     }
+
+    .image-container {
+      height: 210px;
+    }
+
+    .song-card h3 {
+      font-size: 1.2rem;
+    }
+
+    .filter-button {
+      padding: 9px 12px;
+
+      font-size: 13px;
+    }
+  }
 }
