@@ -543,7 +543,36 @@ function shuffleSongs(songListToShuffle) {
 }
 
 // ==============================
-// 13. ランキングを開始
+// 13. ランキング完了後の共通処理
+// ==============================
+
+function completeRanking(ranking) {
+  progressPercent = 100;
+
+  progressText.textContent = "進捗 100%";
+
+  progressFill.style.width = "100%";
+
+  displayRanking(ranking);
+
+  // 画像保存・共有用にランキングデータを渡す
+  setRankingImageTarget(ranking, currentRankingConditions);
+
+  const resultId = saveRankingResult(ranking);
+
+  // 完了したので途中保存データを削除
+  localStorage.removeItem("rankingProgress");
+
+  // 再開ボタンの表示を更新
+  updateResumeRankingButton();
+
+  displayRankingConditions();
+
+  showResultScreen(resultId);
+}
+
+// ==============================
+// 14. ランキングを開始
 // ==============================
 
 async function startRanking(isReplay = false) {
@@ -606,22 +635,7 @@ async function startRanking(isReplay = false) {
   if (rankingTargetSongs.length === 1) {
     const ranking = [...rankingTargetSongs];
 
-    displayRanking(ranking);
-
-    saveRankingResult(ranking);
-
-    // 完了したので途中保存データを削除
-    localStorage.removeItem("rankingProgress");
-
-    displayRankingConditions();
-
-    progressPercent = 100;
-
-    progressText.textContent = "進捗 100%";
-
-    progressFill.style.width = "100%";
-
-    showResultScreen();
+    completeRanking(ranking);
 
     return;
   }
@@ -649,26 +663,5 @@ async function startRanking(isReplay = false) {
   // ランキング結果を表示
   // ----------
 
-  progressPercent = 100;
-
-  progressText.textContent = "進捗 100%";
-
-  progressFill.style.width = "100%";
-
-  displayRanking(ranking);
-
-  // 画像保存・共有用にランキングデータを渡す
-  setRankingImageTarget(ranking, currentRankingConditions);
-
-  const resultId = saveRankingResult(ranking);
-
-  // 完了したので途中保存データを削除
-  localStorage.removeItem("rankingProgress");
-
-  // 再開ボタンの表示を更新
-  updateResumeRankingButton();
-
-  displayRankingConditions();
-
-  showResultScreen(resultId);
+  completeRanking(ranking);
 }

@@ -199,6 +199,11 @@ window.addEventListener("popstate", function (event) {
       if (savedRanking) {
         displayRanking(savedRanking.ranking);
 
+        setRankingImageTarget(
+          savedRanking.ranking,
+          savedRanking.conditions
+        );
+
         displayRankingConditions(savedRanking.conditions);
 
         hideAllScreens();
