@@ -79,7 +79,11 @@ function saveRankingResult(ranking) {
 function displayRankingHistory(rankingHistory) {
   rankingHistoryList.innerHTML = "";
 
-  if (rankingHistory.length === 0) {
+  const visibleRankingHistory = rankingHistory.filter(function (history) {
+    return history.debug !== true;
+  });
+
+  if (visibleRankingHistory.length === 0) {
     rankingHistoryList.innerHTML = `
       <p>
         保存されたランキングはありません。
@@ -89,7 +93,7 @@ function displayRankingHistory(rankingHistory) {
     return;
   }
 
-  rankingHistory.forEach(function (history) {
+  visibleRankingHistory.forEach(function (history) {
     const historyItem = document.createElement("div");
 
     historyItem.classList.add("ranking-history-item");

@@ -760,6 +760,35 @@ img {
   font-size: 30px;
 }
 
+/* ---------- ランキング編集ボタン ---------- */
+
+#result-screen .ranking-edit-controls {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+#result-screen .ranking-edit-controls button {
+  width: 42px;
+  height: 42px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+#result-screen .ranking-edit-controls button:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
 /* ---------- 結果画面のランキング条件 ---------- */
 
 #result-ranking-settings {
@@ -855,6 +884,8 @@ img {
 }
 
 #result-screen #toggle-ranking-button,
+#result-screen #edit-ranking-button,
+#result-screen #cancel-ranking-edit-button,
 #result-screen #save-ranking-image-button,
 #result-screen #restart-button,
 #ranking-history-detail-screen .ranking-history-detail-button-group button {
@@ -881,6 +912,8 @@ img {
 }
 
 #result-screen #toggle-ranking-button:hover,
+#result-screen #edit-ranking-button:hover,
+#result-screen #cancel-ranking-edit-button:hover,
 #result-screen #save-ranking-image-button:hover,
 #result-screen #restart-button:hover,
 #ranking-history-detail-screen
@@ -894,6 +927,8 @@ img {
 }
 
 #result-screen #toggle-ranking-button:active,
+#result-screen #edit-ranking-button:active,
+#result-screen #cancel-ranking-edit-button:active,
 #result-screen #save-ranking-image-button:active,
 #result-screen #restart-button:active,
 #ranking-history-detail-screen
