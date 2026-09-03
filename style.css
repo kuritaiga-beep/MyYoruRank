@@ -762,13 +762,15 @@ img {
 
 /* ---------- ランキング編集ボタン ---------- */
 
-#result-screen .ranking-edit-controls {
+#result-screen .ranking-edit-controls,
+#ranking-history-detail-screen .ranking-edit-controls {
   display: flex;
   gap: 8px;
   margin-left: auto;
 }
 
-#result-screen .ranking-edit-controls button {
+#result-screen .ranking-edit-controls button,
+#ranking-history-detail-screen .ranking-edit-controls button {
   width: 42px;
   height: 42px;
 
@@ -784,7 +786,8 @@ img {
   font-weight: 700;
 }
 
-#result-screen .ranking-edit-controls button:disabled {
+#result-screen .ranking-edit-controls button:disabled,
+#ranking-history-detail-screen .ranking-edit-controls button:disabled {
   cursor: default;
   opacity: 0.35;
 }

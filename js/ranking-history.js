@@ -416,5 +416,10 @@ function setupRankingHistoryEvents() {
     hideAllScreens();
 
     rankingHistoryScreen.style.display = "block";
+
+    const rankingHistory =
+      JSON.parse(localStorage.getItem("rankingHistory")) || [];
+
+    displayRankingHistory(rankingHistory);
   });
 }
