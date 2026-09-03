@@ -792,6 +792,119 @@ img {
   opacity: 0.35;
 }
 
+/* ==============================
+   ランキング編集：楽曲追加パネル
+============================== */
+
+#ranking-song-add-panel {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* hidden属性を確実に有効にする */
+#ranking-song-add-panel[hidden] {
+  display: none;
+}
+
+.ranking-song-add-panel-content {
+  width: min(520px, 90vw);
+  max-height: 80vh;
+
+  padding: 28px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+
+  overflow-y: auto;
+}
+
+.ranking-song-add-panel-content h2 {
+  margin: 0 0 20px;
+
+  text-align: center;
+}
+
+#ranking-song-add-search {
+  width: 100%;
+
+  margin-bottom: 16px;
+  padding: 12px 14px;
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  font-size: 16px;
+}
+
+#ranking-song-add-cancel-button {
+  width: 100%;
+
+  padding: 12px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#ranking-song-add-list {
+  max-height: 50vh;
+
+  margin-bottom: 20px;
+
+  overflow-y: auto;
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.ranking-song-add-item {
+  display: block;
+
+  width: 100%;
+
+  padding: 12px 14px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+
+  text-align: left;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.ranking-song-add-item:last-child {
+  border-bottom: none;
+}
+
+.ranking-song-add-item:hover {
+  background-color: var(--color-background);
+}
+
 /* ---------- 結果画面のランキング条件 ---------- */
 
 #result-ranking-settings {
@@ -889,6 +1002,7 @@ img {
 #result-screen #toggle-ranking-button,
 #result-screen #edit-ranking-button,
 #result-screen #cancel-ranking-edit-button,
+#result-screen #add-ranking-song-button,
 #result-screen #save-ranking-image-button,
 #result-screen #restart-button,
 #ranking-history-detail-screen .ranking-history-detail-button-group button {
@@ -917,6 +1031,7 @@ img {
 #result-screen #toggle-ranking-button:hover,
 #result-screen #edit-ranking-button:hover,
 #result-screen #cancel-ranking-edit-button:hover,
+#result-screen #add-ranking-song-button:hover,
 #result-screen #save-ranking-image-button:hover,
 #result-screen #restart-button:hover,
 #ranking-history-detail-screen
@@ -932,6 +1047,7 @@ img {
 #result-screen #toggle-ranking-button:active,
 #result-screen #edit-ranking-button:active,
 #result-screen #cancel-ranking-edit-button:active,
+#result-screen #add-ranking-song-button:active,
 #result-screen #save-ranking-image-button:active,
 #result-screen #restart-button:active,
 #ranking-history-detail-screen

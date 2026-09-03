@@ -106,7 +106,7 @@ function displayRankingHistory(rankingHistory) {
         </div>
 
         <div>
-          対象曲数：${history.conditions.songCount}曲
+          対象曲数：${history.ranking.length}曲
         </div>
 
         <div class="ranking-history-first">
@@ -229,7 +229,7 @@ function showRankingHistoryDetail(
       hidden
     >
       <p>
-        対象曲数：${selectedHistory.conditions.songCount}曲
+        対象曲数：${selectedHistory.ranking.length}曲
       </p>
 
       <p>

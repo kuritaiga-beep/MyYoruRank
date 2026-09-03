@@ -73,6 +73,39 @@
 
     </main>
 
+    <!-- ==============================
+        ランキング編集：楽曲追加パネル
+    ================================ -->
+
+    <div
+        id="ranking-song-add-panel"
+        hidden
+    >
+        <div class="ranking-song-add-panel-content">
+
+            <h2>楽曲を追加</h2>
+
+            <input
+                id="ranking-song-add-search"
+                type="search"
+                placeholder="曲名を検索"
+                autocomplete="off"
+            >
+
+            <div id="ranking-song-add-list">
+                <!-- 追加可能な楽曲をJavaScriptで表示 -->
+            </div>
+
+            <button
+                id="ranking-song-add-cancel-button"
+                type="button"
+            >
+                キャンセル
+            </button>
+
+        </div>
+    </div>
+
     <!-- ==========================
          ランキング条件画面
     =========================== -->
@@ -460,6 +493,14 @@
         </button>
 
         <button
+            id="add-ranking-song-button"
+            type="button"
+            hidden
+        >
+            楽曲を追加
+        </button>
+
+        <button
             id="save-ranking-image-button"
             class="ranking-image-open-button"
             type="button"
@@ -543,6 +584,14 @@
                 hidden
             >
                 キャンセル
+            </button>
+
+            <button
+                id="history-add-ranking-song-button"
+                type="button"
+                hidden
+            >
+                楽曲を追加
             </button>
 
             <button
