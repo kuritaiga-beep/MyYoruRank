@@ -9,6 +9,8 @@
 
 const editRankingButton = document.getElementById("edit-ranking-button");
 
+const resultEditedBadge = document.getElementById("result-edited-badge");
+
 const saveRankingImageButton = document.getElementById(
   "save-ranking-image-button",
 );
@@ -280,6 +282,8 @@ function confirmRankingEditMode() {
 
     localStorage.setItem("rankingHistory", JSON.stringify(rankingHistory));
   }
+
+  resultEditedBadge.hidden = selectedHistory.edited !== true;
 
   // 確定後のランキングを正式表示
   displayRanking(selectedHistory.ranking);
@@ -608,10 +612,7 @@ function cancelRankingEditMode() {
   // 保存済みの元ランキングを再表示
   displayRanking(selectedHistory.ranking);
 
-  setRankingImageTarget(
-    selectedHistory.ranking,
-    selectedHistory.conditions,
-  );
+  setRankingImageTarget(selectedHistory.ranking, selectedHistory.conditions);
 
   isRankingEditing = false;
 

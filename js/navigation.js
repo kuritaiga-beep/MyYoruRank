@@ -85,6 +85,22 @@ function showCompareScreen() {
 // ------------------------------
 
 function showResultScreen(resultId = null) {
+  const resultEditedBadge = document.getElementById(
+    "result-edited-badge",
+  );
+
+  if (resultEditedBadge) {
+    const rankingHistory =
+      JSON.parse(localStorage.getItem("rankingHistory")) || [];
+
+    const selectedHistory = rankingHistory.find(function (history) {
+      return history.id === resultId;
+    });
+
+    resultEditedBadge.hidden =
+      selectedHistory?.edited !== true;
+  }
+
   hideAllScreens();
 
   resultScreen.style.display = "block";

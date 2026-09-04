@@ -98,11 +98,17 @@ function displayRankingHistory(rankingHistory) {
 
     historyItem.classList.add("ranking-history-item");
 
+    const editedBadgeHtml =
+      history.edited === true
+        ? '<span class="ranking-edited-badge">編集済み</span>'
+        : "";
+
     historyItem.innerHTML = `
       <div class="ranking-history-info">
 
         <div>
           ${new Date(history.date).toLocaleString("ja-JP")}
+          ${editedBadgeHtml}
         </div>
 
         <div>
@@ -190,6 +196,11 @@ function showRankingHistoryDetail(
     return history.id === rankingId;
   });
 
+  const editedBadgeHtml =
+    selectedHistory.edited === true
+      ? '<span class="ranking-edited-badge">編集済み</span>'
+      : "";
+
   const rankingHistoryDetailTitle = document.getElementById(
     "ranking-history-detail-title",
   );
@@ -198,7 +209,10 @@ function showRankingHistoryDetail(
 
   const formattedDate = savedDate.toLocaleDateString("ja-JP");
 
-  rankingHistoryDetailTitle.textContent = `My Yoru Rank - ${formattedDate}`;
+  rankingHistoryDetailTitle.innerHTML = `
+    My Yoru Rank - ${formattedDate}
+    ${editedBadgeHtml}
+  `;
 
   // ------------------------------
   // 履歴ランキング表示を初期化

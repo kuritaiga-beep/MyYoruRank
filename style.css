@@ -905,6 +905,51 @@ img {
   background-color: var(--color-background);
 }
 
+/* ==============================
+   ランキング：編集済みバッジ
+============================== */
+
+.ranking-edited-badge {
+  display: inline-block;
+
+  padding: 4px 8px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ranking-edited-badge[hidden] {
+  display: none;
+}
+
+.result-title-row {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-title-row h2 {
+  margin: 0;
+}
+
+.result-title-row .ranking-edited-badge {
+  position: absolute;
+
+  left: calc(50% + 150px);
+  top: 30%;
+
+  transform: translateY(-50%);
+}
+
 /* ---------- 結果画面のランキング条件 ---------- */
 
 #result-ranking-settings {
