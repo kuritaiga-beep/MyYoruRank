@@ -844,6 +844,12 @@
         "ranking-guide-back-button",
       );
 
+      const rankingGuideParams = new URLSearchParams(window.location.search);
+
+      if (rankingGuideParams.get("from") === "about") {
+        rankingGuideBackButton.textContent = "← My Yoru Rankについて へ戻る";
+      }
+
       rankingGuideBackButton.addEventListener("click", function () {
         if (
           document.referrer &&
