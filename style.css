@@ -348,6 +348,25 @@ img {
   grid-column: 1 / -1;
 }
 
+#ranking-guide-link {
+  display: inline-block;
+  margin-top: 12px;
+
+  color: var(--color-text);
+  text-decoration: underline;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+#ranking-guide-link:visited {
+  color: var(--color-text);
+}
+
+#ranking-guide-link:hover {
+  opacity: 0.75;
+}
+
 /* ========================================
    4. 比較画面
 ======================================== */

@@ -15,7 +15,7 @@
   <body>
     <main id="ranking-guide-page">
       <button id="ranking-guide-back-button" type="button">
-        ← ランキング設定に戻る
+        ← ランキング条件設定に戻る
       </button>
 
       <h1>ランキングの仕組み</h1>
@@ -45,41 +45,41 @@
         </div>
 
         <div class="ranking-guide-steps">
-        <div class="ranking-guide-step">
-          <span class="ranking-guide-step-number">2</span>
+          <div class="ranking-guide-step">
+            <span class="ranking-guide-step-number">2</span>
 
-          <div>
-            <h3>2曲を比較して順番を決める</h3>
+            <div>
+              <h3>2曲を比較して順番を決める</h3>
 
-            <p>
-              表示された2曲から、より好きな曲を選んで小さなランキングを作ります。
-            </p>
+              <p>
+                表示された2曲から、より好きな曲を選んで小さなランキングを作ります。
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div class="ranking-guide-step">
-          <span class="ranking-guide-step-number">3</span>
+          <div class="ranking-guide-step">
+            <span class="ranking-guide-step-number">3</span>
 
-          <div>
-            <h3>小さなランキング同士をまとめる</h3>
+            <div>
+              <h3>小さなランキング同士をまとめる</h3>
 
-            <p>
-              それぞれのランキングの先頭から比較し、選ばれた曲を順番に並べながら1つにまとめます。
-            </p>
+              <p>
+                それぞれのランキングの先頭から比較し、選ばれた曲を順番に並べながら1つにまとめます。
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div class="ranking-guide-step">
-          <span class="ranking-guide-step-number">4</span>
+          <div class="ranking-guide-step">
+            <span class="ranking-guide-step-number">4</span>
 
-          <div>
-            <h3>全体のランキングが完成</h3>
+            <div>
+              <h3>全体のランキングが完成</h3>
 
-            <p>
-              ランキング同士をまとめる作業を繰り返し、最後にすべての楽曲の順位を完成させます。
-            </p>
+              <p>
+                ランキング同士をまとめる作業を繰り返し、最後にすべての楽曲の順位を完成させます。
+              </p>
+            </div>
           </div>
-        </div>
         </div>
 
         <div class="ranking-guide-visual-example">
@@ -845,7 +845,15 @@
       );
 
       rankingGuideBackButton.addEventListener("click", function () {
-        history.back();
+        if (
+          document.referrer &&
+          new URL(document.referrer).origin === window.location.origin
+        ) {
+          history.back();
+          return;
+        }
+
+        window.location.href = "index.html#settings";
       });
     </script>
   </body>
