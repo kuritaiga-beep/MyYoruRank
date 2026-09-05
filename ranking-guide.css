@@ -1,0 +1,848 @@
+/* ==============================
+   ランキングの仕組みページ
+============================== */
+
+#ranking-guide-page {
+  width: min(760px, 92%);
+
+  margin: 0 auto;
+  padding: 60px 0 80px;
+}
+
+#ranking-guide-page h1 {
+  margin: 0 0 24px;
+
+  text-align: center;
+
+  font-size: 40px;
+  font-weight: 700;
+}
+
+#ranking-guide-page > p {
+  margin: 0;
+
+  text-align: center;
+
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+#ranking-guide-back-button {
+  margin-bottom: 36px;
+  padding: 10px 16px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ==============================
+   説明セクション
+============================== */
+
+.ranking-guide-section {
+  margin-top: 28px;
+  padding: 28px 32px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+}
+
+.ranking-guide-section h2 {
+  margin: 0 0 14px;
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.ranking-guide-section p {
+  margin: 0;
+
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* ==============================
+   ランキング作成ステップ
+============================== */
+
+.ranking-guide-steps {
+  margin-top: 28px;
+}
+
+.ranking-guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ranking-guide-step:first-child {
+  padding-top: 0;
+}
+
+.ranking-guide-step:last-child {
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+.ranking-guide-step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 36px;
+  height: 36px;
+
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+  border-radius: 50%;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ranking-guide-step h3 {
+  margin: 3px 0 6px;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ranking-guide-step p {
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ==============================
+   比較結果の具体例
+============================== */
+
+.ranking-guide-example-result {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  margin: 12px 0;
+  padding: 14px 18px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ranking-guide-example-result strong {
+  flex-shrink: 0;
+
+  font-size: 20px;
+}
+
+.ranking-guide-example-conclusion {
+  margin: 24px 0;
+  padding-top: 20px;
+
+  border-top: 1px solid var(--color-border);
+
+  text-align: center;
+}
+
+.ranking-guide-example-conclusion > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ranking-guide-example-conclusion > div {
+  display: inline-block;
+
+  padding: 14px 22px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.ranking-guide-example-conclusion strong {
+  font-size: 18px;
+}
+
+/* ==============================
+   マージソート比較
+============================== */
+
+.ranking-guide-merge-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  margin: 24px 0;
+}
+
+.ranking-guide-merge-item {
+  padding: 22px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.ranking-guide-merge-item h3 {
+  margin: 0 0 16px;
+
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ranking-guide-merge-item p {
+  margin: 0 0 14px;
+
+  text-align: center;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.ranking-guide-merge-item strong {
+  display: block;
+
+  text-align: center;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ==============================
+   比較回数
+============================== */
+
+.ranking-guide-comparison-count {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 18px;
+
+  margin: 26px 0;
+}
+
+.ranking-guide-comparison-count > div {
+  padding: 22px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+
+  text-align: center;
+}
+
+.ranking-guide-comparison-count > div > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.ranking-guide-comparison-count > div > strong {
+  display: block;
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.ranking-guide-comparison-arrow {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* ==============================
+   ランキングについての注意点
+============================== */
+
+.ranking-guide-notes {
+  margin-top: 24px;
+}
+
+.ranking-guide-note {
+  padding: 18px 0;
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ranking-guide-note:first-child {
+  padding-top: 0;
+}
+
+.ranking-guide-note:last-child {
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+.ranking-guide-note h3 {
+  margin: 0 0 8px;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.ranking-guide-note p {
+  margin: 0;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ==============================
+   8曲の具体例
+============================== */
+
+.ranking-guide-visual-example {
+  margin-top: 32px;
+  padding-top: 28px;
+
+  border-top: 1px solid var(--color-border);
+}
+
+.ranking-guide-visual-example > h3 {
+  margin: 0 0 8px;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ranking-guide-visual-example > p {
+  margin: 0 0 20px;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.ranking-guide-example-song-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.ranking-guide-example-song-card {
+  overflow: hidden;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.ranking-guide-example-song-card img {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  object-fit: cover;
+}
+
+.ranking-guide-example-song-card span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 52px;
+  padding: 8px;
+
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* ==============================
+   8曲具体例：分割ステージ
+============================== */
+
+.ranking-guide-merge-stage {
+  margin-top: 30px;
+  padding-top: 28px;
+
+  border-top: 1px solid var(--color-border);
+}
+
+.ranking-guide-merge-stage > h4 {
+  margin: 0 0 8px;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ranking-guide-merge-stage > p {
+  margin: 0 0 20px;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.ranking-guide-merge-groups {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.ranking-guide-merge-group {
+  padding: 18px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.ranking-guide-merge-group h5 {
+  margin: 0 0 14px;
+
+  text-align: center;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ranking-guide-merge-song {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 8px 0;
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ranking-guide-merge-song:last-child {
+  border-bottom: none;
+}
+
+.ranking-guide-merge-song img {
+  flex-shrink: 0;
+
+  width: 72px;
+  aspect-ratio: 16 / 9;
+
+  object-fit: cover;
+
+  border-radius: 6px;
+}
+
+.ranking-guide-merge-song span {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* ==============================
+   8曲具体例：2曲ずつに分割
+============================== */
+
+.ranking-guide-pair-groups {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.ranking-guide-pair-group {
+  padding: 14px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.ranking-guide-pair-group h5 {
+  margin: 0 0 12px;
+
+  text-align: center;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ranking-guide-pair-group .ranking-guide-merge-song {
+  display: block;
+
+  padding: 8px 0;
+
+  text-align: center;
+}
+
+.ranking-guide-pair-group .ranking-guide-merge-song img {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  margin-bottom: 6px;
+
+  object-fit: cover;
+}
+
+.ranking-guide-pair-group .ranking-guide-merge-song span {
+  display: block;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ==============================
+   8曲具体例：2曲ずつ比較
+============================== */
+
+.ranking-guide-pair-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ranking-guide-pair-result {
+  padding: 16px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.ranking-guide-pair-result h5 {
+  margin: 0 0 14px;
+
+  text-align: center;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ranking-guide-pair-choice {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.ranking-guide-pair-choice .ranking-guide-merge-song {
+  display: block;
+
+  padding: 0;
+
+  border-bottom: none;
+
+  text-align: center;
+}
+
+.ranking-guide-pair-choice .ranking-guide-merge-song img {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  margin-bottom: 6px;
+
+  object-fit: cover;
+
+  border-radius: 6px;
+}
+
+.ranking-guide-pair-choice .ranking-guide-merge-song span {
+  display: block;
+
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.ranking-guide-choice-mark {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ==============================
+   8曲具体例：4曲ランキングへ統合
+============================== */
+
+.ranking-guide-merge-process {
+  margin-top: 20px;
+}
+
+.ranking-guide-merge-process > h5 {
+  margin: 0 0 16px;
+
+  text-align: center;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ranking-guide-merge-source {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.ranking-guide-merge-source > div {
+  padding: 16px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.ranking-guide-merge-source > div > strong {
+  display: block;
+
+  margin-bottom: 10px;
+
+  text-align: center;
+
+  font-size: 14px;
+}
+
+.ranking-guide-merge-comparisons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  margin: 20px 0;
+}
+
+.ranking-guide-merge-comparisons p:last-child {
+  grid-column: 1 / -1;
+}
+
+.ranking-guide-merge-comparisons p {
+  margin: 0;
+  padding: 14px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+
+  text-align: center;
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.ranking-guide-merge-comparisons p strong {
+  font-size: 14px;
+}
+
+.ranking-guide-merge-result {
+  margin-top: 20px;
+  padding: 18px 22px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.ranking-guide-merge-result h5 {
+  margin: 0 0 12px;
+
+  text-align: center;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.ranking-guide-merge-result ol {
+  margin: 0;
+  padding-left: 28px;
+}
+
+.ranking-guide-merge-result li {
+  padding: 5px 0;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ranking-guide-merge-summary {
+  margin-top: 28px;
+}
+
+.ranking-guide-merge-summary > p {
+  line-height: 1.5;
+}
+
+/* ==============================
+   8曲具体例：最終統合
+============================== */
+
+.ranking-guide-final-merge {
+  margin-top: 32px;
+  padding-top: 28px;
+
+  border-top: 1px solid var(--color-border);
+}
+
+.ranking-guide-final-merge > h4 {
+  margin: 0 0 8px;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ranking-guide-final-merge > p {
+  margin: 0 0 20px;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ---------- 最終統合の比較 ---------- */
+
+.ranking-guide-final-merge-comparisons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  margin: 20px 0 28px;
+}
+
+.ranking-guide-final-merge-comparisons p {
+  margin: 0;
+  padding: 16px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+
+  text-align: center;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ranking-guide-final-merge-comparisons strong {
+  font-size: 14px;
+}
+
+/* ---------- 完成した8曲ランキング ---------- */
+
+.ranking-guide-final-result {
+  padding: 20px;
+
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.ranking-guide-final-result > h5 {
+  margin: 0 0 18px;
+
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.ranking-guide-final-result-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ranking-guide-final-result-song {
+  display: grid;
+  grid-template-columns: 42px 72px 1fr;
+  align-items: center;
+  gap: 10px;
+
+  padding: 8px;
+
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.ranking-guide-final-result-song > span {
+  text-align: center;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ranking-guide-final-result-song img {
+  display: block;
+
+  width: 72px;
+  aspect-ratio: 16 / 9;
+
+  object-fit: cover;
+
+  border-radius: 5px;
+}
+
+.ranking-guide-final-result-song strong {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ranking-guide-final-remaining-note {
+  margin: 20px 0;
+  padding: 14px 16px;
+  background-color: var(--color-surface);
+  color: var(--color-surface-text);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}

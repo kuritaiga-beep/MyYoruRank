@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ランキングの仕組み | My Yoru Rank</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="ranking-guide.css" />
+  </head>
+
+  <body>
+    <main id="ranking-guide-page">
+      <button id="ranking-guide-back-button" type="button">
+        ← ランキング設定に戻る
+      </button>
+
+      <h1>ランキングの仕組み</h1>
+
+      <p>My Yoru Rankでは、2曲ずつ比較することでランキングを作成します。</p>
+
+      <section class="ranking-guide-section">
+        <h2>どうやって順位が決まるの？</h2>
+
+        <p>
+          My Yoru Rankでは、ランキング対象の楽曲を小さなグループに分け、
+          2曲ずつ比較しながら小さなランキングを作ります。
+          そのランキング同士を少しずつまとめていくことで、
+          最終的に全体の順位を決めています。
+        </p>
+
+        <div class="ranking-guide-step">
+          <span class="ranking-guide-step-number">1</span>
+
+          <div>
+            <h3>楽曲を小さなグループに分ける</h3>
+
+            <p>
+              ランキング対象の楽曲を、比較しやすい小さなグループに分けていきます。
+            </p>
+          </div>
+        </div>
+
+        <div class="ranking-guide-steps">
+        <div class="ranking-guide-step">
+          <span class="ranking-guide-step-number">2</span>
+
+          <div>
+            <h3>2曲を比較して順番を決める</h3>
+
+            <p>
+              表示された2曲から、より好きな曲を選んで小さなランキングを作ります。
+            </p>
+          </div>
+        </div>
+
+        <div class="ranking-guide-step">
+          <span class="ranking-guide-step-number">3</span>
+
+          <div>
+            <h3>小さなランキング同士をまとめる</h3>
+
+            <p>
+              それぞれのランキングの先頭から比較し、選ばれた曲を順番に並べながら1つにまとめます。
+            </p>
+          </div>
+        </div>
+
+        <div class="ranking-guide-step">
+          <span class="ranking-guide-step-number">4</span>
+
+          <div>
+            <h3>全体のランキングが完成</h3>
+
+            <p>
+              ランキング同士をまとめる作業を繰り返し、最後にすべての楽曲の順位を完成させます。
+            </p>
+          </div>
+        </div>
+        </div>
+
+        <div class="ranking-guide-visual-example">
+          <h3>8曲で実際に見てみる</h3>
+
+          <p>
+            ここでは、ページ作成時点のYouTube公式MV再生数を参考に選んだ8曲を使って、
+            ランキングが作られる流れを見てみます。
+            なお、以下の比較結果や順位は仕組みを説明するための例です。
+          </p>
+
+          <div class="ranking-guide-example-song-list">
+            <div class="ranking-guide-example-song-card">
+              <img
+                src="assets/mv-thumbnails/official/Tada Kimi ni Hare.jpg"
+                alt="ただ君に晴れ"
+              />
+              <span>ただ君に晴れ</span>
+            </div>
+
+            <div class="ranking-guide-example-song-card">
+              <img
+                src="assets/mv-thumbnails/official/Dakara Boku wa Ongaku wo Yameta.jpg"
+                alt="だから僕は音楽を辞めた"
+              />
+              <span>だから僕は音楽を辞めた</span>
+            </div>
+
+            <div class="ranking-guide-example-song-card">
+              <img
+                src="assets/mv-thumbnails/official/Itte.jpg"
+                alt="言って。"
+              />
+              <span>言って。</span>
+            </div>
+
+            <div class="ranking-guide-example-song-card">
+              <img
+                src="assets/mv-thumbnails/official/Hana ni Bourei.jpg"
+                alt="花に亡霊"
+              />
+              <span>花に亡霊</span>
+            </div>
+
+            <div class="ranking-guide-example-song-card">
+              <img
+                src="assets/mv-thumbnails/official/Haru Dorobou.jpg"
+                alt="春泥棒"
+              />
+              <span>春泥棒</span>
+            </div>
+
+            <div class="ranking-guide-example-song-card">
+              <img
+                src="assets/mv-thumbnails/official/Hitchcock.jpg"
+                alt="ヒッチコック"
+              />
+              <span>ヒッチコック</span>
+            </div>
+
+            <div class="ranking-guide-example-song-card">
+              <img src="assets/mv-thumbnails/official/Haru.jpg" alt="晴る" />
+              <span>晴る</span>
+            </div>
+
+            <div class="ranking-guide-example-song-card">
+              <img
+                src="assets/mv-thumbnails/official/Ame to Cappuccino.jpg"
+                alt="雨とカプチーノ"
+              />
+              <span>雨とカプチーノ</span>
+            </div>
+          </div>
+
+          <div class="ranking-guide-merge-stage">
+            <h4>① 8曲を4曲ずつのグループに分ける</h4>
+
+            <p>まず、8曲を4曲ずつの2つのグループに分けます。</p>
+
+            <div class="ranking-guide-merge-groups">
+              <div class="ranking-guide-merge-group">
+                <h5>グループA</h5>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Tada Kimi ni Hare.jpg"
+                    alt="ただ君に晴れ"
+                  />
+                  <span>ただ君に晴れ</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Dakara Boku wa Ongaku wo Yameta.jpg"
+                    alt="だから僕は音楽を辞めた"
+                  />
+                  <span>だから僕は音楽を辞めた</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Itte.jpg"
+                    alt="言って。"
+                  />
+                  <span>言って。</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Hana ni Bourei.jpg"
+                    alt="花に亡霊"
+                  />
+                  <span>花に亡霊</span>
+                </div>
+              </div>
+
+              <div class="ranking-guide-merge-group">
+                <h5>グループB</h5>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Haru Dorobou.jpg"
+                    alt="春泥棒"
+                  />
+                  <span>春泥棒</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Hitchcock.jpg"
+                    alt="ヒッチコック"
+                  />
+                  <span>ヒッチコック</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Haru.jpg"
+                    alt="晴る"
+                  />
+                  <span>晴る</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Ame to Cappuccino.jpg"
+                    alt="雨とカプチーノ"
+                  />
+                  <span>雨とカプチーノ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ranking-guide-merge-stage">
+            <h4>② 4曲を2曲ずつのグループに分ける</h4>
+
+            <p>
+              次に、4曲ずつのグループをさらに2曲ずつに分け、
+              2曲のグループを4つ作ります。
+            </p>
+
+            <div class="ranking-guide-pair-groups">
+              <div class="ranking-guide-pair-group">
+                <h5>グループA-1</h5>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Tada Kimi ni Hare.jpg"
+                    alt="ただ君に晴れ"
+                  />
+                  <span>ただ君に晴れ</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Dakara Boku wa Ongaku wo Yameta.jpg"
+                    alt="だから僕は音楽を辞めた"
+                  />
+                  <span>だから僕は音楽を辞めた</span>
+                </div>
+              </div>
+
+              <div class="ranking-guide-pair-group">
+                <h5>グループA-2</h5>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Itte.jpg"
+                    alt="言って。"
+                  />
+                  <span>言って。</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Hana ni Bourei.jpg"
+                    alt="花に亡霊"
+                  />
+                  <span>花に亡霊</span>
+                </div>
+              </div>
+
+              <div class="ranking-guide-pair-group">
+                <h5>グループB-1</h5>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Haru Dorobou.jpg"
+                    alt="春泥棒"
+                  />
+                  <span>春泥棒</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Hitchcock.jpg"
+                    alt="ヒッチコック"
+                  />
+                  <span>ヒッチコック</span>
+                </div>
+              </div>
+
+              <div class="ranking-guide-pair-group">
+                <h5>グループB-2</h5>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Haru.jpg"
+                    alt="晴る"
+                  />
+                  <span>晴る</span>
+                </div>
+
+                <div class="ranking-guide-merge-song">
+                  <img
+                    src="assets/mv-thumbnails/official/Ame to Cappuccino.jpg"
+                    alt="雨とカプチーノ"
+                  />
+                  <span>雨とカプチーノ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ranking-guide-merge-stage">
+            <h4>③ 2曲ずつ比較して小さなランキングを作る</h4>
+
+            <p>
+              それぞれの2曲を比較し、より好きな曲を上位に並べます。
+              ここでは説明のため、次のような順位になったとします。
+            </p>
+
+            <div class="ranking-guide-pair-results">
+              <div class="ranking-guide-pair-result">
+                <h5>グループA-1</h5>
+
+                <div class="ranking-guide-pair-choice">
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Tada Kimi ni Hare.jpg"
+                      alt="ただ君に晴れ"
+                    />
+                    <span>ただ君に晴れ</span>
+                  </div>
+
+                  <span class="ranking-guide-choice-mark">＞</span>
+
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Dakara Boku wa Ongaku wo Yameta.jpg"
+                      alt="だから僕は音楽を辞めた"
+                    />
+                    <span>だから僕は音楽を辞めた</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ranking-guide-pair-result">
+                <h5>グループA-2</h5>
+
+                <div class="ranking-guide-pair-choice">
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Itte.jpg"
+                      alt="言って。"
+                    />
+                    <span>言って。</span>
+                  </div>
+
+                  <span class="ranking-guide-choice-mark">＞</span>
+
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Hana ni Bourei.jpg"
+                      alt="花に亡霊"
+                    />
+                    <span>花に亡霊</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ranking-guide-pair-result">
+                <h5>グループB-1</h5>
+
+                <div class="ranking-guide-pair-choice">
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Haru Dorobou.jpg"
+                      alt="春泥棒"
+                    />
+                    <span>春泥棒</span>
+                  </div>
+
+                  <span class="ranking-guide-choice-mark">＞</span>
+
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Hitchcock.jpg"
+                      alt="ヒッチコック"
+                    />
+                    <span>ヒッチコック</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ranking-guide-pair-result">
+                <h5>グループB-2</h5>
+
+                <div class="ranking-guide-pair-choice">
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Haru.jpg"
+                      alt="晴る"
+                    />
+                    <span>晴る</span>
+                  </div>
+
+                  <span class="ranking-guide-choice-mark">＞</span>
+
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Ame to Cappuccino.jpg"
+                      alt="雨とカプチーノ"
+                    />
+                    <span>雨とカプチーノ</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ranking-guide-merge-stage">
+            <h4>④ 2つの小さなランキングを1つにまとめる</h4>
+
+            <p>
+              次に、順位が決まった2曲ずつのランキングを1つにまとめます。
+              それぞれのランキングの先頭にある曲を比較し、
+              より好きな曲から順番に新しいランキングへ追加していきます。
+            </p>
+
+            <div class="ranking-guide-merge-process">
+              <h5>グループAをまとめる</h5>
+
+              <div class="ranking-guide-merge-source">
+                <div>
+                  <strong>A-1</strong>
+
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Tada Kimi ni Hare.jpg"
+                      alt="ただ君に晴れ"
+                    />
+                    <span>1. ただ君に晴れ</span>
+                  </div>
+
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Dakara Boku wa Ongaku wo Yameta.jpg"
+                      alt="だから僕は音楽を辞めた"
+                    />
+                    <span>2. だから僕は音楽を辞めた</span>
+                  </div>
+                </div>
+
+                <div>
+                  <strong>A-2</strong>
+
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Itte.jpg"
+                      alt="言って。"
+                    />
+                    <span>1. 言って。</span>
+                  </div>
+
+                  <div class="ranking-guide-merge-song">
+                    <img
+                      src="assets/mv-thumbnails/official/Hana ni Bourei.jpg"
+                      alt="花に亡霊"
+                    />
+                    <span>2. 花に亡霊</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ranking-guide-merge-comparisons">
+                <p>
+                  <strong>比較1</strong><br />
+                  ただ君に晴れ ＞ 言って。<br />
+                  → 「ただ君に晴れ」が1位に決定
+                </p>
+
+                <p>
+                  <strong>比較2</strong><br />
+                  だから僕は音楽を辞めた ＜ 言って。<br />
+                  → 「言って。」が2位に決定
+                </p>
+
+                <p>
+                  <strong>比較3</strong><br />
+                  だから僕は音楽を辞めた ＞ 花に亡霊<br />
+                  → 「だから僕は音楽を辞めた」が3位に決定
+                </p>
+              </div>
+
+              <div class="ranking-guide-merge-result">
+                <h5>グループAの4曲ランキング</h5>
+
+                <ol>
+                  <li>ただ君に晴れ</li>
+                  <li>言って。</li>
+                  <li>だから僕は音楽を辞めた</li>
+                  <li>花に亡霊</li>
+                </ol>
+              </div>
+
+              <div class="ranking-guide-merge-summary">
+                <h5>グループBも同じようにまとめる</h5>
+
+                <p>
+                  グループBについても、グループAと同じように
+                  2つのランキングの先頭から比較しながらまとめていきます。
+                  ここでは、次の順位になったとします。
+                </p>
+
+                <div class="ranking-guide-merge-result">
+                  <h5>グループBの4曲ランキング</h5>
+
+                  <ol>
+                    <li>春泥棒</li>
+                    <li>晴る</li>
+                    <li>ヒッチコック</li>
+                    <li>雨とカプチーノ</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ranking-guide-final-merge">
+            <h4>⑤ 2つの4曲ランキングを1つにまとめる</h4>
+
+            <p>
+              最後に、グループAとグループBの4曲ランキングを、
+              ④と同じように先頭の曲から比較しながら1つにまとめます。
+              これで、8曲すべての順位が決まります。
+            </p>
+
+            <div class="ranking-guide-final-merge-comparisons">
+              <p>
+                <strong>比較1</strong><br />
+                ただ君に晴れ ＞ 春泥棒<br />
+                → 「ただ君に晴れ」が1位
+              </p>
+
+              <p>
+                <strong>比較2</strong><br />
+                春泥棒 ＞ 言って。<br />
+                → 「春泥棒」が2位
+              </p>
+
+              <p>
+                <strong>比較3</strong><br />
+                言って。 ＞ 晴る<br />
+                → 「言って。」が3位
+              </p>
+
+              <p>
+                <strong>比較4</strong><br />
+                晴る ＞ だから僕は音楽を辞めた<br />
+                → 「晴る」が4位
+              </p>
+
+              <p>
+                <strong>比較5</strong><br />
+                だから僕は音楽を辞めた ＞ ヒッチコック<br />
+                → 「だから僕は音楽を辞めた」が5位
+              </p>
+
+              <p>
+                <strong>比較6</strong><br />
+                ヒッチコック ＞ 花に亡霊<br />
+                → 「ヒッチコック」が6位
+              </p>
+
+              <p>
+                <strong>比較7</strong><br />
+                花に亡霊 ＞ 雨とカプチーノ<br />
+                → 「花に亡霊」が7位
+              </p>
+            </div>
+
+            <p class="ranking-guide-final-remaining-note">
+              比較7まで終わると、最後に残った「雨とカプチーノ」は
+              追加の比較をせず、そのまま8位に入ります。
+            </p>
+
+            <div class="ranking-guide-final-result">
+              <h5>8曲のランキングが完成</h5>
+
+              <div class="ranking-guide-final-result-list">
+                <div class="ranking-guide-final-result-song">
+                  <span>1位</span>
+                  <img
+                    src="assets/mv-thumbnails/official/Tada Kimi ni Hare.jpg"
+                    alt="ただ君に晴れ"
+                  />
+                  <strong>ただ君に晴れ</strong>
+                </div>
+
+                <div class="ranking-guide-final-result-song">
+                  <span>2位</span>
+                  <img
+                    src="assets/mv-thumbnails/official/Haru Dorobou.jpg"
+                    alt="春泥棒"
+                  />
+                  <strong>春泥棒</strong>
+                </div>
+
+                <div class="ranking-guide-final-result-song">
+                  <span>3位</span>
+                  <img
+                    src="assets/mv-thumbnails/official/Itte.jpg"
+                    alt="言って。"
+                  />
+                  <strong>言って。</strong>
+                </div>
+
+                <div class="ranking-guide-final-result-song">
+                  <span>4位</span>
+                  <img
+                    src="assets/mv-thumbnails/official/Haru.jpg"
+                    alt="晴る"
+                  />
+                  <strong>晴る</strong>
+                </div>
+
+                <div class="ranking-guide-final-result-song">
+                  <span>5位</span>
+                  <img
+                    src="assets/mv-thumbnails/official/Dakara Boku wa Ongaku wo Yameta.jpg"
+                    alt="だから僕は音楽を辞めた"
+                  />
+                  <strong>だから僕は音楽を辞めた</strong>
+                </div>
+
+                <div class="ranking-guide-final-result-song">
+                  <span>6位</span>
+                  <img
+                    src="assets/mv-thumbnails/official/Hitchcock.jpg"
+                    alt="ヒッチコック"
+                  />
+                  <strong>ヒッチコック</strong>
+                </div>
+
+                <div class="ranking-guide-final-result-song">
+                  <span>7位</span>
+                  <img
+                    src="assets/mv-thumbnails/official/Hana ni Bourei.jpg"
+                    alt="花に亡霊"
+                  />
+                  <strong>花に亡霊</strong>
+                </div>
+
+                <div class="ranking-guide-final-result-song">
+                  <span>8位</span>
+                  <img
+                    src="assets/mv-thumbnails/official/Ame to Cappuccino.jpg"
+                    alt="雨とカプチーノ"
+                  />
+                  <strong>雨とカプチーノ</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ranking-guide-section">
+        <h2>なぜ全部の組み合わせを比較しなくていいの？</h2>
+
+        <p>
+          My Yoru Rankでは、すでに分かっている順位関係から、
+          直接比較していない曲同士の順番も判断できます。
+          そのため、すべての2曲の組み合わせを比較する必要はありません。
+        </p>
+
+        <div class="ranking-guide-example">
+          <p>たとえば、すでに次の2つの比較結果が分かっているとします。</p>
+
+          <div class="ranking-guide-example-result">
+            <span>ただ君に晴れ</span>
+            <strong>＞</strong>
+            <span>だから僕は音楽を辞めた</span>
+          </div>
+
+          <div class="ranking-guide-example-result">
+            <span>だから僕は音楽を辞めた</span>
+            <strong>＞</strong>
+            <span>言って。</span>
+          </div>
+
+          <div class="ranking-guide-example-conclusion">
+            <span>だから</span>
+
+            <div>
+              <strong>ただ君に晴れ ＞ 言って。</strong>
+            </div>
+          </div>
+
+          <p>
+            「ただ君に晴れ」は「だから僕は音楽を辞めた」より上、
+            「だから僕は音楽を辞めた」は「言って。」より上なので、
+            「ただ君に晴れ」と「言って。」を直接比較しなくても順番が分かります。
+          </p>
+        </div>
+
+        <p>
+          このように、すでに分かっている順位関係を利用することで、
+          すべての曲同士を直接比較しなくてもランキングを作ることができます。
+        </p>
+      </section>
+
+      <section class="ranking-guide-section">
+        <h2>マージソートという仕組み</h2>
+
+        <p>
+          ここまで見てきた「小さく分ける → 順番を決める →
+          まとめる」という流れは、
+          「マージソート」と呼ばれる並べ替え方法をもとにしています。
+        </p>
+
+        <p>
+          通常のマージソートでは、数字などを小さなグループに分け、
+          大小を比較しながら順番にまとめていきます。
+        </p>
+
+        <div class="ranking-guide-merge-comparison">
+          <div class="ranking-guide-merge-item">
+            <h3>普通のマージソート</h3>
+
+            <p>3 と 7 を比較</p>
+
+            <strong>→ 小さい方の「3」を先に並べる</strong>
+          </div>
+
+          <div class="ranking-guide-merge-item">
+            <h3>My Yoru Rank</h3>
+
+            <p>「ただ君に晴れ」と「だから僕は音楽を辞めた」を比較</p>
+
+            <strong>→ より好きだと選んだ曲を先に並べる</strong>
+          </div>
+        </div>
+
+        <p>
+          つまりMy Yoru Rankでは、
+          数字の大小を比べる代わりに「どちらの曲がより好きか」をあなたが選ぶことで、
+          マージソートと同じ流れで楽曲の順位を決めています。
+        </p>
+      </section>
+
+      <section class="ranking-guide-section">
+        <h2>比較回数について</h2>
+
+        <p>
+          すべての曲同士を1組ずつ直接比較しようとすると、
+          曲数が増えるほど必要な比較回数は大きく増えていきます。
+        </p>
+
+        <div class="ranking-guide-comparison-count">
+          <div>
+            <span>全116曲をすべて直接比較</span>
+
+            <strong>6,670回</strong>
+          </div>
+
+          <span class="ranking-guide-comparison-arrow">→</span>
+
+          <div>
+            <span>My Yoru Rank</span>
+
+            <strong>最大685回</strong>
+          </div>
+        </div>
+
+        <p>
+          My Yoru Rankでは、すでに分かっている順位関係を利用しながら
+          マージソートで順位を決めるため、
+          全116曲を対象にした場合でも、最大685回の比較でランキングを完成できます。
+        </p>
+
+        <p>
+          実際の比較回数は、選んだ楽曲数や比較の進み方によって変わりますが、
+          すべての組み合わせを直接比較する場合よりも大幅に少なくなります。
+        </p>
+      </section>
+
+      <section class="ranking-guide-section">
+        <h2>ランキングについての注意点</h2>
+
+        <p>
+          My Yoru Rankで作成されるランキングは、
+          あなたがそのとき行った比較結果をもとに作られます。
+        </p>
+
+        <div class="ranking-guide-notes">
+          <div class="ranking-guide-note">
+            <h3>一部の順位は、これまでの比較結果から決まります</h3>
+
+            <p>
+              すでに分かっている順位関係を利用するため、
+              すべての曲同士を直接比較して順位を決めているわけではありません。
+            </p>
+          </div>
+
+          <div class="ranking-guide-note">
+            <h3>同じ条件でも結果が変わることがあります</h3>
+
+            <p>
+              比較するときの気分や好みの変化によって、
+              同じ楽曲・同じ条件でもランキング結果が変わることがあります。
+            </p>
+          </div>
+
+          <div class="ranking-guide-note">
+            <h3>ランキングは絶対的な順位ではありません</h3>
+
+            <p>
+              完成したランキングは、
+              そのときのあなたの比較結果をもとに作られた順位です。
+              自分の好みを振り返るひとつの結果として楽しんでください。
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const rankingGuideBackButton = document.getElementById(
+        "ranking-guide-back-button",
+      );
+
+      rankingGuideBackButton.addEventListener("click", function () {
+        history.back();
+      });
+    </script>
+  </body>
+</html>
