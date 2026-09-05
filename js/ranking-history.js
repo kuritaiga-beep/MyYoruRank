@@ -387,7 +387,11 @@ function showRankingHistoryDetail(
   rankingHistoryDetailScreen.style.display = "block";
 
   // 画像保存・共有用に保存ランキングデータを渡す
-  setRankingImageTarget(selectedHistory.ranking, selectedHistory.conditions);
+  setRankingImageTarget(
+    selectedHistory.ranking,
+    selectedHistory.conditions,
+    selectedHistory.edited === true,
+  );
 
   if (shouldPushHistory) {
     pushScreenHistory("ranking-history-detail", {

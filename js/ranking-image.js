@@ -124,10 +124,11 @@ let allRankingImageCurrentPage = 0;
 // 2-1. 画像化対象を設定
 // ========================================
 
-function setRankingImageTarget(ranking, conditions) {
+function setRankingImageTarget(ranking, conditions, edited = false) {
   rankingImageTarget = {
     ranking: ranking,
     conditions: conditions,
+    edited: edited,
   };
 
   console.log("画像化対象:", rankingImageTarget);
@@ -497,31 +498,50 @@ function drawAllRankingImagePage() {
     1845,
   );
 
-  // ---------- 最下部 ----------
+  // ---------- 最下段 ----------
+  const footerY = 1890;
 
-  // 署名
+  // 1. 編集済み（左）
+  if (rankingImageTarget.edited === true) {
+    context.save();
+
+    context.fillStyle = "#ffffff";
+    context.font = "500 24px sans-serif";
+    context.textAlign = "left";
+    context.textBaseline = "middle";
+
+    context.fillText("編集済み", 100, footerY);
+
+    context.restore();
+  }
+
+  // 2. ページ番号（中央）
+  context.save();
 
   context.fillStyle = "#ffffff";
-
-  context.font = "500 15px sans-serif";
-
-  context.textAlign = "left";
-
-  context.textBaseline = "middle";
-
-  context.fillText("Created by MyYoruRank", 100, 1890);
-
-  // ページ番号
-
   context.font = "500 22px sans-serif";
-
-  context.textAlign = "right";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
 
   context.fillText(
     `${allRankingImageCurrentPage + 1} / ${allRankingImagePages.length}`,
-    980,
-    1890,
+    540,
+    footerY,
   );
+
+  context.restore();
+
+  // 3. 署名（右）
+  context.save();
+
+  context.fillStyle = "#ffffff";
+  context.font = "500 15px sans-serif";
+  context.textAlign = "right";
+  context.textBaseline = "middle";
+
+  context.fillText("Created by MyYoruRank", 980, footerY);
+
+  context.restore();
 
   // ---------- モーダル側のページ表示 ----------
 
@@ -821,6 +841,17 @@ function drawTop10RankingImage() {
   // ========================================
   // 7-5. ブランド署名
   // ========================================
+
+  if (rankingImageTarget.edited === true) {
+    context.save();
+
+    context.textAlign = "left";
+    context.font = "24px sans-serif";
+
+    context.fillText("編集済み", 100, 1890);
+
+    context.restore();
+  }
 
   context.font = "500 14px sans-serif";
 
