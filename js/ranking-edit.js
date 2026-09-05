@@ -23,6 +23,10 @@ const historyEditRankingButton = document.getElementById(
   "history-edit-ranking-button",
 );
 
+const historySaveRankingImageButton = document.getElementById(
+  "history-save-ranking-image-button",
+);
+
 const historyCancelRankingEditButton = document.getElementById(
   "history-cancel-ranking-edit-button",
 );
@@ -65,31 +69,13 @@ let hasRankingEditChanges = false;
 // 編集元の画面
 let rankingEditSource = null;
 
+let editingRankingConditions = null;
+
 // ==============================
 // 3. 編集モードを開始
 // ==============================
 
 function startRankingEditMode() {
-  isRankingEditing = true;
-
-  editRankingButton.textContent = "編集を確定";
-
-  cancelRankingEditButton.hidden = false;
-
-  addRankingSongButton.hidden = false;
-
-  // 編集時は全曲ランキングを表示する
-  isShowingAllRanking = true;
-
-  resultScreen.classList.add("show-all-ranking");
-
-  toggleRankingButton.textContent = "トップ10だけ表示";
-
-  // 編集中は他の主要操作を無効化
-  toggleRankingButton.disabled = true;
-  saveRankingImageButton.disabled = true;
-  restartButton.disabled = true;
-
   const resultId = history.state?.resultId;
 
   const rankingHistory =
@@ -104,15 +90,47 @@ function startRankingEditMode() {
     return;
   }
 
+  // ------------------------------
+  // 編集対象を確定
+  // ------------------------------
+
   editingRankingId = selectedHistory.id;
 
-  rankingEditSource = "result";
+  editingRankingConditions = selectedHistory.conditions;
 
-  hasRankingEditChanges = false;
+  rankingEditSource = "result";
 
   workingRanking = selectedHistory.ranking.map(function (song) {
     return { ...song };
   });
+
+  hasRankingEditChanges = false;
+
+  // ------------------------------
+  // 編集モードのUIへ切り替え
+  // ------------------------------
+
+  isRankingEditing = true;
+
+  editRankingButton.textContent = "編集を確定";
+
+  cancelRankingEditButton.hidden = false;
+
+  addRankingSongButton.hidden = false;
+
+  // 編集時は全曲ランキングを表示
+  isShowingAllRanking = true;
+
+  resultScreen.classList.add("show-all-ranking");
+
+  toggleRankingButton.textContent = "トップ10だけ表示";
+
+  // 編集中は他の主要操作を無効化
+  toggleRankingButton.disabled = true;
+
+  saveRankingImageButton.disabled = true;
+
+  restartButton.disabled = true;
 
   showRankingEditControls();
 }
@@ -127,6 +145,11 @@ function renderWorkingRanking() {
   }
 
   displayRanking(workingRanking);
+
+  displayRankingConditions(
+    editingRankingConditions,
+    workingRanking.length,
+  );
 
   // 編集中は常に全曲表示
   isShowingAllRanking = true;
@@ -288,8 +311,17 @@ function confirmRankingEditMode() {
   // 確定後のランキングを正式表示
   displayRanking(selectedHistory.ranking);
 
+  displayRankingConditions(
+    selectedHistory.conditions,
+    selectedHistory.ranking.length,
+  );
+
   // 画像保存・共有対象も更新
-  setRankingImageTarget(selectedHistory.ranking, selectedHistory.conditions);
+  setRankingImageTarget(
+    selectedHistory.ranking,
+    selectedHistory.conditions,
+    selectedHistory.edited === true,
+  );
 
   isRankingEditing = false;
 
@@ -305,7 +337,9 @@ function confirmRankingEditMode() {
 
   workingRanking = null;
   editingRankingId = null;
+  editingRankingConditions = null;
   hasRankingEditChanges = false;
+  rankingEditSource = null;
 }
 
 // ==============================
@@ -356,6 +390,8 @@ function startHistoryRankingEditMode() {
   historyRankingToggleButton.disabled = true;
 
   rankingHistoryDetailBackButton.disabled = true;
+
+  historySaveRankingImageButton.disabled = true;
 
   showHistoryRankingEditControls();
 }
@@ -524,11 +560,15 @@ function confirmHistoryRankingEditMode() {
 
   rankingHistoryDetailBackButton.disabled = false;
 
+  historySaveRankingImageButton.disabled = false;
+
   workingRanking = null;
 
   editingRankingId = null;
 
   hasRankingEditChanges = false;
+
+  rankingEditSource = null;
 
   // 確定後の保存データから履歴詳細を再表示
   showRankingHistoryDetail(rankingHistory, confirmedRankingId, false);
@@ -564,11 +604,15 @@ function cancelHistoryRankingEditMode() {
 
   rankingHistoryDetailBackButton.disabled = false;
 
+  historySaveRankingImageButton.disabled = false;
+
   workingRanking = null;
 
   editingRankingId = null;
 
   hasRankingEditChanges = false;
+
+  rankingEditSource = null;
 
   // 保存されている元ランキングから履歴詳細を再表示
   showRankingHistoryDetail(rankingHistory, cancelledRankingId, false);
@@ -612,7 +656,16 @@ function cancelRankingEditMode() {
   // 保存済みの元ランキングを再表示
   displayRanking(selectedHistory.ranking);
 
-  setRankingImageTarget(selectedHistory.ranking, selectedHistory.conditions);
+  displayRankingConditions(
+    selectedHistory.conditions,
+    selectedHistory.ranking.length,
+  );
+
+  setRankingImageTarget(
+    selectedHistory.ranking,
+    selectedHistory.conditions,
+    selectedHistory.edited === true,
+  );
 
   isRankingEditing = false;
 

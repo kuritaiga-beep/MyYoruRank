@@ -86,12 +86,18 @@ function displayRanking(ranking) {
 // 4. 今回のランキング条件を表示
 // ==============================
 
-function displayRankingConditions(conditions = currentRankingConditions) {
+function displayRankingConditions(
+  conditions = currentRankingConditions,
+  songCountOverride = null,
+) {
   if (!conditions) {
     return;
   }
 
   const { songCount, albums, musicTypes, categories, mvStatus } = conditions;
+
+  const displayedSongCount =
+    songCountOverride !== null ? songCountOverride : songCount;
 
   const musicTypeText =
     musicTypes.length > 0 ? musicTypes.join(" / ") : "すべて";
@@ -110,7 +116,7 @@ function displayRankingConditions(conditions = currentRankingConditions) {
   const albumText = albums.length > 0 ? albums.join(" / ") : "すべて";
 
   resultRankingSettingsContent.innerHTML = `
-    <p>対象曲数：${songCount}曲</p>
+    <p>対象曲数：${displayedSongCount}曲</p>
     <p>Type：${musicTypeText}</p>
     <p>MV：${mvText}</p>
     <p>Category：${categoryText}</p>
