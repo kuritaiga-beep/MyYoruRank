@@ -618,10 +618,12 @@ async function startRanking(isReplay = false) {
 
   if (rankingTargetSongs.length === 0) {
     rankingList.innerHTML = `
-            <p>
-                ランキング対象の楽曲がありません。
-            </p>
-        `;
+    <p>
+      ランキング対象の楽曲がありません。
+    </p>
+  `;
+
+    setRankingImageTarget([], currentRankingConditions, false);
 
     showResultScreen();
 

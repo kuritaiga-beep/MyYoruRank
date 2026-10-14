@@ -44,13 +44,21 @@ function showHomeScreen() {
   hideAllScreens();
 
   homeScreen.style.display = "block";
+
+  history.replaceState(
+    {
+      screen: "home",
+    },
+    "",
+    "#home",
+  );
 }
 
 // ------------------------------
 // 3-2. ランキング条件画面
 // ------------------------------
 
-function showSettingsScreen() {
+function showSettingsScreen(shouldPushHistory = true) {
   hideAllScreens();
 
   createRankingAlbumFilterOptions();
@@ -65,7 +73,17 @@ function showSettingsScreen() {
 
   settingsScreen.style.display = "block";
 
-  pushScreenHistory("settings");
+  if (shouldPushHistory) {
+    pushScreenHistory("settings");
+  } else {
+    history.replaceState(
+      {
+        screen: "settings",
+      },
+      "",
+      "#settings",
+    );
+  }
 }
 
 // ------------------------------
@@ -85,20 +103,16 @@ function showCompareScreen() {
 // ------------------------------
 
 function showResultScreen(resultId = null) {
-  const resultEditedBadge = document.getElementById(
-    "result-edited-badge",
-  );
+  const resultEditedBadge = document.getElementById("result-edited-badge");
 
   if (resultEditedBadge) {
-    const rankingHistory =
-      JSON.parse(localStorage.getItem("rankingHistory")) || [];
+    const rankingHistory = getRankingHistory();
 
     const selectedHistory = rankingHistory.find(function (history) {
       return history.id === resultId;
     });
 
-    resultEditedBadge.hidden =
-      selectedHistory?.edited !== true;
+    resultEditedBadge.hidden = selectedHistory?.edited !== true;
   }
 
   hideAllScreens();
@@ -129,15 +143,8 @@ function showSongListScreen() {
 
 // ==============================
 // 4. 初期ブラウザ履歴
+// 初期画面の決定はinitializeApp()で行う
 // ==============================
-
-history.replaceState(
-  {
-    screen: "home",
-  },
-  "",
-  "#home",
-);
 
 // ==============================
 // 5. ブラウザの戻る・進む
@@ -149,6 +156,10 @@ window.addEventListener("popstate", function (event) {
   }
 
   const screenName = event.state.screen;
+
+  if (typeof window.discardRankingEditStateForNavigation === "function") {
+    window.discardRankingEditStateForNavigation();
+  }
 
   // 比較画面から別画面へ移動する場合は
   // 現在のランキングを中断して保存する
@@ -176,7 +187,7 @@ window.addEventListener("popstate", function (event) {
       break;
 
     case "compare":
-      resumeRanking();
+      resumeRanking(false);
       break;
 
     case "song-list":
@@ -192,8 +203,7 @@ window.addEventListener("popstate", function (event) {
       break;
 
     case "ranking-history-detail": {
-      const rankingHistory =
-        JSON.parse(localStorage.getItem("rankingHistory")) || [];
+      const rankingHistory = getRankingHistory();
 
       const rankingId = event.state.rankingId;
 
@@ -205,8 +215,7 @@ window.addEventListener("popstate", function (event) {
     case "result": {
       const resultId = event.state.resultId;
 
-      const rankingHistory =
-        JSON.parse(localStorage.getItem("rankingHistory")) || [];
+      const rankingHistory = getRankingHistory();
 
       const savedRanking = rankingHistory.find(function (item) {
         return item.id === resultId;
@@ -215,10 +224,7 @@ window.addEventListener("popstate", function (event) {
       if (savedRanking) {
         displayRanking(savedRanking.ranking);
 
-        setRankingImageTarget(
-          savedRanking.ranking,
-          savedRanking.conditions
-        );
+        setRankingImageTarget(savedRanking.ranking, savedRanking.conditions);
 
         displayRankingConditions(savedRanking.conditions);
 

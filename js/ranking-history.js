@@ -40,8 +40,7 @@ const rankingHistoryDetailBackButton = document.getElementById(
 // ==============================
 
 function saveRankingResult(ranking) {
-  const rankingHistory =
-    JSON.parse(localStorage.getItem("rankingHistory")) || [];
+  const rankingHistory = getRankingHistory();
 
   const rankingResult = {
     id: Date.now(),
@@ -195,6 +194,26 @@ function showRankingHistoryDetail(
   const selectedHistory = rankingHistory.find(function (history) {
     return history.id === rankingId;
   });
+
+  if (!selectedHistory) {
+    console.warn("表示対象のランキング履歴が見つかりません。", rankingId);
+
+    hideAllScreens();
+
+    rankingHistoryScreen.style.display = "block";
+
+    displayRankingHistory(rankingHistory);
+
+    history.replaceState(
+      {
+        screen: "ranking-history",
+      },
+      "",
+      "#ranking-history",
+    );
+
+    return;
+  }
 
   const editedBadgeHtml =
     selectedHistory.edited === true
@@ -414,8 +433,7 @@ function setupRankingHistoryEvents() {
 
     rankingHistoryScreen.style.display = "block";
 
-    const rankingHistory =
-      JSON.parse(localStorage.getItem("rankingHistory")) || [];
+    const rankingHistory = getRankingHistory();
 
     displayRankingHistory(rankingHistory);
 
@@ -435,8 +453,7 @@ function setupRankingHistoryEvents() {
 
     rankingHistoryScreen.style.display = "block";
 
-    const rankingHistory =
-      JSON.parse(localStorage.getItem("rankingHistory")) || [];
+    const rankingHistory = getRankingHistory();
 
     displayRankingHistory(rankingHistory);
   });

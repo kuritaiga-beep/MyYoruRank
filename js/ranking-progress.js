@@ -96,7 +96,7 @@ function restoreRankingProgress(savedProgress) {
 // 4. 保存したランキングを再開
 // ==============================
 
-function resumeRanking() {
+function resumeRanking(shouldPushHistory = true) {
   const savedProgress = loadRankingProgress();
 
   if (!savedProgress) {
@@ -108,6 +108,10 @@ function resumeRanking() {
   hideAllScreens();
 
   compareScreen.style.display = "block";
+
+  if (shouldPushHistory) {
+    pushScreenHistory("compare");
+  }
 
   startRanking(true);
 }
@@ -130,9 +134,7 @@ function setupRankingProgressEvents() {
 
     comparisonResolve = null;
 
-    hideAllScreens();
-
-    homeScreen.style.display = "block";
+    showHomeScreen();
 
     updateResumeRankingButton();
   });

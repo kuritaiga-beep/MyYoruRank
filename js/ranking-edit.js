@@ -78,8 +78,7 @@ let editingRankingConditions = null;
 function startRankingEditMode() {
   const resultId = history.state?.resultId;
 
-  const rankingHistory =
-    JSON.parse(localStorage.getItem("rankingHistory")) || [];
+  const rankingHistory = getRankingHistory();
 
   const selectedHistory = rankingHistory.find(function (rankingResult) {
     return rankingResult.id === resultId;
@@ -283,8 +282,7 @@ function confirmRankingEditMode() {
 
   closeRankingSongAddPanel();
 
-  const rankingHistory =
-    JSON.parse(localStorage.getItem("rankingHistory")) || [];
+  const rankingHistory = getRankingHistory();
 
   const selectedHistory = rankingHistory.find(function (history) {
     return history.id === editingRankingId;
@@ -349,8 +347,7 @@ function confirmRankingEditMode() {
 function startHistoryRankingEditMode() {
   const rankingId = history.state?.rankingId;
 
-  const rankingHistory =
-    JSON.parse(localStorage.getItem("rankingHistory")) || [];
+  const rankingHistory = getRankingHistory();
 
   const selectedHistory = rankingHistory.find(function (rankingResult) {
     return rankingResult.id === rankingId;
@@ -523,8 +520,7 @@ function confirmHistoryRankingEditMode() {
 
   closeRankingSongAddPanel();
 
-  const rankingHistory =
-    JSON.parse(localStorage.getItem("rankingHistory")) || [];
+  const rankingHistory = getRankingHistory();
 
   const selectedHistory = rankingHistory.find(function (history) {
     return history.id === editingRankingId;
@@ -587,8 +583,7 @@ function cancelHistoryRankingEditMode() {
 
   closeRankingSongAddPanel();
 
-  const rankingHistory =
-    JSON.parse(localStorage.getItem("rankingHistory")) || [];
+  const rankingHistory = getRankingHistory();
 
   const cancelledRankingId = editingRankingId;
 
@@ -624,13 +619,64 @@ function cancelHistoryRankingEditMode() {
 // 8. 編集モードをキャンセル
 // ==============================
 
+window.discardRankingEditStateForNavigation = function () {
+  if (!isRankingEditing) {
+    return;
+  }
+
+  closeRankingSongAddPanel();
+
+  document
+    .querySelectorAll(".ranking-edit-controls")
+    .forEach(function (controls) {
+      controls.remove();
+    });
+
+  // 結果画面側の編集UIを戻す
+  editRankingButton.textContent = "順位を編集";
+  cancelRankingEditButton.hidden = true;
+  addRankingSongButton.hidden = true;
+
+  isShowingAllRanking = false;
+
+  resultScreen.classList.remove("show-all-ranking");
+
+  toggleRankingButton.textContent = "全曲ランキングを表示";
+
+  toggleRankingButton.disabled = false;
+  saveRankingImageButton.disabled = false;
+  restartButton.disabled = false;
+
+  // 履歴詳細側の編集UIを戻す
+  historyEditRankingButton.textContent = "順位を編集";
+  historyCancelRankingEditButton.hidden = true;
+  historyAddRankingSongButton.hidden = true;
+
+  isShowingAllHistoryRanking = false;
+
+  rankingHistoryDetailScreen.classList.remove("show-all-ranking");
+
+  historyRankingToggleButton.textContent = "全曲ランキングを表示";
+
+  historyRankingToggleButton.disabled = false;
+  rankingHistoryDetailBackButton.disabled = false;
+  historySaveRankingImageButton.disabled = false;
+
+  // 編集中データを破棄
+  isRankingEditing = false;
+  workingRanking = null;
+  editingRankingId = null;
+  editingRankingConditions = null;
+  hasRankingEditChanges = false;
+  rankingEditSource = null;
+};
+
 function cancelRankingEditMode() {
   if (editingRankingId === null) {
     return;
   }
 
-  const rankingHistory =
-    JSON.parse(localStorage.getItem("rankingHistory")) || [];
+  const rankingHistory = getRankingHistory();
 
   const selectedHistory = rankingHistory.find(function (history) {
     return history.id === editingRankingId;

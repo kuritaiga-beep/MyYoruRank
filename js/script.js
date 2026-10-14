@@ -167,6 +167,37 @@ const isDebugMode =
   new URLSearchParams(window.location.search).get("debug") === "true";
 
 // ==============================
+// rankingHistoryを安全に読み込む
+// ==============================
+
+function getRankingHistory() {
+  const savedRankingHistory = localStorage.getItem("rankingHistory");
+
+  if (!savedRankingHistory) {
+    return [];
+  }
+
+  try {
+    const rankingHistory = JSON.parse(savedRankingHistory);
+
+    if (!Array.isArray(rankingHistory)) {
+      console.warn(
+        "rankingHistoryのデータ形式が正しくありません。",
+        rankingHistory,
+      );
+
+      return [];
+    }
+
+    return rankingHistory;
+  } catch (error) {
+    console.warn("rankingHistoryの読み込みに失敗しました。", error);
+
+    return [];
+  }
+}
+
+// ==============================
 // 3. ランキング共通状態
 // ==============================
 
@@ -353,7 +384,11 @@ function initializeApp() {
 
   resetRankingState();
 
-  showHomeScreen();
+  if (window.location.hash === "#settings") {
+    showSettingsScreen(false);
+  } else {
+    showHomeScreen();
+  }
 }
 
 // ==============================
