@@ -138,7 +138,8 @@ img {
 #home-screen #start-button,
 #home-screen #resume-ranking-button,
 #home-screen #ranking-history-button,
-#home-screen #song-list-button {
+#home-screen #song-list-button,
+#home-screen #about-link {
   width: 220px;
 
   padding: 14px 20px;
@@ -163,14 +164,16 @@ img {
 
 #home-screen #resume-ranking-button,
 #home-screen #ranking-history-button,
-#home-screen #song-list-button {
+#home-screen #song-list-button,
+#home-screen #about-link {
   margin-top: 15px;
 }
 
 #home-screen #start-button:hover,
 #home-screen #resume-ranking-button:hover,
 #home-screen #ranking-history-button:hover,
-#home-screen #song-list-button:hover {
+#home-screen #song-list-button:hover,
+#home-screen #about-link:hover {
   background-color: var(--color-surface-hover);
 
   transform: translateY(-2px);
@@ -181,8 +184,27 @@ img {
 #home-screen #start-button:active,
 #home-screen #resume-ranking-button:active,
 #home-screen #ranking-history-button:active,
-#home-screen #song-list-button:active {
+#home-screen #song-list-button:active,
+#home-screen #about-link:active {
   transform: translateY(0);
+}
+
+#home-screen #about-link:visited {
+  color: var(--color-surface-text);
+}
+
+#home-screen #about-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+#home-screen #about-link:visited {
+  color: var(--color-surface-text);
+  text-decoration: none;
 }
 
 /* ---------- バージョン ---------- */

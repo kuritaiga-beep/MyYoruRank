@@ -531,7 +531,7 @@ function drawAllRankingImagePage() {
   context.textAlign = "right";
   context.textBaseline = "middle";
 
-  context.fillText("Created by MyYoruRank", 980, footerY);
+  context.fillText("Created by My Yoru Rank", 980, footerY);
 
   context.restore();
 
@@ -849,7 +849,7 @@ function drawTop10RankingImage() {
 
   context.textAlign = "right";
 
-  context.fillText("Created by MyYoruRank", 980, 1890);
+  context.fillText("Created by My Yoru Rank", 980, 1890);
 }
 
 // ========================================
