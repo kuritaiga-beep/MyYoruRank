@@ -137,10 +137,6 @@ const songCategoryCheckboxes = document.querySelectorAll(
   'input[name="song-category"]',
 );
 
-const totalSongCount = document.getElementById("total-song-count");
-
-const mvSongCount = document.getElementById("mv-song-count");
-
 const instrumentalSongCount = document.getElementById(
   "instrumental-song-count",
 );
@@ -154,8 +150,6 @@ const filterToggleIcon = document.getElementById("filter-toggle-icon");
 // ------------------------------
 
 const imageErrorSummary = document.getElementById("image-error-summary");
-
-const imageErrorCount = document.getElementById("image-error-count");
 
 // ==============================
 // 2. 共通設定
@@ -233,7 +227,6 @@ let currentRankingSongOrder = [];
 let currentRankingConditions = null;
 
 // ランキング条件の初期化状態
-let hasInitializedRankingFilters = false;
 let hasInitializedRankingSettings = false;
 
 // ==============================

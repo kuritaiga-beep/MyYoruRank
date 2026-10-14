@@ -130,8 +130,6 @@ function setRankingImageTarget(ranking, conditions, edited = false) {
     conditions: conditions,
     edited: edited,
   };
-
-  console.log("画像化対象:", rankingImageTarget);
 }
 
 // ========================================
@@ -149,8 +147,6 @@ rankingImageOpenButtons.forEach(function (button) {
 
       return;
     }
-
-    console.log("画像保存・共有を開始:", rankingImageTarget);
 
     // ---------- 曲数に応じて保存範囲を設定 ----------
 
@@ -372,10 +368,6 @@ function createAllRankingImagePages() {
 
     allRankingImagePages.push(pageSongs);
   }
-
-  console.log("全曲版ページ数:", allRankingImagePages.length);
-
-  console.log("全曲版ページデータ:", allRankingImagePages);
 }
 
 // ========================================
@@ -877,8 +869,6 @@ function updateRankingImagePreview() {
     'input[name="ranking-image-range"]:checked',
   ).value;
 
-  console.log("画像生成範囲:", selectedRange);
-
   // ========================================
   // 全曲版
   // ========================================
@@ -1085,8 +1075,6 @@ async function saveRankingImageOnMobile(blob, fileName) {
     // ユーザーが共有画面を閉じただけなら
     // エラーとして扱わない
     if (error.name === "AbortError") {
-      console.log("画像保存・共有がキャンセルされました");
-
       return true;
     }
 
@@ -1142,8 +1130,6 @@ async function saveTop10RankingImage() {
 
     // 端末に応じて保存方法を自動選択
     await saveRankingImage(blob, getRankingImageFileName("top10"));
-
-    console.log("TOP10画像の保存処理が完了しました");
   } catch (error) {
     console.error("TOP10画像の保存に失敗しました:", error);
   }
@@ -1225,13 +1211,9 @@ async function saveAllRankingImages() {
           files: imageFiles,
         });
 
-        console.log("全曲版の複数画像を共有しました");
-
         return;
       } catch (error) {
         if (error.name === "AbortError") {
-          console.log("全曲版画像の共有がキャンセルされました");
-
           return;
         }
 
@@ -1247,8 +1229,6 @@ async function saveAllRankingImages() {
     for (const file of imageFiles) {
       downloadRankingImage(file, file.name);
     }
-
-    console.log("全曲版の画像保存が完了しました");
   } catch (error) {
     console.error("全曲版画像の保存に失敗しました:", error);
   }
@@ -1325,13 +1305,9 @@ async function shareTop10RankingImage() {
     await navigator.share({
       files: [file],
     });
-
-    console.log("TOP10画像を共有しました");
   } catch (error) {
     // ユーザーが共有画面を閉じた場合
     if (error.name === "AbortError") {
-      console.log("共有がキャンセルされました");
-
       return;
     }
 

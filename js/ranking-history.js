@@ -442,9 +442,7 @@ function setupRankingHistoryEvents() {
 
   // ランキング履歴 → ホーム
   rankingHistoryHomeButton.addEventListener("click", function () {
-    hideAllScreens();
-
-    homeScreen.style.display = "block";
+    showHomeScreen();
   });
 
   // ランキング履歴詳細 → ランキング履歴
@@ -456,5 +454,13 @@ function setupRankingHistoryEvents() {
     const rankingHistory = getRankingHistory();
 
     displayRankingHistory(rankingHistory);
+
+    history.replaceState(
+      {
+        screen: "ranking-history",
+      },
+      "",
+      "#ranking-history",
+    );
   });
 }

@@ -39,11 +39,55 @@ function loadRankingProgress() {
   }
 
   try {
-    return JSON.parse(savedProgress);
+    const rankingProgress = JSON.parse(savedProgress);
+
+    const hasValidConditions =
+      rankingProgress &&
+      rankingProgress.conditions &&
+      typeof rankingProgress.conditions === "object" &&
+      !Array.isArray(rankingProgress.conditions) &&
+      typeof rankingProgress.conditions.songCount === "number" &&
+      Array.isArray(rankingProgress.conditions.albums) &&
+      Array.isArray(rankingProgress.conditions.musicTypes) &&
+      Array.isArray(rankingProgress.conditions.categories) &&
+      Array.isArray(rankingProgress.conditions.mvStatus);
+
+    const isValidRankingProgress =
+      rankingProgress &&
+      typeof rankingProgress === "object" &&
+      !Array.isArray(rankingProgress) &&
+      Array.isArray(rankingProgress.songOrder) &&
+      rankingProgress.songOrder.every(function (songTitle) {
+        return typeof songTitle === "string";
+      }) &&
+      Array.isArray(rankingProgress.comparisonResults) &&
+      (rankingProgress.mergeTaskSelectionHistory === undefined ||
+        Array.isArray(rankingProgress.mergeTaskSelectionHistory)) &&
+      hasValidConditions;
+
+    if (!isValidRankingProgress) {
+      console.warn(
+        "ランキング途中データの形式が正しくありません。",
+        rankingProgress,
+      );
+
+      localStorage.removeItem("rankingProgress");
+
+      updateResumeRankingButton();
+
+      return null;
+    }
+
+    return rankingProgress;
   } catch (error) {
-    console.error("ランキング途中データの読み込みに失敗しました。", error);
+    console.error(
+      "ランキング途中データの読み込みに失敗しました。",
+      error,
+    );
 
     localStorage.removeItem("rankingProgress");
+
+    updateResumeRankingButton();
 
     return null;
   }
